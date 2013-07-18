@@ -1,7 +1,19 @@
+<img src="ParcelKitLogo.png" width="89px" height="109px" />
+
 ParcelKit
 =========
 ParcelKit seamlessly integrates Core Data with [Dropbox](http://www.dropbox.com) using the Dropbox [Datastore API](https://www.dropbox.com/developers/datastore).
 
+Installation
+------------
+ParcelKit is available as an iOS Framework.
+
+1. Open the ParcelKit.xcodeproj project
+2. Select the “Framework” scheme
+3. Build (⌘B) the Framework
+4. Open the Products section in Xcode, right click “libParcelKit.a”, and select “Show in Finder”
+5. Drag and drop the “ParcelKit.framework” folder into your iPhone/iPad project
+6. Edit your build settings and add “Other Linker Flags” = “-ObjC”
 
 Usage
 -----
@@ -46,13 +58,15 @@ Example Application
     
 ToDo
 ----
-* Add support for the NSData data type
-* Add support for the NSOrderedSet data type
+* Add support for the NSData attribute type
+* Add support for the NSOrderedSet attribute type
 
 Requirements
 ------------
-ParcelKit requires a minimum of iOS 6.1 and Dropbox Sync SDK 2.0.0-b3.
-For running the included logic tests, ParcelKit requires the Xcode 5 Developer Preview.
+* iOS 6.1 or higher
+* Dropbox Sync SDK 2.0.0-b3 or higher
+* Xcode 4.6 or higher for building the framework
+* Xcode 5 Developer Preview 3 or higher for running the included logic tests
 
 License
 -------
