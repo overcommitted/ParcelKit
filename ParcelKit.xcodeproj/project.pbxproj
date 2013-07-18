@@ -1,0 +1,719 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		ABE87A3C17935A4400E2A1DA /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = ABE87A3D17935A4400E2A1DA /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				ABE87A4217935A6700E2A1DA /* ShellScript */,
+			);
+			dependencies = (
+				ABE87A4117935A5000E2A1DA /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		AB1E6AF01795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */; };
+		AB1E6AF31795D77A00FF03A8 /* PKListMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF21795D77A00FF03A8 /* PKListMock.m */; };
+		AB1E6AF51795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF41795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m */; };
+		AB3F8D3217935E2D000F8FA0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F8D3117935E2D000F8FA0 /* XCTest.framework */; };
+		AB3F8D3317935E2D000F8FA0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE87A15179353C800E2A1DA /* Foundation.framework */; };
+		AB3F8D3517935E2D000F8FA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F8D3417935E2D000F8FA0 /* UIKit.framework */; };
+		AB3F8D3B17935E2D000F8FA0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB3F8D3917935E2D000F8FA0 /* InfoPlist.strings */; };
+		AB3F8D4517935E6C000F8FA0 /* PKSyncManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3F8D4417935E6C000F8FA0 /* PKSyncManagerTests.m */; };
+		AB6EF676179432FF00D0BAB0 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6EF66F179432FF00D0BAB0 /* libOCMock.a */; };
+		AB6EF6791794363500D0BAB0 /* Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF6771794363500D0BAB0 /* Tests.xcdatamodeld */; };
+		AB6EF67F17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */; };
+		AB6EF6851794783400D0BAB0 /* PKDatastoreMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF6841794783400D0BAB0 /* PKDatastoreMock.m */; };
+		AB6EF68B179488EC00D0BAB0 /* PKRecordMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF68A179488EC00D0BAB0 /* PKRecordMock.m */; };
+		ABC7D0FD1793600B00AAA1CA /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE87A3A179355F400E2A1DA /* Dropbox.framework */; };
+		ABC7D0FE179360A300AAA1CA /* PKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A251793556400E2A1DA /* PKSyncManager.m */; };
+		ABC7D0FF179360A700AAA1CA /* NSManagedObject+ParcelKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A271793556400E2A1DA /* NSManagedObject+ParcelKit.m */; };
+		ABC7D102179360AF00AAA1CA /* DBRecord+ParcelKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A291793556400E2A1DA /* DBRecord+ParcelKit.m */; };
+		ABC7D105179360F400AAA1CA /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D104179360F400AAA1CA /* libc++.dylib */; };
+		ABC7D1071793610300AAA1CA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D1061793610300AAA1CA /* QuartzCore.framework */; };
+		ABC7D1091793610700AAA1CA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D1081793610700AAA1CA /* Security.framework */; };
+		ABC7D10B1793611300AAA1CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D10A1793611300AAA1CA /* SystemConfiguration.framework */; };
+		ABC7D10D1793611800AAA1CA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D10C1793611800AAA1CA /* CFNetwork.framework */; };
+		ABC7D10F1793611E00AAA1CA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D10E1793611E00AAA1CA /* MobileCoreServices.framework */; };
+		ABC8E9541794A35B00724531 /* PKTableMock.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC8E9531794A35B00724531 /* PKTableMock.m */; };
+		ABE87A16179353C800E2A1DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE87A15179353C800E2A1DA /* Foundation.framework */; };
+		ABE87A1B179353C800E2A1DA /* ParcelKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE87A1A179353C800E2A1DA /* ParcelKit.h */; };
+		ABE87A301793556400E2A1DA /* PKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A251793556400E2A1DA /* PKSyncManager.m */; };
+		ABE87A311793556400E2A1DA /* NSManagedObject+ParcelKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A271793556400E2A1DA /* NSManagedObject+ParcelKit.m */; };
+		ABE87A321793556400E2A1DA /* DBRecord+ParcelKit.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A291793556400E2A1DA /* DBRecord+ParcelKit.m */; };
+		ABE87A371793558A00E2A1DA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE87A361793558A00E2A1DA /* CoreData.framework */; };
+		ABE87A4517935C0400E2A1DA /* PKSyncManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE87A241793556400E2A1DA /* PKSyncManager.h */; };
+		ABE87A4617935C0400E2A1DA /* NSManagedObject+ParcelKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE87A261793556400E2A1DA /* NSManagedObject+ParcelKit.h */; };
+		ABE87A4917935C0400E2A1DA /* DBRecord+ParcelKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE87A281793556400E2A1DA /* DBRecord+ParcelKit.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB3F8D3F17935E2D000F8FA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABE87A0A179353C800E2A1DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABE87A11179353C800E2A1DA;
+			remoteInfo = ParcelKit;
+		};
+		ABE87A4017935A5000E2A1DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ABE87A0A179353C800E2A1DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ABE87A11179353C800E2A1DA;
+			remoteInfo = ParcelKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ABE87A10179353C800E2A1DA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Headers;
+			dstSubfolderSpec = 16;
+			files = (
+				ABE87A4517935C0400E2A1DA /* PKSyncManager.h in CopyFiles */,
+				ABE87A4617935C0400E2A1DA /* NSManagedObject+ParcelKit.h in CopyFiles */,
+				ABE87A4917935C0400E2A1DA /* DBRecord+ParcelKit.h in CopyFiles */,
+				ABE87A1B179353C800E2A1DA /* ParcelKit.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ParcelKitTests.m"; sourceTree = "<group>"; };
+		AB1E6AF11795D77A00FF03A8 /* PKListMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKListMock.h; sourceTree = "<group>"; };
+		AB1E6AF21795D77A00FF03A8 /* PKListMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKListMock.m; sourceTree = "<group>"; };
+		AB1E6AF41795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBRecord+ParcelKitTests.m"; sourceTree = "<group>"; };
+		AB3F8D3017935E2D000F8FA0 /* ParcelKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ParcelKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB3F8D3117935E2D000F8FA0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AB3F8D3417935E2D000F8FA0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		AB3F8D3817935E2D000F8FA0 /* ParcelKitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ParcelKitTests-Info.plist"; sourceTree = "<group>"; };
+		AB3F8D3A17935E2D000F8FA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		AB3F8D3E17935E2D000F8FA0 /* ParcelKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParcelKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		AB3F8D4417935E6C000F8FA0 /* PKSyncManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKSyncManagerTests.m; sourceTree = "<group>"; };
+		AB6EF66F179432FF00D0BAB0 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		AB6EF670179432FF00D0BAB0 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		AB6EF671179432FF00D0BAB0 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		AB6EF672179432FF00D0BAB0 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		AB6EF673179432FF00D0BAB0 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		AB6EF674179432FF00D0BAB0 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		AB6EF675179432FF00D0BAB0 /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
+		AB6EF6781794363500D0BAB0 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
+		AB6EF67D17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+ParcelKitTests.h"; sourceTree = "<group>"; };
+		AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+ParcelKitTests.m"; sourceTree = "<group>"; };
+		AB6EF6831794783400D0BAB0 /* PKDatastoreMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKDatastoreMock.h; sourceTree = "<group>"; };
+		AB6EF6841794783400D0BAB0 /* PKDatastoreMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKDatastoreMock.m; sourceTree = "<group>"; };
+		AB6EF689179488EC00D0BAB0 /* PKRecordMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRecordMock.h; sourceTree = "<group>"; };
+		AB6EF68A179488EC00D0BAB0 /* PKRecordMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRecordMock.m; sourceTree = "<group>"; };
+		ABC7D104179360F400AAA1CA /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		ABC7D1061793610300AAA1CA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		ABC7D1081793610700AAA1CA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		ABC7D10A1793611300AAA1CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ABC7D10C1793611800AAA1CA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		ABC7D10E1793611E00AAA1CA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		ABC8E9521794A35B00724531 /* PKTableMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTableMock.h; sourceTree = "<group>"; };
+		ABC8E9531794A35B00724531 /* PKTableMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTableMock.m; sourceTree = "<group>"; };
+		ABE87A12179353C800E2A1DA /* libParcelKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libParcelKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABE87A15179353C800E2A1DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ABE87A19179353C800E2A1DA /* ParcelKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParcelKit-Prefix.pch"; sourceTree = "<group>"; };
+		ABE87A1A179353C800E2A1DA /* ParcelKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParcelKit.h; sourceTree = "<group>"; };
+		ABE87A241793556400E2A1DA /* PKSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKSyncManager.h; sourceTree = "<group>"; };
+		ABE87A251793556400E2A1DA /* PKSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKSyncManager.m; sourceTree = "<group>"; };
+		ABE87A261793556400E2A1DA /* NSManagedObject+ParcelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+ParcelKit.h"; sourceTree = "<group>"; };
+		ABE87A271793556400E2A1DA /* NSManagedObject+ParcelKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ParcelKit.m"; sourceTree = "<group>"; };
+		ABE87A281793556400E2A1DA /* DBRecord+ParcelKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DBRecord+ParcelKit.h"; sourceTree = "<group>"; };
+		ABE87A291793556400E2A1DA /* DBRecord+ParcelKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBRecord+ParcelKit.m"; sourceTree = "<group>"; };
+		ABE87A361793558A00E2A1DA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		ABE87A3A179355F400E2A1DA /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AB3F8D2D17935E2D000F8FA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABC7D10F1793611E00AAA1CA /* MobileCoreServices.framework in Frameworks */,
+				ABC7D10D1793611800AAA1CA /* CFNetwork.framework in Frameworks */,
+				AB6EF676179432FF00D0BAB0 /* libOCMock.a in Frameworks */,
+				ABC7D10B1793611300AAA1CA /* SystemConfiguration.framework in Frameworks */,
+				ABC7D1091793610700AAA1CA /* Security.framework in Frameworks */,
+				ABC7D1071793610300AAA1CA /* QuartzCore.framework in Frameworks */,
+				ABC7D105179360F400AAA1CA /* libc++.dylib in Frameworks */,
+				AB3F8D3217935E2D000F8FA0 /* XCTest.framework in Frameworks */,
+				AB3F8D3517935E2D000F8FA0 /* UIKit.framework in Frameworks */,
+				AB3F8D3317935E2D000F8FA0 /* Foundation.framework in Frameworks */,
+				ABC7D0FD1793600B00AAA1CA /* Dropbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE87A0F179353C800E2A1DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE87A371793558A00E2A1DA /* CoreData.framework in Frameworks */,
+				ABE87A16179353C800E2A1DA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB3F8D3617935E2D000F8FA0 /* ParcelKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				AB3F8D4417935E6C000F8FA0 /* PKSyncManagerTests.m */,
+				AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */,
+				AB1E6AF41795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m */,
+				AB3F8D3717935E2D000F8FA0 /* Supporting Files */,
+				AB6EF65A179431B800D0BAB0 /* Vendor */,
+			);
+			path = ParcelKitTests;
+			sourceTree = "<group>";
+		};
+		AB3F8D3717935E2D000F8FA0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AB6EF6771794363500D0BAB0 /* Tests.xcdatamodeld */,
+				AB6EF67D17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.h */,
+				AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */,
+				AB6EF6831794783400D0BAB0 /* PKDatastoreMock.h */,
+				AB6EF6841794783400D0BAB0 /* PKDatastoreMock.m */,
+				AB6EF689179488EC00D0BAB0 /* PKRecordMock.h */,
+				AB6EF68A179488EC00D0BAB0 /* PKRecordMock.m */,
+				ABC8E9521794A35B00724531 /* PKTableMock.h */,
+				ABC8E9531794A35B00724531 /* PKTableMock.m */,
+				AB1E6AF11795D77A00FF03A8 /* PKListMock.h */,
+				AB1E6AF21795D77A00FF03A8 /* PKListMock.m */,
+				AB3F8D3817935E2D000F8FA0 /* ParcelKitTests-Info.plist */,
+				AB3F8D3917935E2D000F8FA0 /* InfoPlist.strings */,
+				AB3F8D3E17935E2D000F8FA0 /* ParcelKitTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AB6EF65A179431B800D0BAB0 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				AB6EF66E179432FF00D0BAB0 /* OCMock */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		AB6EF66E179432FF00D0BAB0 /* OCMock */ = {
+			isa = PBXGroup;
+			children = (
+				AB6EF66F179432FF00D0BAB0 /* libOCMock.a */,
+				AB6EF670179432FF00D0BAB0 /* NSNotificationCenter+OCMAdditions.h */,
+				AB6EF671179432FF00D0BAB0 /* OCMArg.h */,
+				AB6EF672179432FF00D0BAB0 /* OCMConstraint.h */,
+				AB6EF673179432FF00D0BAB0 /* OCMock.h */,
+				AB6EF674179432FF00D0BAB0 /* OCMockObject.h */,
+				AB6EF675179432FF00D0BAB0 /* OCMockRecorder.h */,
+			);
+			path = OCMock;
+			sourceTree = "<group>";
+		};
+		ABE87A09179353C800E2A1DA = {
+			isa = PBXGroup;
+			children = (
+				ABE87A17179353C800E2A1DA /* ParcelKit */,
+				AB3F8D3617935E2D000F8FA0 /* ParcelKitTests */,
+				ABE87A38179355E500E2A1DA /* Vendor */,
+				ABE87A14179353C800E2A1DA /* Frameworks */,
+				ABE87A13179353C800E2A1DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABE87A13179353C800E2A1DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87A12179353C800E2A1DA /* libParcelKit.a */,
+				AB3F8D3017935E2D000F8FA0 /* ParcelKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABE87A14179353C800E2A1DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ABC7D10E1793611E00AAA1CA /* MobileCoreServices.framework */,
+				ABC7D10C1793611800AAA1CA /* CFNetwork.framework */,
+				ABC7D10A1793611300AAA1CA /* SystemConfiguration.framework */,
+				ABC7D1081793610700AAA1CA /* Security.framework */,
+				ABC7D1061793610300AAA1CA /* QuartzCore.framework */,
+				ABC7D104179360F400AAA1CA /* libc++.dylib */,
+				ABE87A361793558A00E2A1DA /* CoreData.framework */,
+				ABE87A15179353C800E2A1DA /* Foundation.framework */,
+				AB3F8D3117935E2D000F8FA0 /* XCTest.framework */,
+				AB3F8D3417935E2D000F8FA0 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ABE87A17179353C800E2A1DA /* ParcelKit */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87A1A179353C800E2A1DA /* ParcelKit.h */,
+				ABE87A241793556400E2A1DA /* PKSyncManager.h */,
+				ABE87A251793556400E2A1DA /* PKSyncManager.m */,
+				ABE87A261793556400E2A1DA /* NSManagedObject+ParcelKit.h */,
+				ABE87A271793556400E2A1DA /* NSManagedObject+ParcelKit.m */,
+				ABE87A281793556400E2A1DA /* DBRecord+ParcelKit.h */,
+				ABE87A291793556400E2A1DA /* DBRecord+ParcelKit.m */,
+				ABE87A18179353C800E2A1DA /* Supporting Files */,
+			);
+			path = ParcelKit;
+			sourceTree = "<group>";
+		};
+		ABE87A18179353C800E2A1DA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87A19179353C800E2A1DA /* ParcelKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ABE87A38179355E500E2A1DA /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87A39179355E500E2A1DA /* Dropbox */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		ABE87A39179355E500E2A1DA /* Dropbox */ = {
+			isa = PBXGroup;
+			children = (
+				ABE87A3A179355F400E2A1DA /* Dropbox.framework */,
+			);
+			path = Dropbox;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AB3F8D2F17935E2D000F8FA0 /* ParcelKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB3F8D4317935E2D000F8FA0 /* Build configuration list for PBXNativeTarget "ParcelKitTests" */;
+			buildPhases = (
+				AB3F8D2C17935E2D000F8FA0 /* Sources */,
+				AB3F8D2D17935E2D000F8FA0 /* Frameworks */,
+				AB3F8D2E17935E2D000F8FA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB3F8D4017935E2D000F8FA0 /* PBXTargetDependency */,
+			);
+			name = ParcelKitTests;
+			productName = ParcelKitTests;
+			productReference = AB3F8D3017935E2D000F8FA0 /* ParcelKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		ABE87A11179353C800E2A1DA /* ParcelKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABE87A20179353C800E2A1DA /* Build configuration list for PBXNativeTarget "ParcelKit" */;
+			buildPhases = (
+				ABE87A0E179353C800E2A1DA /* Sources */,
+				ABE87A0F179353C800E2A1DA /* Frameworks */,
+				ABE87A10179353C800E2A1DA /* CopyFiles */,
+				ABE87A23179353FA00E2A1DA /* Prepare Framework */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ParcelKit;
+			productName = ParcelKit;
+			productReference = ABE87A12179353C800E2A1DA /* libParcelKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABE87A0A179353C800E2A1DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Overcommitted, LLC.";
+				TargetAttributes = {
+					AB3F8D2F17935E2D000F8FA0 = {
+						TestTargetID = ABE87A11179353C800E2A1DA;
+					};
+				};
+			};
+			buildConfigurationList = ABE87A0D179353C800E2A1DA /* Build configuration list for PBXProject "ParcelKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ABE87A09179353C800E2A1DA;
+			productRefGroup = ABE87A13179353C800E2A1DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABE87A11179353C800E2A1DA /* ParcelKit */,
+				ABE87A3C17935A4400E2A1DA /* Framework */,
+				AB3F8D2F17935E2D000F8FA0 /* ParcelKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AB3F8D2E17935E2D000F8FA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB3F8D3B17935E2D000F8FA0 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ABE87A23179353FA00E2A1DA /* Prepare Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n\n# Link the \"Current\" version to \"A\"\n/bin/ln -sfh A \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/${PRODUCT_NAME}\"\n\n# The -a ensures that the headers maintain the source modification date so that we don't constantly\n# cause propagating rebuilds of files that import these headers.\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework/Versions/A/Headers\"\n";
+		};
+		ABE87A4217935A6700E2A1DA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nlipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AB3F8D2C17935E2D000F8FA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB6EF6851794783400D0BAB0 /* PKDatastoreMock.m in Sources */,
+				ABC8E9541794A35B00724531 /* PKTableMock.m in Sources */,
+				AB1E6AF51795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m in Sources */,
+				ABC7D0FE179360A300AAA1CA /* PKSyncManager.m in Sources */,
+				AB1E6AF01795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m in Sources */,
+				AB1E6AF31795D77A00FF03A8 /* PKListMock.m in Sources */,
+				ABC7D102179360AF00AAA1CA /* DBRecord+ParcelKit.m in Sources */,
+				ABC7D0FF179360A700AAA1CA /* NSManagedObject+ParcelKit.m in Sources */,
+				AB3F8D4517935E6C000F8FA0 /* PKSyncManagerTests.m in Sources */,
+				AB6EF67F17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m in Sources */,
+				AB6EF6791794363500D0BAB0 /* Tests.xcdatamodeld in Sources */,
+				AB6EF68B179488EC00D0BAB0 /* PKRecordMock.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABE87A0E179353C800E2A1DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE87A301793556400E2A1DA /* PKSyncManager.m in Sources */,
+				ABE87A311793556400E2A1DA /* NSManagedObject+ParcelKit.m in Sources */,
+				ABE87A321793556400E2A1DA /* DBRecord+ParcelKit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB3F8D4017935E2D000F8FA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABE87A11179353C800E2A1DA /* ParcelKit */;
+			targetProxy = AB3F8D3F17935E2D000F8FA0 /* PBXContainerItemProxy */;
+		};
+		ABE87A4117935A5000E2A1DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ABE87A11179353C800E2A1DA /* ParcelKit */;
+			targetProxy = ABE87A4017935A5000E2A1DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AB3F8D3917935E2D000F8FA0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB3F8D3A17935E2D000F8FA0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AB3F8D4117935E2D000F8FA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+					"$(SRCROOT)/Vendor/Dropbox",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ParcelKitTests/ParcelKitTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/ParcelKitTests/Vendor";
+				INFOPLIST_FILE = "ParcelKitTests/ParcelKitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock/libOCMock.a",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		AB3F8D4217935E2D000F8FA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
+					"$(SRCROOT)/Vendor/Dropbox",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ParcelKitTests/ParcelKitTests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/ParcelKitTests/Vendor";
+				INFOPLIST_FILE = "ParcelKitTests/ParcelKitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-force_load",
+					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock/libOCMock.a",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		ABE87A1E179353C800E2A1DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		ABE87A1F179353C800E2A1DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				STRIP_STYLE = "non-global";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ABE87A21179353C800E2A1DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DSTROOT = /tmp/ParcelKit.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor/Dropbox\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ParcelKit/ParcelKit-Prefix.pch";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		ABE87A22179353C800E2A1DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/ParcelKit.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor/Dropbox\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ParcelKit/ParcelKit-Prefix.pch";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		ABE87A3E17935A4400E2A1DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ABE87A3F17935A4400E2A1DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AB3F8D4317935E2D000F8FA0 /* Build configuration list for PBXNativeTarget "ParcelKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB3F8D4117935E2D000F8FA0 /* Debug */,
+				AB3F8D4217935E2D000F8FA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABE87A0D179353C800E2A1DA /* Build configuration list for PBXProject "ParcelKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABE87A1E179353C800E2A1DA /* Debug */,
+				ABE87A1F179353C800E2A1DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABE87A20179353C800E2A1DA /* Build configuration list for PBXNativeTarget "ParcelKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABE87A21179353C800E2A1DA /* Debug */,
+				ABE87A22179353C800E2A1DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABE87A3D17935A4400E2A1DA /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABE87A3E17935A4400E2A1DA /* Debug */,
+				ABE87A3F17935A4400E2A1DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AB6EF6771794363500D0BAB0 /* Tests.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AB6EF6781794363500D0BAB0 /* Tests.xcdatamodel */,
+			);
+			currentVersion = AB6EF6781794363500D0BAB0 /* Tests.xcdatamodel */;
+			path = Tests.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = ABE87A0A179353C800E2A1DA /* Project object */;
+}
