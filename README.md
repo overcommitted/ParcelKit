@@ -51,6 +51,10 @@ Make sure you add this attribute to each entity you wish to sync.
 
 An alternative attribute name may be specifed by changing the syncAttributeName property on the sync manager object.
 
+Documentation
+-------------
+* [ParcelKit Reference](http://overcommitted.github.io/ParcelKit/) documentation
+
 Example Application
 -------------------
 * [Toado](https://github.com/daikini/toado) - Simple task manager demonstrating the integration of Core Data and Dropbox using ParcelKit.
