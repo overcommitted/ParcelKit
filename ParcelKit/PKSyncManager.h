@@ -45,7 +45,11 @@ extern NSString * const PKDefaultSyncAttributeName;
 /** The Dropbox Datastore to read and write to. */
 @property (nonatomic, strong, readonly) DBDatastore *datastore;
 
-/** The Core Data entity attribute name to use for keeping managed objects in sync. */
+/**
+ The Core Data entity attribute name to use for keeping managed objects in sync.
+ 
+ The default value is “syncId”.
+*/
 @property (nonatomic, copy) NSString *syncAttributeName;
 
 /**
