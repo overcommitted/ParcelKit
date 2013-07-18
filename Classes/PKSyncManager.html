@@ -1,0 +1,1198 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>PKSyncManager Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">ParcelKit </a></h1>
+				<a id="developerHome" href="../index.html">Overcommitted, LLC</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">PKSyncManager Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/datastore">&nbsp;&nbsp;&nbsp;&nbsp;datastore</option>
+	
+	<option value="//api/name/managedObjectContext">&nbsp;&nbsp;&nbsp;&nbsp;managedObjectContext</option>
+	
+	<option value="//api/name/syncAttributeName">&nbsp;&nbsp;&nbsp;&nbsp;syncAttributeName</option>
+	
+	
+	
+	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/syncId">&nbsp;&nbsp;&nbsp;&nbsp;+ syncId</option>
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/entityNameForTable:">&nbsp;&nbsp;&nbsp;&nbsp;- entityNameForTable:</option>
+	
+	<option value="//api/name/entityNames">&nbsp;&nbsp;&nbsp;&nbsp;- entityNames</option>
+	
+	<option value="//api/name/initWithManagedObjectContext:datastore:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithManagedObjectContext:datastore:</option>
+	
+	<option value="//api/name/isObserving">&nbsp;&nbsp;&nbsp;&nbsp;- isObserving</option>
+	
+	<option value="//api/name/removeTableForEntityName:">&nbsp;&nbsp;&nbsp;&nbsp;- removeTableForEntityName:</option>
+	
+	<option value="//api/name/setTable:forEntityName:">&nbsp;&nbsp;&nbsp;&nbsp;- setTable:forEntityName:</option>
+	
+	<option value="//api/name/setTablesForEntityNamesWithDictionary:">&nbsp;&nbsp;&nbsp;&nbsp;- setTablesForEntityNamesWithDictionary:</option>
+	
+	<option value="//api/name/startObserving">&nbsp;&nbsp;&nbsp;&nbsp;- startObserving</option>
+	
+	<option value="//api/name/stopObserving">&nbsp;&nbsp;&nbsp;&nbsp;- stopObserving</option>
+	
+	<option value="//api/name/tableForEntityName:">&nbsp;&nbsp;&nbsp;&nbsp;- tableForEntityName:</option>
+	
+	<option value="//api/name/tableIds">&nbsp;&nbsp;&nbsp;&nbsp;- tableIds</option>
+	
+	<option value="//api/name/tablesByEntityName">&nbsp;&nbsp;&nbsp;&nbsp;- tablesByEntityName</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Creating and Configuring a Sync Manager">Creating and Configuring a Sync Manager</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Accessing Entity Names and Tables">Accessing Entity Names and Tables</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Observing Changes">Observing Changes</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/datastore">datastore</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/managedObjectContext">managedObjectContext</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncAttributeName">syncAttributeName</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncId">syncId</a></span></li>
+	
+</ul></li>
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/entityNameForTable:">entityNameForTable:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/entityNames">entityNames</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithManagedObjectContext:datastore:">initWithManagedObjectContext:datastore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isObserving">isObserving</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeTableForEntityName:">removeTableForEntityName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setTable:forEntityName:">setTable:forEntityName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setTablesForEntityNamesWithDictionary:">setTablesForEntityNamesWithDictionary:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/startObserving">startObserving</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stopObserving">stopObserving</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableForEntityName:">tableForEntityName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableIds">tableIds</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tablesByEntityName">tablesByEntityName</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="PKSyncManager Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">PKSyncManager Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">PKSyncManager.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The sync manager is responsible for listening to changes from a
+Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the changes between them.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/managedObjectContext">&nbsp;&nbsp;managedObjectContext</a></code>
+		<span class="tooltip"><p>The Core Data managed object context to listen for changes from.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/datastore">&nbsp;&nbsp;datastore</a></code>
+		<span class="tooltip"><p>The Dropbox Datastore to read and write to.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncAttributeName">&nbsp;&nbsp;syncAttributeName</a></code>
+		<span class="tooltip"><p>The Core Data entity attribute name to use for keeping managed objects in sync.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncId">+&nbsp;syncId</a></code>
+		<span class="tooltip"><p>Returns a random string suitable for using as a sync identifer.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Creating and Configuring a Sync Manager" name="task_Creating and Configuring a Sync Manager"></a>
+						<h3 class="subsubtitle task-title">Creating and Configuring a Sync Manager</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithManagedObjectContext:datastore:">&ndash;&nbsp;initWithManagedObjectContext:datastore:</a></code>
+		<span class="tooltip"><p>The designated initializer used to specify the Core Data managed object context and the Dropbox data store that should be synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setTablesForEntityNamesWithDictionary:">&ndash;&nbsp;setTablesForEntityNamesWithDictionary:</a></code>
+		<span class="tooltip"><p>Map multiple Core Data entity names to their corresponding Dropbox data store table name. Replaces all other existing relationships that may have been previously set.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setTable:forEntityName:">&ndash;&nbsp;setTable:forEntityName:</a></code>
+		<span class="tooltip"><p>Maps a single Core Data entity name to the corresponding Dropbox data store table name.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/removeTableForEntityName:">&ndash;&nbsp;removeTableForEntityName:</a></code>
+		<span class="tooltip"><p>Removes the Core Data &lt;&ndash;> Dropbox mapping for the given entity name.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Accessing Entity Names and Tables" name="task_Accessing Entity Names and Tables"></a>
+						<h3 class="subsubtitle task-title">Accessing Entity Names and Tables</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/tablesByEntityName">&ndash;&nbsp;tablesByEntityName</a></code>
+		<span class="tooltip"><p>Returns a dictionary of tables mapped to their corresponding entity names.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/tableIds">&ndash;&nbsp;tableIds</a></code>
+		<span class="tooltip"><p>Returns an array of currently mapped Dropbox data store tableIds.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/entityNames">&ndash;&nbsp;entityNames</a></code>
+		<span class="tooltip"><p>Returns an array of currently mapped Core Data entity names.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/tableForEntityName:">&ndash;&nbsp;tableForEntityName:</a></code>
+		<span class="tooltip"><p>Returns the tableId associated with a given entity name.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/entityNameForTable:">&ndash;&nbsp;entityNameForTable:</a></code>
+		<span class="tooltip"><p>Returns the entity name associated with a given tableId.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Observing Changes" name="task_Observing Changes"></a>
+						<h3 class="subsubtitle task-title">Observing Changes</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isObserving">&ndash;&nbsp;isObserving</a></code>
+		<span class="tooltip"><p>Returns whether or not the sync manager is currently observing changes.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/startObserving">&ndash;&nbsp;startObserving</a></code>
+		<span class="tooltip"><p>Starts observing changes to the Core Data managed object context and the Dropbox data store.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/stopObserving">&ndash;&nbsp;stopObserving</a></code>
+		<span class="tooltip"><p>Stops observing changes from the Core Data managed object context and the Dropbox data store.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/datastore" title="datastore"></a>
+	<h3 class="subsubtitle method-title">datastore</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The Dropbox Datastore to read and write to.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) DBDatastore *datastore</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/managedObjectContext" title="managedObjectContext"></a>
+	<h3 class="subsubtitle method-title">managedObjectContext</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The Core Data managed object context to listen for changes from.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The managed object context must have a persistent store coordinator set.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncAttributeName" title="syncAttributeName"></a>
+	<h3 class="subsubtitle method-title">syncAttributeName</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The Core Data entity attribute name to use for keeping managed objects in sync.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *syncAttributeName</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/syncId" title="syncId"></a>
+	<h3 class="subsubtitle method-title">syncId</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a random string suitable for using as a sync identifer.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)syncId</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A random string suitable for using as a sync identifer.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/entityNameForTable:" title="entityNameForTable:"></a>
+	<h3 class="subsubtitle method-title">entityNameForTable:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the entity name associated with a given tableId.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)entityNameForTable:(NSString *)<em>tableId</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tableId</em></dt>
+			<dd><p>The tableId for which to return the corresponding entity name.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The entity name associated with tableId, or nil if no entity name is associated with tableId.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/entityNames" title="entityNames"></a>
+	<h3 class="subsubtitle method-title">entityNames</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of currently mapped Core Data entity names.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)entityNames</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of currently mapped Core Data entity names.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithManagedObjectContext:datastore:" title="initWithManagedObjectContext:datastore:"></a>
+	<h3 class="subsubtitle method-title">initWithManagedObjectContext:datastore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The designated initializer used to specify the Core Data managed object context and the Dropbox data store that should be synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithManagedObjectContext:(NSManagedObjectContext *)<em>managedObjectContext</em> datastore:(DBDatastore *)<em>datastore</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>managedObjectContext</em></dt>
+			<dd><p>The Core Data managed object context the sync manager should listen for changes from.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>datastore</em></dt>
+			<dd><p>The Dropbox data store the sync manager should listen for changes from and write changes to.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A newly initialized <code>PKSyncManager</code> object.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The managed object context must have a persistent store coordinator set.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isObserving" title="isObserving"></a>
+	<h3 class="subsubtitle method-title">isObserving</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns whether or not the sync manager is currently observing changes.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)isObserving</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>NO</code> if the sync manager is not observing changes, <code>YES</code> if it is.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The default value is <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/removeTableForEntityName:" title="removeTableForEntityName:"></a>
+	<h3 class="subsubtitle method-title">removeTableForEntityName:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Removes the Core Data &lt;&ndash;> Dropbox mapping for the given entity name.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)removeTableForEntityName:(NSString *)<em>entityName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entityName</em></dt>
+			<dd><p>The Core Data entity name that should no longer be mapped to Dropbox.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setTable:forEntityName:" title="setTable:forEntityName:"></a>
+	<h3 class="subsubtitle method-title">setTable:forEntityName:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Maps a single Core Data entity name to the corresponding Dropbox data store table name.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setTable:(NSString *)<em>tableId</em> forEntityName:(NSString *)<em>entityName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tableId</em></dt>
+			<dd><p>The Dropbox data store tableId that the entity name should be mapped to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entityName</em></dt>
+			<dd><p>The Core Data entity name that should map to the given tableId.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Replaces any existing relationship for the given entity name that may have been previously set.
+Will raise an NSInternalInconsistencyException if the entity does not contain a valid sync attribute.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setTablesForEntityNamesWithDictionary:" title="setTablesForEntityNamesWithDictionary:"></a>
+	<h3 class="subsubtitle method-title">setTablesForEntityNamesWithDictionary:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Map multiple Core Data entity names to their corresponding Dropbox data store table name. Replaces all other existing relationships that may have been previously set.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)setTablesForEntityNamesWithDictionary:(NSDictionary *)<em>keyedTables</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>keyedTables</em></dt>
+			<dd><p>Dictionary of key/value pairs where the key is the Core Data entity name and the value is the corresponding Dropbox data store table name.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/startObserving" title="startObserving"></a>
+	<h3 class="subsubtitle method-title">startObserving</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Starts observing changes to the Core Data managed object context and the Dropbox data store.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)startObserving</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/stopObserving" title="stopObserving"></a>
+	<h3 class="subsubtitle method-title">stopObserving</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Stops observing changes from the Core Data managed object context and the Dropbox data store.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)stopObserving</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/tableForEntityName:" title="tableForEntityName:"></a>
+	<h3 class="subsubtitle method-title">tableForEntityName:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the tableId associated with a given entity name.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)tableForEntityName:(NSString *)<em>entityName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entityName</em></dt>
+			<dd><p>The entity name for which to return the corresponding tableId.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The tableId associated with entityName, or nil if no tableId is associated with entityName.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/tableIds" title="tableIds"></a>
+	<h3 class="subsubtitle method-title">tableIds</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an array of currently mapped Dropbox data store tableIds.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSArray *)tableIds</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An array of currently mapped Dropbox data store tableIds.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/tablesByEntityName" title="tablesByEntityName"></a>
+	<h3 class="subsubtitle method-title">tablesByEntityName</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a dictionary of tables mapped to their corresponding entity names.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSDictionary *)tablesByEntityName</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A dictionary of tables mapped to their corresponding entity names.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Overcommitted, LLC. All rights reserved. (Last updated: 2013-07-17)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>
