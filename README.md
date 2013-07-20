@@ -41,7 +41,7 @@ Hold on to the sync manager reference.
 
 Set up Core Data
 ----------------
-<img src="ParcelKitAttribute.png" align="right" width="548px" height="100px" />
+<img src="ParcelKitAttribute.png" align="right" width="725px" height="132px" />
 
 ParcelKit requires an extra attribute inside your Core Data model. 
 
