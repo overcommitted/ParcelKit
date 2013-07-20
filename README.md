@@ -41,11 +41,11 @@ Hold on to the sync manager reference.
 
 Set up Core Data
 ----------------
-<img src="https://github.com/overcommitted/ParcelKit/raw/master/ParcelKitAttribute.png" align="right" width="725px" height="127px" />
+<img src="ParcelKitAttribute.png" align="right" width="548px" height="100px" />
 
 ParcelKit requires an extra attribute inside your Core Data model. 
 
-* __syncId__ with the type __String__. The __Indexed__ property should also be checked.
+* __syncID__ with the type __String__. The __Indexed__ property should also be checked.
 
 Make sure you add this attribute to each entity you wish to sync.
 

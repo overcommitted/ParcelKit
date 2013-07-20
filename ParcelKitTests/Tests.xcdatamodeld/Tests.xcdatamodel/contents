@@ -2,7 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3383" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Author" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="syncId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="syncID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="authors" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Book" syncable="YES">
@@ -15,7 +15,7 @@
         <attribute name="price" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="publishedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="ratingsCount" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="syncId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="syncID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="yearPublished" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="books" inverseEntity="Author" syncable="YES"/>
@@ -23,7 +23,7 @@
     </entity>
     <entity name="Publisher" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="syncId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="syncID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="publisher" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>

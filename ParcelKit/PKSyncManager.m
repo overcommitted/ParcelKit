@@ -27,7 +27,7 @@
 #import "NSManagedObject+ParcelKit.h"
 #import "DBRecord+ParcelKit.h"
 
-NSString * const PKDefaultSyncAttributeName = @"syncId";
+NSString * const PKDefaultSyncAttributeName = @"syncID";
 static NSUInteger const PKFetchRequestBatchSize = 25;
 
 @interface PKSyncManager ()
@@ -39,7 +39,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
 
 @implementation PKSyncManager
 
-+ (NSString *)syncId
++ (NSString *)syncID
 {
     return [[[NSUUID UUID] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
 }
@@ -243,7 +243,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     
     NSSet *managedObjectsWithoutSyncId = [managedObjects filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"%K == nil", self.syncAttributeName]];
     for (NSManagedObject *managedObject in managedObjectsWithoutSyncId) {
-        [managedObject setPrimitiveValue:[[self class] syncId] forKey:self.syncAttributeName];
+        [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
     };
     
     for (NSManagedObject *managedObject in managedObjects) {

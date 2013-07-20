@@ -48,7 +48,7 @@ extern NSString * const PKDefaultSyncAttributeName;
 /**
  The Core Data entity attribute name to use for keeping managed objects in sync.
  
- The default value is “syncId”.
+ The default value is “syncID”.
 */
 @property (nonatomic, copy) NSString *syncAttributeName;
 
@@ -56,7 +56,7 @@ extern NSString * const PKDefaultSyncAttributeName;
  Returns a random string suitable for using as a sync identifer.
  @return A random string suitable for using as a sync identifer.
  */
-+ (NSString *)syncId;
++ (NSString *)syncID;
 
 /** @name Creating and Configuring a Sync Manager */
 

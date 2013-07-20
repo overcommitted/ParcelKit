@@ -63,28 +63,28 @@
 
 - (void)testSyncIdShouldReturnAString
 {
-    NSString *syncId = [PKSyncManager syncId];
-    XCTAssertNotNil(syncId, @"syncId should not be nil");
-    XCTAssertTrue([syncId isKindOfClass:[NSString class]], @"syncId should be a string");
+    NSString *syncID = [PKSyncManager syncID];
+    XCTAssertNotNil(syncID, @"syncID should not be nil");
+    XCTAssertTrue([syncID isKindOfClass:[NSString class]], @"syncID should be a string");
 }
 
 - (void)testSyncIdShouldBeAtLeastOneCharacter
 {
-    NSString *syncId = [PKSyncManager syncId];
-    XCTAssertTrue([syncId length] > 0, @"syncId should be at least 1 character");
+    NSString *syncID = [PKSyncManager syncID];
+    XCTAssertTrue([syncID length] > 0, @"syncID should be at least 1 character");
 }
 
 - (void)testSyncIdShouldBeLessThanThirtyTwoCharacters
 {
-    NSString *syncId = [PKSyncManager syncId];
-    XCTAssertTrue([syncId length] <= 32, @"syncId should be less than or equal to 32 characters");
+    NSString *syncID = [PKSyncManager syncID];
+    XCTAssertTrue([syncID length] <= 32, @"syncID should be less than or equal to 32 characters");
 }
 
 - (void)testSyncIdShouldBeRandom
 {
-    NSString *syncIdA = [PKSyncManager syncId];
-    NSString *syncIdB = [PKSyncManager syncId];
-    XCTAssertFalse([syncIdA isEqualToString:syncIdB], @"syncId should be random");
+    NSString *syncIDA = [PKSyncManager syncID];
+    NSString *syncIDB = [PKSyncManager syncID];
+    XCTAssertFalse([syncIDA isEqualToString:syncIDB], @"syncID should be random");
 }
 
 - (void)testInitializingManagedObjectContextAndDatastore
@@ -97,7 +97,7 @@
 - (void)testSyncAttributeNameShouldReturnDefaultValue
 {
     PKSyncManager *syncManager = [[PKSyncManager alloc] init];
-    XCTAssertEqualObjects(@"syncId", syncManager.syncAttributeName, @"");
+    XCTAssertEqualObjects(@"syncID", syncManager.syncAttributeName, @"");
 }
 
 - (void)testSettingSyncAttributeNameShouldSetSpecifiedValue
@@ -255,7 +255,7 @@
     [self.datastore updateStatus:DBDatastoreIncoming withChanges:@{@"books": @[bookA, bookB]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"syncId" ascending:YES]]];
+    [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"syncID" ascending:YES]]];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
     XCTAssertEquals(2, (int)[objects count], @"");
     
