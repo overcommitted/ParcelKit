@@ -2,18 +2,30 @@
 
 ParcelKit
 =========
-ParcelKit seamlessly integrates Core Data with [Dropbox](http://www.dropbox.com) using the Dropbox [Datastore API](https://www.dropbox.com/developers/datastore).
+ParcelKit integrates Core Data with [Dropbox](http://www.dropbox.com) using the Dropbox [Datastore API](https://www.dropbox.com/developers/datastore).
 
 Installation
 ------------
-ParcelKit is available as an iOS Framework.
+ParcelKit can be added to a project using [CocoaPods](https://github.com/cocoapods/cocoapods). We also distribute a framework build.
 
+### Using CocoaPods
+
+```
+// Podfile
+pod 'ParcelKit'
+```
+and
+```
+pod install
+```
+
+### Framework
 1. Open the ParcelKit.xcodeproj project
 2. Select the “Framework” scheme
 3. Build (⌘B) the Framework
 4. Open the Products section in Xcode, right click “libParcelKit.a”, and select “Show in Finder”
 5. Drag and drop the “ParcelKit.framework” folder into your iPhone/iPad project
-6. Edit your build settings and add “Other Linker Flags” = “-ObjC”
+6. Edit your build settings and add `-ObjC` to “Other Linker Flags”
 
 Usage
 -----
