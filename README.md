@@ -1,4 +1,4 @@
-<img src="ParcelKitLogo.png" width="89px" height="109px" />
+<img src="https://raw.github.com/overcommitted/ParcelKit/master/ParcelKitLogo.png" width="89px" height="109px" />
 
 ParcelKit
 =========
@@ -53,7 +53,7 @@ Hold on to the sync manager reference.
 
 Set up Core Data
 ----------------
-<img src="ParcelKitAttribute.png" align="right" width="725px" height="132px" />
+<img src="https://raw.github.com/overcommitted/ParcelKit/master/ParcelKitAttribute.png" align="right" width="725px" height="132px" />
 
 ParcelKit requires an extra attribute inside your Core Data model. 
 
