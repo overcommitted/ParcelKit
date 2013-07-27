@@ -24,6 +24,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "DBRecord+ParcelKit.h"
 
 #import "PKSyncManager.h"
@@ -95,6 +96,22 @@
     XCTAssertEqualObjects([self.book valueForKey:@"pageCount"], [self.record objectForKey:@"pageCount"], @"");
 }
 
+- (void)testSetFieldsWithManagedObjectShouldOnlySetChangedAttributes
+{
+    [self.book setValue:@(1960) forKey:@"yearPublished"];
+    
+    [self.record setObject:[self.book valueForKey:@"title"] forKey:@"title"];
+    [self.record setObject:@(2013) forKey:@"yearPublished"];
+    
+    id recordMock = [OCMockObject partialMockForObject:self.record];
+    [[recordMock expect] setObject:@(1960) forKey:@"yearPublished"];
+    [[recordMock reject] setObject:[self.book valueForKey:@"title"] forKey:@"title"];
+    
+    [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
+    
+    [recordMock verify];
+}
+
 - (void)testSetFieldsWithManagedObjectShouldSetToManyRelationship
 {
     [self.book setValue:[NSSet setWithObject:self.author] forKey:@"authors"];
@@ -157,6 +174,8 @@
     
     [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
     
+   
     XCTAssertFalse([[[self.record fields] allKeys] containsObject:@"publisher"], @"");
 }
+
 @end

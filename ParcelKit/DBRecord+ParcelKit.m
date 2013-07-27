@@ -42,14 +42,17 @@
             if ([propertyDescription isTransient]) return;
             
             if ([propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
-                [strongSelf setObject:value forKey:name];
+                id previousValue = [strongSelf objectForKey:name];
+                if (!previousValue || [previousValue compare:value] != NSOrderedSame) {
+                    [strongSelf setObject:value forKey:name];
+                }
             } else if ([propertyDescription isKindOfClass:[NSRelationshipDescription class]]) {
                 if ([(NSRelationshipDescription *)propertyDescription isToMany]) {
                     DBList *fieldList = [strongSelf getOrCreateList:name];
-                    NSSet *oldIdentifiers = [[NSMutableSet alloc] initWithArray:[fieldList values]];
+                    NSSet *previousIdentifiers = [[NSMutableSet alloc] initWithArray:[fieldList values]];
                     NSSet *currentIdentifiers = [[NSSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]];
                     
-                    NSMutableSet *deletedIdentifiers = [[NSMutableSet alloc] initWithSet:oldIdentifiers];
+                    NSMutableSet *deletedIdentifiers = [[NSMutableSet alloc] initWithSet:previousIdentifiers];
                     [deletedIdentifiers minusSet:currentIdentifiers];
                     for (NSString *recordId in deletedIdentifiers) {
                         NSInteger index = [[fieldList values] indexOfObject:recordId];
@@ -59,7 +62,7 @@
                     }
                     
                     NSMutableSet *insertedIdentifiers = [[NSMutableSet alloc] initWithSet:currentIdentifiers];
-                    [insertedIdentifiers minusSet:oldIdentifiers];
+                    [insertedIdentifiers minusSet:previousIdentifiers];
                     for (NSString *recordId in insertedIdentifiers) {
                         if (![[fieldList values] containsObject:recordId]) {
                             [fieldList addObject:recordId];
