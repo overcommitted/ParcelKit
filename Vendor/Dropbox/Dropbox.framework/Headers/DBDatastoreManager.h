@@ -12,7 +12,7 @@
 
 /** Gets the datastore manager for an account that has been linked via the account manager.
 
- Mulitple calls with the same account will return the same object, unless you call <shutDown> or
+ Multiple calls with the same account will return the same object, unless you call <shutDown> or
  the account is unlinked. */
 + (DBDatastoreManager *)managerForAccount:(DBAccount *)account;
 

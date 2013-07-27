@@ -64,7 +64,8 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
 /** @name Watching for changes */
 
 /** Add `block` as an observer to get called whenever a new account is linked or an existing
- account is unlinked.
+ account is unlinked. The observer will be called regardless of whether the account was
+ unlinked using `-[DBAccount unlink]` or by the user on the Dropbox website.
 
  @param observer this is only used as a handle to unregister blocks with the <removeObserver:> method.
  */

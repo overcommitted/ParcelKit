@@ -11,13 +11,13 @@ typedef enum {
                         // default resolution strategy.
 	DBResolutionLocal, // Resolves conflicts by always taking the local change.
 	DBResolutionMax, // Resolves conflicts by taking the largest value, based on type-specific
-                     // ordering.
+                     // ordering (see DBRecord for more information).
 	DBResolutionMin, // Resolves conflicts by taking the smallest value, based on type-specific
-                     // ordering.
-	DBResolutionSum  // Resolves conflicts by preserving additions or subtractions to a numeritcal
-                     // value, which allows you to treat it as a counter or accumulator without
-                     // losing updates. For non-numerical values this rule behaves as
-                     // DBResolutionRemote.
+                     // ordering (see DBRecord for more information).
+	DBResolutionSum  // Resolves conflicts by preserving additions or subtractions to a numerical
+                     // value (integer or floating point), which allows you to treat it as a counter
+					 // or accumulator without losing updates. For non-numerical values this rule
+					 // behaves as DBResolutionRemote.
 } DBResolutionRule;
 
 /** A collection of [records](DBRecord) that lets you query for existing records or insert new ones. You can

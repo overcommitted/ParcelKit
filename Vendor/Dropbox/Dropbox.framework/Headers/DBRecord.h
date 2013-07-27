@@ -8,10 +8,19 @@
  contains a set of fields, each of which has a name and a value. You can get records from a
  <DBTable> object.
  <p>
- Values you set to the following types: NSString, NSNumber, NSDate, NSData, NSArray. For objects of
- type NSNumber, the value of <code>objCType</code> is not guaranteed to be preserved. When you get
+ Fields can hold values of the following types: NSNumber, NSString, NSData, NSDate, NSArray.
+ For objects of type NSNumber, the value of <code>objCType</code> is not guaranteed to be preserved,
+ but the Datastore will distinguish been boolean, integer, and floating-point vlaues.  When you get
  a field that has a list value, its type will be DBList, which allows you to perform conflict-free
  list mutations.  Note that records do not have null fields - only fields which are unset.
+ </p><p>
+ Values have a defined sort order based on their type.  Integer, floating point, boolean, and
+ date values are ordered by their numerical value.  String, byte, and list values are
+ lexicographically ordered. Integer and floating point values are compared to each other by
+ casting to double, but boolean values are treated as a distinct type ordered before all
+ other numbers.  Other values of distinct types are ordered by type, in the order listed
+ above.  For example, all boolean values are ordered before all other numeric values, which in
+ turn are ordered before all string values.
  </p><p>
  Changes to this record are immediately visible to other record objects with the same
  <code>tableId</code> and <code>recordId</code> Calling <code>-[DBDatastore sync:]</code>, which
