@@ -276,7 +276,7 @@
     
     NSSet *authors = [self.book valueForKey:@"authors"];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(1, (int)[authors count], @"");
+    XCTAssertEqual(1, (int)[authors count], @"");
     
     NSManagedObject *author = [authors anyObject];
     XCTAssertEqualObjects(author, self.author, @"");
@@ -289,7 +289,7 @@
     
     NSSet *authors = [self.book valueForKey:@"authors"];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(1, (int)[authors count], @"");
+    XCTAssertEqual(1, (int)[authors count], @"");
     
     NSManagedObject *author = [authors anyObject];
     XCTAssertEqualObjects(author, self.author, @"");
@@ -301,14 +301,14 @@
     [authorToBeRemoved setValue:@"2" forKey:PKDefaultSyncAttributeName];
     
     [self.book setValue:[NSSet setWithObjects:self.author, authorToBeRemoved, nil] forKey:@"authors"];
-    XCTAssertEquals(2, (int)[[self.book valueForKey:@"authors"] count], @"");
+    XCTAssertEqual(2, (int)[[self.book valueForKey:@"authors"] count], @"");
     
     PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"authors": [[PKListMock alloc] initWithValues:@[@"1"]]}];
     [self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
     
     NSSet *authors = [self.book valueForKey:@"authors"];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(1, (int)[authors count], @"");
+    XCTAssertEqual(1, (int)[authors count], @"");
     
     NSManagedObject *author = [authors anyObject];
     XCTAssertEqualObjects(author, self.author, @"");

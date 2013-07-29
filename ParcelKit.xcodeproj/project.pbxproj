@@ -481,7 +481,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
 					"$(SRCROOT)/Vendor/Dropbox",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -524,7 +523,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
 					"$(SRCROOT)/Vendor/Dropbox",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

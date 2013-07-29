@@ -165,7 +165,7 @@
 - (void)testTableIdsShouldReturnSpecifiedTableIds
 {
     NSArray *tableIds = [self.syncManager tableIds];
-    XCTAssertEquals(2, (int)[tableIds count], @"");
+    XCTAssertEqual(2, (int)[tableIds count], @"");
     XCTAssertTrue([tableIds containsObject:@"books"], @"");
     XCTAssertTrue([tableIds containsObject:@"authors"], @"");
 }
@@ -173,7 +173,7 @@
 - (void)testEntityNamesShouldReturnSpecifiedEntityNames
 {
     NSArray *entityNames = [self.syncManager entityNames];
-    XCTAssertEquals(2, (int)[entityNames count], @"");
+    XCTAssertEqual(2, (int)[entityNames count], @"");
     XCTAssertTrue([entityNames containsObject:@"Book"], @"");
     XCTAssertTrue([entityNames containsObject:@"Author"], @"");
 }
@@ -239,7 +239,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    XCTAssertEquals(1, (int)[objects count], @"");
+    XCTAssertEqual(1, (int)[objects count], @"");
     
     NSManagedObject *object = objects[0];
     XCTAssertEqualObjects(@"1", [object valueForKey:self.syncManager.syncAttributeName], @"");
@@ -257,7 +257,7 @@
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"syncID" ascending:YES]]];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    XCTAssertEquals(2, (int)[objects count], @"");
+    XCTAssertEqual(2, (int)[objects count], @"");
     
     NSManagedObject *objectA = objects[0];
     XCTAssertEqualObjects(@"1", [objectA valueForKey:self.syncManager.syncAttributeName], @"");
@@ -282,7 +282,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    XCTAssertEquals(1, (int)[objects count], @"");
+    XCTAssertEqual(1, (int)[objects count], @"");
     
     NSManagedObject *updatedObject = objects[0];
     XCTAssertEqualObjects(@"1", [updatedObject valueForKey:self.syncManager.syncAttributeName], @"");
@@ -303,7 +303,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    XCTAssertEquals(0, (int)[objects count], @"");
+    XCTAssertEqual(0, (int)[objects count], @"");
 }
 
 - (void)testNonIncomingDatastoreChangesShouldNotUpdateCoreData
@@ -315,7 +315,7 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
-    XCTAssertEquals(0, (int)[objects count], @"");
+    XCTAssertEqual(0, (int)[objects count], @"");
 }
 
 #pragma mark - Observe Core Data Changes

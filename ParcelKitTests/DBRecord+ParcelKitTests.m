@@ -120,7 +120,7 @@
     
     NSArray *authors = [[self.record getOrCreateList:@"authors"] values];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(1, (int)[authors count], @"");
+    XCTAssertEqual(1, (int)[authors count], @"");
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
 }
 
@@ -135,7 +135,7 @@
     
     NSArray *authors = [[self.record getOrCreateList:@"authors"] values];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(2, (int)[authors count], @"");
+    XCTAssertEqual(2, (int)[authors count], @"");
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
     XCTAssertTrue([authors containsObject:[anotherAuthor valueForKey:PKDefaultSyncAttributeName]], @"");
 }
@@ -152,7 +152,7 @@
     
     NSArray *authors = [authorsList values];
     XCTAssertNotNil(authors, @"");
-    XCTAssertEquals(1, (int)[authors count], @"");
+    XCTAssertEqual(1, (int)[authors count], @"");
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
 }
 
