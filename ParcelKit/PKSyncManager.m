@@ -72,18 +72,18 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     }
 
     __weak typeof(self) weakSelf = self;
-    [keyedTables enumerateKeysAndObjectsUsingBlock:^(NSString *entityName, NSString *tableId, BOOL *stop) {
+    [keyedTables enumerateKeysAndObjectsUsingBlock:^(NSString *entityName, NSString *tableID, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
-        [strongSelf setTable:tableId forEntityName:entityName];
+        [strongSelf setTable:tableID forEntityName:entityName];
     }];
 }
 
-- (void)setTable:(NSString *)tableId forEntityName:(NSString *)entityName
+- (void)setTable:(NSString *)tableID forEntityName:(NSString *)entityName
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.managedObjectContext];
     NSAttributeDescription *attributeDescription = [[entity attributesByName] objectForKey:self.syncAttributeName];
     NSAssert([attributeDescription attributeType] == NSStringAttributeType, @"Entity “%@” must contain a string attribute named “%@”", entityName, self.syncAttributeName);
-    [self.tablesKeyedByEntityName setObject:tableId forKey:entityName];
+    [self.tablesKeyedByEntityName setObject:tableID forKey:entityName];
 }
 
 - (void)removeTableForEntityName:(NSString *)entityName
@@ -96,7 +96,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     return [[NSDictionary alloc] initWithDictionary:self.tablesKeyedByEntityName];
 }
 
-- (NSArray *)tableIds
+- (NSArray *)tableIDs
 {
     return [self.tablesKeyedByEntityName allValues];
 }
@@ -111,9 +111,9 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     return [self.tablesKeyedByEntityName objectForKey:entityName];
 }
 
-- (NSString *)entityNameForTable:(NSString *)tableId
+- (NSString *)entityNameForTable:(NSString *)tableID
 {
-    return [[self.tablesKeyedByEntityName allKeysForObject:tableId] lastObject];
+    return [[self.tablesKeyedByEntityName allKeysForObject:tableID] lastObject];
 }
 
 
@@ -166,10 +166,10 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     [managedObjectContext setUndoManager:nil];
     
     __weak typeof(self) weakSelf = self;
-    [changes enumerateKeysAndObjectsUsingBlock:^(NSString *tableId, NSArray *records, BOOL *stop) {
+    [changes enumerateKeysAndObjectsUsingBlock:^(NSString *tableID, NSArray *records, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         for (DBRecord *record in records) {
-            NSString *entityName = [strongSelf entityNameForTable:tableId];
+            NSString *entityName = [strongSelf entityNameForTable:tableID];
             if (!entityName) continue;
             
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
@@ -224,10 +224,10 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     
     NSSet *deletedObjects = [managedObjectContext deletedObjects];
     for (NSManagedObject *managedObject in deletedObjects) {
-        NSString *tableId = [self tableForEntityName:[[managedObject entity] name]];
-        if (!tableId) continue;
+        NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
+        if (!tableID) continue;
         
-        DBTable *table = [self.datastore getTable:tableId];
+        DBTable *table = [self.datastore getTable:tableID];
         DBError *error = nil;
         DBRecord *record = [table getRecord:[managedObject primitiveValueForKey:self.syncAttributeName] error:&error];
         if (record) {
@@ -261,10 +261,10 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
 
 - (void)updateDatastoreWithManagedObject:(NSManagedObject *)managedObject
 {
-    NSString *tableId = [self tableForEntityName:[[managedObject entity] name]];
-    if (!tableId) return;
+    NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
+    if (!tableID) return;
     
-    DBTable *table = [self.datastore getTable:tableId];
+    DBTable *table = [self.datastore getTable:tableID];
     DBError *error = nil;
     DBRecord *record = [table getOrInsertRecord:[managedObject valueForKey:self.syncAttributeName] fields:nil inserted:NULL error:&error];
     if (record) {

@@ -37,6 +37,6 @@
 // Mocked DBDatastore Methods
 - (void)addObserver:(id)observer block:(DBObserver)block;
 - (void)removeObserver:(id)observer;
-- (PKTableMock *)getTable:(NSString *)tableId;
+- (PKTableMock *)getTable:(NSString *)tableID;
 - (NSDictionary *)sync:(DBError **)error;
 @end

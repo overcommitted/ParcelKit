@@ -78,7 +78,7 @@
 	
 	<option value="//api/name/tableForEntityName:">&nbsp;&nbsp;&nbsp;&nbsp;- tableForEntityName:</option>
 	
-	<option value="//api/name/tableIds">&nbsp;&nbsp;&nbsp;&nbsp;- tableIds</option>
+	<option value="//api/name/tableIDs">&nbsp;&nbsp;&nbsp;&nbsp;- tableIDs</option>
 	
 	<option value="//api/name/tablesByEntityName">&nbsp;&nbsp;&nbsp;&nbsp;- tablesByEntityName</option>
 	
@@ -152,7 +152,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableForEntityName:">tableForEntityName:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableIds">tableIds</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tableIDs">tableIDs</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/tablesByEntityName">tablesByEntityName</a></span></li>
 	
@@ -291,8 +291,8 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/tableIds">&ndash;&nbsp;tableIds</a></code>
-		<span class="tooltip"><p>Returns an array of currently mapped Dropbox data store tableIds.</p></span>
+		<code><a href="#//api/name/tableIDs">&ndash;&nbsp;tableIDs</a></code>
+		<span class="tooltip"><p>Returns an array of currently mapped Dropbox data store tableIDs.</p></span>
 	</span>
 	
 	
@@ -306,14 +306,14 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/tableForEntityName:">&ndash;&nbsp;tableForEntityName:</a></code>
-		<span class="tooltip"><p>Returns the tableId associated with a given entity name.</p></span>
+		<span class="tooltip"><p>Returns the tableID associated with a given entity name.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/entityNameForTable:">&ndash;&nbsp;entityNameForTable:</a></code>
-		<span class="tooltip"><p>Returns the entity name associated with a given tableId.</p></span>
+		<span class="tooltip"><p>Returns the entity name associated with a given tableID.</p></span>
 	</span>
 	
 	
@@ -541,12 +541,12 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns the entity name associated with a given tableId.</p>
+		<p>Returns the entity name associated with a given tableID.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (NSString *)entityNameForTable:(NSString *)<em>tableId</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (NSString *)entityNameForTable:(NSString *)<em>tableID</em></code></div>
 
     
 	
@@ -554,8 +554,8 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>tableId</em></dt>
-			<dd><p>The tableId for which to return the corresponding entity name.</p></dd>
+			<dt><em>tableID</em></dt>
+			<dd><p>The tableID for which to return the corresponding entity name.</p></dd>
 		</dl>
 		
 	</div>
@@ -564,7 +564,7 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The entity name associated with tableId, or nil if no entity name is associated with tableId.</p>
+		<p>The entity name associated with tableID, or nil if no entity name is associated with tableID.</p>
 	</div>
 	
 	
@@ -791,7 +791,7 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)setTable:(NSString *)<em>tableId</em> forEntityName:(NSString *)<em>entityName</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)setTable:(NSString *)<em>tableID</em> forEntityName:(NSString *)<em>entityName</em></code></div>
 
     
 	
@@ -799,13 +799,13 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>tableId</em></dt>
-			<dd><p>The Dropbox data store tableId that the entity name should be mapped to.</p></dd>
+			<dt><em>tableID</em></dt>
+			<dd><p>The Dropbox data store tableID that the entity name should be mapped to.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>entityName</em></dt>
-			<dd><p>The Core Data entity name that should map to the given tableId.</p></dd>
+			<dd><p>The Core Data entity name that should map to the given tableID.</p></dd>
 		</dl>
 		
 	</div>
@@ -961,7 +961,7 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns the tableId associated with a given entity name.</p>
+		<p>Returns the tableID associated with a given entity name.</p>
 	</div>		
 	
     
@@ -975,7 +975,7 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>entityName</em></dt>
-			<dd><p>The entity name for which to return the corresponding tableId.</p></dd>
+			<dd><p>The entity name for which to return the corresponding tableID.</p></dd>
 		</dl>
 		
 	</div>
@@ -984,7 +984,7 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The tableId associated with entityName, or nil if no tableId is associated with entityName.</p>
+		<p>The tableID associated with entityName, or nil if no tableID is associated with entityName.</p>
 	</div>
 	
 	
@@ -1006,18 +1006,18 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/tableIds" title="tableIds"></a>
-	<h3 class="subsubtitle method-title">tableIds</h3>
+	<a name="//api/name/tableIDs" title="tableIDs"></a>
+	<h3 class="subsubtitle method-title">tableIDs</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns an array of currently mapped Dropbox data store tableIds.</p>
+		<p>Returns an array of currently mapped Dropbox data store tableIDs.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (NSArray *)tableIds</code></div>
+	<div class="method-subsection method-declaration"><code>- (NSArray *)tableIDs</code></div>
 
     
 	
@@ -1025,7 +1025,7 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>An array of currently mapped Dropbox data store tableIds.</p>
+		<p>An array of currently mapped Dropbox data store tableIDs.</p>
 	</div>
 	
 	
@@ -1100,7 +1100,7 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Overcommitted, LLC. All rights reserved. (Last updated: 2013-07-20)</span><br />
+						<p><span class="copyright">&copy; 2013 Overcommitted, LLC. All rights reserved. (Last updated: 2013-07-30)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

@@ -71,12 +71,12 @@ static NSString * const PKDatastoreMockObserverBlockKey = @"block";
     [self.observers filterUsingPredicate:[NSPredicate predicateWithFormat:@"%K != %@", PKDatastoreMockObserverKey, observer]];
 }
 
-- (PKTableMock *)getTable:(NSString *)tableId
+- (PKTableMock *)getTable:(NSString *)tableID
 {
-    PKTableMock *table = [self.tables objectForKey:tableId];
+    PKTableMock *table = [self.tables objectForKey:tableID];
     if (!table) {
         table = [[PKTableMock alloc] init];
-        [self.tables setObject:table forKey:tableId];
+        [self.tables setObject:table forKey:tableID];
     }
     return table;
 }

@@ -103,8 +103,8 @@
 - (void)testSettingSyncAttributeNameShouldSetSpecifiedValue
 {
     PKSyncManager *syncManager = [[PKSyncManager alloc] initWithManagedObjectContext:self.managedObjectContext datastore:self.datastore];
-    syncManager.syncAttributeName = @"sinkId";
-     XCTAssertEqualObjects(@"sinkId", syncManager.syncAttributeName, @"");
+    syncManager.syncAttributeName = @"sinkID";
+     XCTAssertEqualObjects(@"sinkID", syncManager.syncAttributeName, @"");
 }
 
 - (void)testSetTablesForEntityNamesWithDictionaryShouldSetSpecifiedRelationships
@@ -162,12 +162,12 @@
     XCTAssertEqualObjects(@{}, [syncManager tablesByEntityName], @"");
 }
 
-- (void)testTableIdsShouldReturnSpecifiedTableIds
+- (void)testTableIDsShouldReturnSpecifiedTableIDs
 {
-    NSArray *tableIds = [self.syncManager tableIds];
-    XCTAssertEqual(2, (int)[tableIds count], @"");
-    XCTAssertTrue([tableIds containsObject:@"books"], @"");
-    XCTAssertTrue([tableIds containsObject:@"authors"], @"");
+    NSArray *tableIDs = [self.syncManager tableIDs];
+    XCTAssertEqual(2, (int)[tableIDs count], @"");
+    XCTAssertTrue([tableIDs containsObject:@"books"], @"");
+    XCTAssertTrue([tableIDs containsObject:@"authors"], @"");
 }
 
 - (void)testEntityNamesShouldReturnSpecifiedEntityNames

@@ -82,10 +82,10 @@ extern NSString * const PKDefaultSyncAttributeName;
  
  Replaces any existing relationship for the given entity name that may have been previously set.
  Will raise an NSInternalInconsistencyException if the entity does not contain a valid sync attribute.
- @param tableId The Dropbox data store tableId that the entity name should be mapped to.
- @param entityName The Core Data entity name that should map to the given tableId.
+ @param tableID The Dropbox data store tableID that the entity name should be mapped to.
+ @param entityName The Core Data entity name that should map to the given tableID.
  */
-- (void)setTable:(NSString *)tableId forEntityName:(NSString *)entityName;
+- (void)setTable:(NSString *)tableID forEntityName:(NSString *)entityName;
 
 /**
  Removes the Core Data <-> Dropbox mapping for the given entity name.
@@ -102,10 +102,10 @@ extern NSString * const PKDefaultSyncAttributeName;
 - (NSDictionary *)tablesByEntityName;
 
 /**
- Returns an array of currently mapped Dropbox data store tableIds.
- @return An array of currently mapped Dropbox data store tableIds.
+ Returns an array of currently mapped Dropbox data store tableIDs.
+ @return An array of currently mapped Dropbox data store tableIDs.
  */
-- (NSArray *)tableIds;
+- (NSArray *)tableIDs;
 
 /**
  Returns an array of currently mapped Core Data entity names.
@@ -114,18 +114,18 @@ extern NSString * const PKDefaultSyncAttributeName;
 - (NSArray *)entityNames;
 
 /**
- Returns the tableId associated with a given entity name.
- @param entityName The entity name for which to return the corresponding tableId.
- @return The tableId associated with entityName, or nil if no tableId is associated with entityName.
+ Returns the tableID associated with a given entity name.
+ @param entityName The entity name for which to return the corresponding tableID.
+ @return The tableID associated with entityName, or nil if no tableID is associated with entityName.
  */
 - (NSString *)tableForEntityName:(NSString *)entityName;
 
 /**
- Returns the entity name associated with a given tableId.
- @param tableId The tableId for which to return the corresponding entity name.
- @return The entity name associated with tableId, or nil if no entity name is associated with tableId.
+ Returns the entity name associated with a given tableID.
+ @param tableID The tableID for which to return the corresponding entity name.
+ @return The entity name associated with tableID, or nil if no entity name is associated with tableID.
  */
-- (NSString *)entityNameForTable:(NSString *)tableId;
+- (NSString *)entityNameForTable:(NSString *)tableID;
 
 /** @name Observing Changes */
 
