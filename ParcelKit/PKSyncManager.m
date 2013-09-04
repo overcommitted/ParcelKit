@@ -41,7 +41,9 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
 
 + (NSString *)syncID
 {
-    return [[[NSUUID UUID] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+    NSString *uuid = (NSString *)CFBridgingRelease(CFUUIDCreateString(NULL, uuidRef));
+    return [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
 }
 
 - (id)init
