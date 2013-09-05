@@ -75,7 +75,6 @@ Example Application
 ToDo
 ----
 * Add support for the NSData attribute type
-* Add support for the NSOrderedSet attribute type
 
 Requirements
 ------------

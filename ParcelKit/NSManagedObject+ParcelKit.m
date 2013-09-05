@@ -102,7 +102,7 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                     }
                 }
                 
-                NSMutableSet *relatedObjects = [strongSelf mutableSetValueForKey:propertyName];
+                id relatedObjects = ([relationshipDescription isOrdered] ? [strongSelf mutableOrderedSetValueForKey:propertyName] : [strongSelf mutableSetValueForKey:propertyName]);
                 NSMutableSet *unrelatedObjects = [[NSMutableSet alloc] init];
                 for (NSManagedObject *relatedObject in relatedObjects) {
                     if (![recordIdentifiers containsObject:[relatedObject valueForKey:syncAttributeName]]) {
@@ -111,6 +111,7 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                 }
                 [relatedObjects minusSet:unrelatedObjects];
                 
+                NSUInteger recordIndex = 0;
                 for (NSString *identifier in recordIdentifiers) {
                     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", syncAttributeName, identifier]];
                     [fetchRequest setIncludesPropertyValues:NO];
@@ -119,13 +120,26 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                     if (managedObjects) {
                         if ([managedObjects count] == 1) {
                             NSManagedObject *relatedObject = managedObjects[0];
-                            if (![relatedObjects containsObject:relatedObject]) {
-                                [relatedObjects addObject:relatedObject];
+                            
+                            if ([relationshipDescription isOrdered]) {
+                                NSUInteger relatedObjectIndex = [relatedObjects indexOfObject:relatedObject];
+                                if (relatedObjectIndex != recordIndex) {
+                                    if (relatedObjectIndex != NSNotFound) {
+                                        [relatedObjects removeObject:relatedObject];
+                                    }
+                                    [relatedObjects insertObject:relatedObject atIndex:recordIndex];
+                                }
+                            } else {
+                                if (![relatedObjects containsObject:relatedObject]) {
+                                    [relatedObjects addObject:relatedObject];
+                                }
                             }
                         }
                     } else {
                         NSLog(@"Error executing fetch request: %@", error);
                     }
+                    
+                    recordIndex++;
                 };
             } else {
                 id identifier = [record objectForKey:propertyName];

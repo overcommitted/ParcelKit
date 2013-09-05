@@ -268,7 +268,6 @@
     XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
 }
 
-
 - (void)testSetPropertiesWithRecordShouldSetToManyRelationship
 {
     PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"authors": [[PKListMock alloc] initWithValues:@[@"1"]]}];
@@ -280,6 +279,37 @@
     
     NSManagedObject *author = [authors anyObject];
     XCTAssertEqualObjects(author, self.author, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldSetOrderedToManyRelationship
+{
+    NSManagedObject *author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
+    
+    NSMutableArray *unsortedIdentifiers = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 10; i++) {
+        NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+        NSString *identifier = [NSString stringWithFormat:@"%i", i + 100];
+        [book setValue:identifier forKey:PKDefaultSyncAttributeName];
+        
+        if (i % 2) {
+            [book setValue:[NSSet setWithObject:author] forKey:@"authors"];
+        }
+        
+        [unsortedIdentifiers addObject:identifier];
+    }
+    
+    NSArray *identifiers = [[unsortedIdentifiers reverseObjectEnumerator] allObjects];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": [[PKListMock alloc] initWithValues:identifiers]}];
+    [author pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    
+    NSOrderedSet *books = [author valueForKey:@"books"];
+    XCTAssertNotNil(books, @"");
+    XCTAssertEqual(10, (int)[books count], @"");
+
+    [identifiers enumerateObjectsUsingBlock:^(NSString *identifier, NSUInteger idx, BOOL *stop) {
+        NSManagedObject *book = [books objectAtIndex:idx];
+        XCTAssertEqualObjects(identifier, [book valueForKey:PKDefaultSyncAttributeName], @"");
+    }];
 }
 
 - (void)testSetPropertiesWithRecordShouldIgnoreMissingObjectsInToManyRelationship
