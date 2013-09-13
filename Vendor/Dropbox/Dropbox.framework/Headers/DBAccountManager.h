@@ -4,9 +4,6 @@
 
 @class DBAccount;
 
-/** A generic block type used for observing changes throughout the Sync API */
-typedef void (^DBObserver)();
-
 /** An observer for the <linkedAccount> property */
 typedef void (^DBAccountManagerObserver)(DBAccount *account);
 
@@ -38,9 +35,9 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
  */
 - (void)linkFromController:(UIViewController *)rootController;
 
-/** You must call this method in your app delegate's 
+/** You must call this method in your app delegate's
  `-application:openURL:sourceApplication:annotation:` method in order to complete the link process.
- 
+
  @returns The [account](DBAccount) object if the link was successful, or `nil` if the user
  cancelled.
  */
@@ -72,7 +69,7 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
 - (void)addObserver:(id)observer block:(DBAccountManagerObserver)block;
 
 /** Use this method to remove all blocks associated with `observer`.
- 
+
  @param observer the same value you provided to the <addObserver:block:> method.
  */
 - (void)removeObserver:(id)observer;

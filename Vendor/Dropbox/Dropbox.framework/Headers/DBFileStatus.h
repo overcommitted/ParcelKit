@@ -2,9 +2,9 @@
 
 /** Possible values for [DBFileStatus state]. */
 typedef enum {
-	DBFileStateDownloading,
-	DBFileStateIdle,
-	DBFileStateUploading,
+    DBFileStateDownloading,
+    DBFileStateIdle,
+    DBFileStateUploading,
 } DBFileState;
 
 

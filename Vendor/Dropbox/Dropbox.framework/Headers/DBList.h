@@ -2,8 +2,8 @@
 
 
 /** An object that allows you to modify a list that is set as a value on a [record](DBRecord).
- Lists can contain the same values as records, except for other lists. Changes to the list using
- the list mutation methods are automatically merged with changes made remotely. */
+ Lists can contain the same values as records, except for other lists. Any changes you make to the
+ list are intelligently merged with changes made remotely. */
 @interface DBList : NSObject
 
 /** Returns the total number of items in the list. */
@@ -15,7 +15,7 @@
 - (id)objectAtIndexedSubscript:(NSUInteger)index;
 
 
-/** Inserts an object at the given index. */
+/** Inserts an object at the given index, moving other objects further down the list. */
 - (void)insertObject:(id)obj atIndex:(NSUInteger)index;
 
 /** Removes the object at the given index. */

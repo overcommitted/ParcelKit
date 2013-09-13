@@ -3,15 +3,16 @@
 #import "DBAccountManager.h"
 #import "DBError.h"
 #import "DBTable.h"
+#import "DBUtil.h"
 
 @class DBDatastoreManager;
 
 enum DBDatastoreStatusFlags {
-	DBDatastoreConnected = 1 << 0, // The API is connected with the server
-	DBDatastoreDownloading = 1 << 1, // Changes are currently downloading
-	DBDatastoreUploading = 1 << 2, // Changes are currently uploading
-	DBDatastoreIncoming = 1 << 3, // There are remote changes waiting to be synced
-	DBDatastoreOutgoing = 1 << 4 // There are local changes waiting to be synced
+    DBDatastoreConnected = 1 << 0, // The API is connected with the server
+    DBDatastoreDownloading = 1 << 1, // Changes are currently downloading
+    DBDatastoreUploading = 1 << 2, // Changes are currently uploading
+    DBDatastoreIncoming = 1 << 3, // There are remote changes waiting to be synced
+    DBDatastoreOutgoing = 1 << 4 // There are local changes waiting to be synced
 };
 
 /** A bitset indicating the current sync status of the datastore. */
@@ -21,7 +22,7 @@ typedef NSUInteger DBDatastoreStatus;
 /** A datastore is a simple, syncable database for app data. You can open the default datastore
  using <openDefaultStoreForAccount:error:> and open or create other datastores using a
  <DBDatastoreManager>.
- 
+
  You interact with data in the datastore using tables. You can call <getTable:> to get a table,
  or <getTables:> to list all tables in a datastore containing records.
 
@@ -31,7 +32,7 @@ typedef NSUInteger DBDatastoreStatus;
  to be incorporated, the `DBDatastoreIncoming` flag will be set in the <status> bitset, and calling
  <sync:> will also apply those changes to your view of the datastore, resolving any conflicts along
  the way.
- 
+
  To find out when there are changes ready to be synced, add an observer using <addObserver:block:>
  to register a block that will be called every time <status> changes.
  */
@@ -42,7 +43,7 @@ typedef NSUInteger DBDatastoreStatus;
 
 /** Close a datastore when you're done using it to indicate that you are no longer
  interested in receiving updates for this datastore.
- 
+
  Any changes made since the last call to <sync:> will be discarded on close. If the account is
  unlinked remotely, the datastore will close automatically.
  */

@@ -17,20 +17,20 @@
 + (DBDatastoreManager *)managerForAccount:(DBAccount *)account;
 
 /** Opens the default datastore for this account, or creates it if it doesn't exist.
- 
+
  @return The default datastore if successful, or `nil` if an error occurred. */
 - (DBDatastore *)openDefaultDatastore:(DBError **)error;
 
-/** List the IDs of all known datastores for the user, including the default datastore if it has
- been created.
+/** Lists the <DBDatastoreInfo> for each of the user's datastores, including
+ the default datastore if it has been created.
 
- @return A list of datastore IDs as strings if successful, or `nil` if an error occurred. */
-- (NSArray *)listDatastoreIds:(DBError **)error;
+ @return A list of datastore <DBDatastoreInfo> objects if successful, or `nil` if an error occurred. */
+- (NSArray *)listDatastores:(DBError **)error;
 
 /** Open an existing datastore by its ID.
 
  The same datastore can't be opened more than once.
- 
+
  @return The datastore with the given ID if successful, or `nil` if an error occurred. */
 - (DBDatastore *)openDatastore:(NSString *)datastoreId error:(DBError **)error;
 

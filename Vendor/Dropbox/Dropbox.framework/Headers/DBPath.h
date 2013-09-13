@@ -12,7 +12,7 @@
 /** Create a new path object from a string.  Some special characters, names, or encodings a
  are not allowed in a Dropbox path.  For more details see this
  [article](http://www.dropbox.com/help/145).
- 
+
  @return A new path object if the contents of `pathStr` are a valid Dropbox path, `nil` otherwise.
  */
 - (id)initWithString:(NSString *)pathStr;
@@ -23,11 +23,11 @@
 
 /** Create a new path by treating the current path as a path to a folder, and `childName` as the
  name of an item in that folder.
- 
+
  @return A new path, or `nil` if `childName` is invalid.
  */
 - (DBPath *)childPath:(NSString *)childName;
- 
+
 /** Create a new path that is the folder containing the current path.
  For the root, this will return the same as `stringValue`.
 

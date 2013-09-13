@@ -12,30 +12,26 @@
  For objects of type NSNumber, the value of <code>objCType</code> is not guaranteed to be preserved,
  but the Datastore will distinguish been boolean, integer, and floating-point vlaues.  When you get
  a field that has a list value, its type will be DBList, which allows you to perform conflict-free
- list mutations.  Note that records do not have null fields - only fields which are unset.
- </p><p>
- Values have a defined sort order based on their type.  Integer, floating point, boolean, and
- date values are ordered by their numerical value.  String, byte, and list values are
- lexicographically ordered. Integer and floating point values are compared to each other by
- casting to double, but boolean values are treated as a distinct type ordered before all
- other numbers.  Other values of distinct types are ordered by type, in the order listed
- above.  For example, all boolean values are ordered before all other numeric values, which in
- turn are ordered before all string values.
+ list mutations.
  </p><p>
  Changes to this record are immediately visible to other record objects with the same
  <code>tableId</code> and <code>recordId</code> Calling <code>-[DBDatastore sync:]</code>, which
  incorporates remote changes into your datastore, will also update any records you have a
- reference to. </p> */
+ reference to.
+ </p>
+ */
 @interface DBRecord : NSObject
 
 /** Returns `YES` if `recordId` is a valid ID for a `DBRecord`, or `NO` otherwise.
  IDs are case-sensitive, can be 1-32 characters long and may contain alphanumeric
- characters plus these punctuation characters: . - _ + / = */
+ characters plus these punctuation characters: . - _ + / =
+ IDs with a leading : are valid, but reserved for internal use. */
 + (BOOL)isValidId:(NSString *)recordId;
 
 /** Returns `YES` if `name` is a valid name for a field in a `DBRecord`, or `NO` otherwise.
- IDs are case-sensitive, can be 1-32 characters long and may contain alphanumeric
- characters plus these punctuation characters: . - _ + / = */
+ Names are case-sensitive, can be 1-32 characters long and may contain alphanumeric
+ characters plus these punctuation characters: . - _ + / =
+ Names with a leading : are valid, but reserved for internal use. */
 + (BOOL)isValidFieldName:(NSString *)name;
 
 /** The id of the record. */
@@ -54,7 +50,7 @@
 
 /** Returns the current list at the given field, or returns an empty [list](DBList) if no value
  is set. If the field has a non-list value, this method will return `nil`.
- 
+
  Please note that if the empty list is returned, the list won't appear in the record until
  you insert an element. If you don't insert any elements, the field will remain unset. */
 - (DBList *)getOrCreateList:(NSString *)fieldName;

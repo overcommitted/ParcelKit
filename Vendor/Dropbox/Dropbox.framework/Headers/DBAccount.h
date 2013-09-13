@@ -2,6 +2,7 @@
 
 #import "DBAccountManager.h"
 #import "DBAccountInfo.h"
+#import "DBUtil.h"
 
 /** The account represents a particular user who has linked his account to your app. You can get
  account objects from the [account manager](DBAccountManager).*/
@@ -11,7 +12,7 @@
 /** @name Unlinking an account */
 
 /** This method unlinks a user's account from your app.
- 
+
  Once an account is unlinked, the local cache is deleted. If there is a
  [filesystem](DBFilesystem) object created with this account it will stop running. */
 - (void)unlink;
