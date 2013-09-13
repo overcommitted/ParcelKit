@@ -1,3 +1,7 @@
+Version 1.0.0-b7
+================
+* Update vendored Dropbox-Sync-API-SDK to 2.0.0-b6
+
 Version 1.0.0-b6
 ================
 * Add support for ordered attributes
