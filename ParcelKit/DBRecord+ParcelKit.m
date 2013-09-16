@@ -47,13 +47,14 @@
                     [strongSelf setObject:value forKey:name];
                 }
             } else if ([propertyDescription isKindOfClass:[NSRelationshipDescription class]]) {
-                if ([(NSRelationshipDescription *)propertyDescription isToMany]) {
+                NSRelationshipDescription *relationshipDescription = (NSRelationshipDescription *)propertyDescription;
+                if ([relationshipDescription isToMany]) {
                     DBList *fieldList = [strongSelf getOrCreateList:name];
-                    NSSet *previousIdentifiers = [[NSMutableSet alloc] initWithArray:[fieldList values]];
-                    NSSet *currentIdentifiers = [[NSSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]];
+                    NSMutableOrderedSet *previousIdentifiers = [[NSMutableOrderedSet alloc] initWithArray:[fieldList values]];
+                    NSOrderedSet *currentIdentifiers = ([relationshipDescription isOrdered] ? [value valueForKey:syncAttributeName] : [[NSOrderedSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]]);
                     
-                    NSMutableSet *deletedIdentifiers = [[NSMutableSet alloc] initWithSet:previousIdentifiers];
-                    [deletedIdentifiers minusSet:currentIdentifiers];
+                    NSMutableOrderedSet *deletedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:previousIdentifiers];
+                    [deletedIdentifiers minusOrderedSet:currentIdentifiers];
                     for (NSString *recordId in deletedIdentifiers) {
                         NSInteger index = [[fieldList values] indexOfObject:recordId];
                         if (index != NSNotFound) {
@@ -61,12 +62,19 @@
                         }
                     }
                     
-                    NSMutableSet *insertedIdentifiers = [[NSMutableSet alloc] initWithSet:currentIdentifiers];
-                    [insertedIdentifiers minusSet:previousIdentifiers];
+                    NSMutableOrderedSet *insertedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:currentIdentifiers];
+                    [insertedIdentifiers minusOrderedSet:previousIdentifiers];
+                    
+                    NSUInteger recordIndex = 0;
                     for (NSString *recordId in insertedIdentifiers) {
-                        if (![[fieldList values] containsObject:recordId]) {
-                            [fieldList addObject:recordId];
+                        NSInteger index = [[fieldList values] indexOfObject:recordId];
+                        if (index != recordIndex) {
+                            if (index != NSNotFound) {
+                                [fieldList removeObjectAtIndex:index];
+                            }
+                            [fieldList insertObject:recordId atIndex:recordIndex];
                         }
+                        recordIndex++;
                     }
                 } else {
                     [strongSelf setObject:[value valueForKey:syncAttributeName] forKey:name];

@@ -29,6 +29,7 @@
 
 #import "PKSyncManager.h"
 #import "PKRecordMock.h"
+#import "PKListMock.h"
 #import "NSManagedObjectContext+ParcelKitTests.h"
 
 @interface DBRecordParcelKitTests : XCTestCase
@@ -45,7 +46,7 @@
 {
     [super setUp];
     
-    self.record = [[PKRecordMock alloc] initWithRecordId:@"1" fields:Nil deleted:NO];
+    self.record = [[PKRecordMock alloc] initWithRecordId:@"1" fields:nil deleted:NO];
     
     self.managedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
     
@@ -124,6 +125,34 @@
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
 }
 
+- (void)testSetFieldsWithManagedObjectShouldSetOrderedToManyRelationship
+{
+    NSMutableArray *identifiers = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 10; i++) {
+        NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+        NSString *identifier = [NSString stringWithFormat:@"%i", i + 100];
+        [book setValue:identifier forKey:PKDefaultSyncAttributeName];
+        [book setValue:[NSSet setWithObject:self.author] forKey:@"authors"];
+        
+        if (i % 2) {
+            [identifiers addObject:identifier];
+        }
+    }
+    
+    NSArray *unsortedIdentifiers = [[identifiers reverseObjectEnumerator] allObjects];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": [[PKListMock alloc] initWithValues:unsortedIdentifiers]}];
+    [record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
+    
+    NSArray *books = [[record getOrCreateList:@"books"] values];
+    XCTAssertNotNil(books, @"");
+    XCTAssertEqual(10, (int)[books count], @"");
+
+    [[self.author valueForKey:@"books"] enumerateObjectsUsingBlock:^(NSManagedObject *book, NSUInteger idx, BOOL *stop) {
+        NSString *identifier = [books objectAtIndex:idx];
+        XCTAssertEqualObjects([book valueForKey:PKDefaultSyncAttributeName], identifier, @"");
+    }];
+}
+
 - (void)testSetFieldsWithManagedObjectShouldSetToManyMultipleRelationships
 {
     NSManagedObject *anotherAuthor = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
@@ -156,6 +185,30 @@
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
 }
 
+- (void)testSetFieldsWithManagedObjectShouldRemoveObjectsInOrderedToManyRelationship
+{
+    NSMutableArray *identifiers = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 3; i++) {
+        NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+        NSString *identifier = [NSString stringWithFormat:@"%i", i + 100];
+        [book setValue:identifier forKey:PKDefaultSyncAttributeName];
+        [book setValue:[NSSet setWithObject:self.author] forKey:@"authors"];
+        [identifiers addObject:identifier];
+    }
+    
+    NSArray *unsortedIdentifiers = [[[identifiers reverseObjectEnumerator] allObjects] arrayByAddingObjectsFromArray:@[@"should-delete-1", @"should-delete-2"]];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": [[PKListMock alloc] initWithValues:unsortedIdentifiers]}];
+    [record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
+    
+    NSArray *books = [[record getOrCreateList:@"books"] values];
+    XCTAssertNotNil(books, @"");
+    XCTAssertEqual(3, (int)[books count], @"");
+    
+    [[self.author valueForKey:@"books"] enumerateObjectsUsingBlock:^(NSManagedObject *book, NSUInteger idx, BOOL *stop) {
+        NSString *identifier = [books objectAtIndex:idx];
+        XCTAssertEqualObjects([book valueForKey:PKDefaultSyncAttributeName], identifier, @"");
+    }];
+}
 
 - (void)testSetFieldsWithManagedObjectShouldSetToOneRelationship
 {

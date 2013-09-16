@@ -59,6 +59,11 @@
     return [self.mockValues objectAtIndex:index];
 }
 
+- (void)insertObject:(id)obj atIndex:(NSUInteger)index
+{
+    [self.mockValues insertObject:obj atIndex:index];
+}
+
 - (void)removeObjectAtIndex:(NSUInteger)index
 {
     [self.mockValues removeObjectAtIndex:index];
