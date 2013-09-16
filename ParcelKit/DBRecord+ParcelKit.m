@@ -55,8 +55,8 @@
                     
                     NSMutableOrderedSet *deletedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:previousIdentifiers];
                     [deletedIdentifiers minusOrderedSet:currentIdentifiers];
-                    for (NSString *recordId in deletedIdentifiers) {
-                        NSInteger index = [[fieldList values] indexOfObject:recordId];
+                    for (NSString *identifier in deletedIdentifiers) {
+                        NSInteger index = [[fieldList values] indexOfObject:identifier];
                         if (index != NSNotFound) {
                             [fieldList removeObjectAtIndex:index];
                         }
