@@ -38,5 +38,6 @@
 - (void)addObserver:(id)observer block:(DBObserver)block;
 - (void)removeObserver:(id)observer;
 - (PKTableMock *)getTable:(NSString *)tableID;
+- (void)setTable:(PKTableMock *)table;
 - (NSDictionary *)sync:(DBError **)error;
 @end

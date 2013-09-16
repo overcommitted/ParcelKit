@@ -27,6 +27,7 @@
 #import "PKRecordMock.h"
 
 @interface PKTableMock ()
+@property (copy, nonatomic) NSString *tableID;
 @property (strong, nonatomic, readwrite) NSMutableDictionary *records;
 @end
 
@@ -39,6 +40,20 @@
         _records = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (id)initWithTableID:(NSString *)tableID
+{
+    self = [self init];
+    if (self) {
+        _tableID = tableID;
+    }
+    return self;
+}
+
+- (NSString *)tableId
+{
+    return _tableID;
 }
 
 - (void)deleteRecord:(DBRecord *)record

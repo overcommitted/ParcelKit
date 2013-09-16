@@ -30,7 +30,6 @@
 @interface PKRecordMock ()
 @property (copy, nonatomic) NSString *recordId;
 @property (strong, nonatomic) NSMutableDictionary *mockFields;
-@property (strong, nonatomic) NSMutableDictionary *mockLists;
 @property (assign, nonatomic) BOOL deleted;
 @end
 
@@ -54,7 +53,6 @@
     self = [super init];
     if (self) {
         _mockFields = [[NSMutableDictionary alloc] init];
-        _mockLists = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -109,10 +107,10 @@
 
 - (DBList *)getOrCreateList:(NSString *)fieldName
 {
-    PKListMock *list = [self.mockLists objectForKey:fieldName];
+    PKListMock *list = [self.mockFields objectForKey:fieldName];
     if (!list) {
         list = [[PKListMock alloc] init];
-        [self.mockLists setObject:list forKey:fieldName];
+        [self.mockFields setObject:list forKey:fieldName];
     }
     return list;
 }

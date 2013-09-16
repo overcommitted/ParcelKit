@@ -62,11 +62,8 @@
                         }
                     }
                     
-                    NSMutableOrderedSet *insertedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:currentIdentifiers];
-                    [insertedIdentifiers minusOrderedSet:previousIdentifiers];
-                    
                     NSUInteger recordIndex = 0;
-                    for (NSString *recordId in insertedIdentifiers) {
+                    for (NSString *recordId in currentIdentifiers) {
                         NSInteger index = [[fieldList values] indexOfObject:recordId];
                         if (index != recordIndex) {
                             if (index != NSNotFound) {
