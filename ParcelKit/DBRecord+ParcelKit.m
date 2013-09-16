@@ -63,13 +63,13 @@
                     }
                     
                     NSUInteger recordIndex = 0;
-                    for (NSString *recordId in currentIdentifiers) {
-                        NSInteger index = [[fieldList values] indexOfObject:recordId];
+                    for (NSString *identifier in currentIdentifiers) {
+                        NSInteger index = [[fieldList values] indexOfObject:identifier];
                         if (index != recordIndex) {
                             if (index != NSNotFound) {
                                 [fieldList removeObjectAtIndex:index];
                             }
-                            [fieldList insertObject:recordId atIndex:recordIndex];
+                            [fieldList insertObject:identifier atIndex:recordIndex];
                         }
                         recordIndex++;
                     }
