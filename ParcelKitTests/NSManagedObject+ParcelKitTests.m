@@ -349,25 +349,29 @@
     NSManagedObject *author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
     
     NSMutableArray *unsortedIdentifiers = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
         NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
         NSString *identifier = [NSString stringWithFormat:@"%i", i + 100];
         [book setValue:identifier forKey:PKDefaultSyncAttributeName];
-        
-        if (i % 2) {
-            [book setValue:[NSSet setWithObject:author] forKey:@"authors"];
-        }
-        
+        [book setValue:[NSSet setWithObject:author] forKey:@"authors"];
         [unsortedIdentifiers addObject:identifier];
     }
+
+    NSManagedObject *shouldDeleteBookOne = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [shouldDeleteBookOne setValue:@"shouldDeleteBookOne" forKey:PKDefaultSyncAttributeName];
+    [shouldDeleteBookOne setValue:[NSSet setWithObject:author] forKey:@"authors"];
+
+    NSManagedObject *shouldDeleteBookTwo = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [shouldDeleteBookTwo setValue:@"shouldDeleteBookTwo" forKey:PKDefaultSyncAttributeName];
+    [shouldDeleteBookTwo setValue:[NSSet setWithObject:author] forKey:@"authors"];
     
     NSArray *identifiers = [[unsortedIdentifiers reverseObjectEnumerator] allObjects];
-    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": [[PKListMock alloc] initWithValues:[identifiers arrayByAddingObjectsFromArray:@[@"should-delete-1", @"should-delete-2"]]]}];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": [[PKListMock alloc] initWithValues:identifiers]}];
     [author pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
     
     NSOrderedSet *books = [author valueForKey:@"books"];
     XCTAssertNotNil(books, @"");
-    XCTAssertEqual(10, (int)[books count], @"");
+    XCTAssertEqual(3, (int)[books count], @"");
     
     [identifiers enumerateObjectsUsingBlock:^(NSString *identifier, NSUInteger idx, BOOL *stop) {
         NSManagedObject *book = [books objectAtIndex:idx];
