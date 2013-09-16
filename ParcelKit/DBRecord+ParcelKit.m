@@ -65,11 +65,15 @@
                     NSUInteger recordIndex = 0;
                     for (NSString *identifier in currentIdentifiers) {
                         NSInteger index = [[fieldList values] indexOfObject:identifier];
-                        if (index != recordIndex) {
-                            if (index != NSNotFound) {
-                                [fieldList removeObjectAtIndex:index];
+                        if ([relationshipDescription isOrdered]) {
+                            if (index != recordIndex) {
+                                if (index != NSNotFound) {
+                                    [fieldList removeObjectAtIndex:index];
+                                }
+                                [fieldList insertObject:identifier atIndex:recordIndex];
                             }
-                            [fieldList insertObject:identifier atIndex:recordIndex];
+                        } else if (index == NSNotFound) {
+                            [fieldList addObject:identifier];
                         }
                         recordIndex++;
                     }
