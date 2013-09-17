@@ -161,22 +161,28 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
 #pragma mark - Updating Core Data
 - (void)updateCoreDataWithDatastoreChanges:(NSDictionary *)changes
 {
+    static NSString * const PKUpdateManagedObjectKey = @"object";
+    static NSString * const PKUpdateRecordKey = @"record";
+    
     if ([changes count] == 0) return;
     
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [managedObjectContext setPersistentStoreCoordinator:[self.managedObjectContext persistentStoreCoordinator]];
     [managedObjectContext setUndoManager:nil];
     
+    __block NSMutableArray *updates = [[NSMutableArray alloc] init];
+    
     __weak typeof(self) weakSelf = self;
     [changes enumerateKeysAndObjectsUsingBlock:^(NSString *tableID, NSArray *records, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
+        NSString *entityName = [strongSelf entityNameForTable:tableID];
+        if (!entityName) return;
+
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+        [fetchRequest setFetchLimit:1];
+
         for (DBRecord *record in records) {
-            NSString *entityName = [strongSelf entityNameForTable:tableID];
-            if (!entityName) continue;
-            
-            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", strongSelf.syncAttributeName, record.recordId]];
-            [fetchRequest setFetchLimit:1];
             
             NSError *error = nil;
             NSArray *managedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -193,13 +199,19 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
                         [managedObject setValue:record.recordId forKey:strongSelf.syncAttributeName];
                     }
                     
-                    [managedObject pk_setPropertiesWithRecord:record syncAttributeName:strongSelf.syncAttributeName];
+                    [updates addObject:@{PKUpdateManagedObjectKey: managedObject, PKUpdateRecordKey: record}];
                 }
             } else {
                 NSLog(@"Error executing fetch request: %@", error);
             }
         }
     }];
+    
+    for (NSDictionary *update in updates) {
+        NSManagedObject *managedObject = update[PKUpdateManagedObjectKey];
+        DBRecord *record = update[PKUpdateRecordKey];
+        [managedObject pk_setPropertiesWithRecord:record syncAttributeName:self.syncAttributeName];
+    }
     
     if ([managedObjectContext hasChanges]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
