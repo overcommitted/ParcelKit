@@ -27,7 +27,7 @@ typedef enum {
  </p><p>
  When using the max and min resolution rules, values are compared as follows: integer,
  floating point, boolean, and date values are ordered by their numerical value.  String, byte, and
- list values are lexicographically ordered. Integer and floating point values are compared to each 
+ list values are lexicographically ordered. Integer and floating point values are compared to each
  other by casting to double, but boolean values are treated as a distinct type ordered before all
  other numbers.  Other values of distinct types are ordered by type, in the order listed
  above.  For example, all boolean values are ordered before all other numeric values, which in
