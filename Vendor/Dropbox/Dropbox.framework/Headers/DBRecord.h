@@ -10,7 +10,7 @@
  <p>
  Fields can hold values of the following types: NSNumber, NSString, NSData, NSDate, NSArray.
  For objects of type NSNumber, the value of <code>objCType</code> is not guaranteed to be preserved,
- but the Datastore will distinguish been boolean, integer, and floating-point vlaues.  When you get
+ but the datastore will distinguish been boolean, integer, and floating-point values.  When you get
  a field that has a list value, its type will be DBList, which allows you to perform conflict-free
  list mutations.
  </p><p>
