@@ -1,3 +1,11 @@
+Version 1.0.0
+================
+* Updated Dropbox-Sync-API-SDK to 2.0.0.
+
+Version 1.0.0-b9
+================
+* Updated Dropbox-Sync-API-SDK to 2.0.0-b7. 
+
 Version 1.0.0-b8
 ================
 * Fix ordered relationships not updating properly.
