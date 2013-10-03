@@ -1,3 +1,7 @@
+Version 1.0.1
+================
+* Updated Dropbox-Sync-API-SDK to 2.0.1.
+
 Version 1.0.0
 ================
 * Updated Dropbox-Sync-API-SDK to 2.0.0.
