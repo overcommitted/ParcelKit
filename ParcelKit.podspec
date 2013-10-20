@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ParcelKit"
-  s.version      = "1.0.1"
+  s.version      = "1.1.0"
   s.summary      = "ParcelKit integrates Core Data with Dropbox using the Dropbox Datastore API."
   s.homepage     = "http://github.com/overcommitted/ParcelKit"
   s.license      = 'MIT'
