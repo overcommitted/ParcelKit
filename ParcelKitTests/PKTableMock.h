@@ -35,5 +35,6 @@
 - (id)initWithTableID:(NSString *)tableID;
 - (id)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore;
 
+- (void)setRecord:(DBRecord *)record;
 - (void)deleteRecord:(DBRecord *)record;
 @end

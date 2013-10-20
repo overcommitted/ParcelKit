@@ -7,4 +7,10 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+    // For testing define maximum binary data length bytes
+    #define PKMaximumBinaryDataLengthInBytes 3
+    #define PKMaximumBinaryDataChunkLengthInBytes 3
+
+    #define PKBinaryDataTableSuffix @".bin"
 #endif

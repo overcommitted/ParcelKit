@@ -284,13 +284,13 @@
     PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
 
     NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
+    [binaryTable setRecord:[PKRecordMock record:@"1" withFields:@{@"data": chunkOne}]];
     
     NSData *chunkTwo = [@"Two" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{@"data": chunkTwo}];
+    [binaryTable setRecord:[PKRecordMock record:@"2" withFields:@{@"data": chunkTwo}]];
     
     NSData *chunkThree = [@"Three" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"3"] = [PKRecordMock record:@"3" withFields:@{@"data": chunkThree}];
+    [binaryTable setRecord:[PKRecordMock record:@"3" withFields:@{@"data": chunkThree}]];
     
     PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
     PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2", @"3"]]}];
@@ -325,30 +325,14 @@
     XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
 }
 
-- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfCannotFindBinaryTableRecordForChunkedBinaryDataAttribute
-{
-    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
-    
-    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
-    NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
-    
-    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
-    
-    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2"]]}];
-    [record setTable:table];
-    
-    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
-}
-
 - (void)testSetPropertiesWithRecordShouldRaiseExceptionIfBinaryTableRecordContainsInvalidDataForChunkedBinaryDataAttribute
 {
     PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
     
     PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
     NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
-    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{@"data": @"Not a binary value"}];
+    [binaryTable setRecord:[PKRecordMock record:@"1" withFields:@{@"data": chunkOne}]];
+    [binaryTable setRecord:[PKRecordMock record:@"2" withFields:@{@"data": @"Not a binary value"}]];
     
     PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
     
@@ -364,8 +348,8 @@
     
     PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
     NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
-    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
-    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{}];
+    [binaryTable setRecord:[PKRecordMock record:@"1" withFields:@{@"data": chunkOne}]];
+    [binaryTable setRecord:[PKRecordMock record:@"2" withFields:@{}]];
     
     PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
     

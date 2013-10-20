@@ -72,10 +72,6 @@ Example Application
 * [Toado](https://github.com/daikini/toado) - Simple task manager demonstrating the integration of Core Data and Dropbox using ParcelKit.
 
     
-ToDo
-----
-* Add support for the NSData attribute type
-
 Requirements
 ------------
 * iOS 6.1 or higher

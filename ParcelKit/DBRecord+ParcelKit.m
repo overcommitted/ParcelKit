@@ -25,7 +25,12 @@
 
 #import "DBRecord+ParcelKit.h"
 
+#ifndef PKMaximumBinaryDataChunkLengthInBytes
+#define PKMaximumBinaryDataChunkLengthInBytes 95000
+#endif
+
 @implementation DBRecord (ParcelKit)
+
 - (void)pk_setFieldsWithManagedObject:(NSManagedObject *)managedObject syncAttributeName:(NSString *)syncAttributeName
 {
     __weak typeof(self) weakSelf = self;
@@ -36,15 +41,71 @@
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         
         if ([name isEqualToString:syncAttributeName]) return;
-        
+
+        NSPropertyDescription *propertyDescription = [propertiesByName objectForKey:name];
+        if ([propertyDescription isTransient]) return;
+
         if (value && value != [NSNull null]) {
-            NSPropertyDescription *propertyDescription = [propertiesByName objectForKey:name];
-            if ([propertyDescription isTransient]) return;
-            
             if ([propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
                 id previousValue = [strongSelf objectForKey:name];
-                if (!previousValue || [previousValue compare:value] != NSOrderedSame) {
-                    [strongSelf setObject:value forKey:name];
+
+                NSAttributeType attributeType = [(NSAttributeDescription *)propertyDescription attributeType];
+                if (attributeType != NSBinaryDataAttributeType) {
+                    if (!previousValue || [previousValue compare:value] != NSOrderedSame) {
+                        [strongSelf setObject:value forKey:name];
+                    }
+                } else {
+                    NSString *binaryTableID = [self.table.tableId stringByAppendingString:PKBinaryDataTableSuffix];
+                    DBTable *binaryTable = [self.table.datastore getTable:binaryTableID];
+
+                    NSMutableArray *previousRecords = [[NSMutableArray alloc] init];
+                    NSMutableData *previousData = [[NSMutableData alloc] init];
+                    if (previousValue) {
+                        if ([previousValue isKindOfClass:[NSData class]]) {
+                            [previousData appendData:previousValue];
+                        } else if ([previousValue isKindOfClass:[DBList class]]) {
+                            NSArray *binaryRecordIDs = [previousValue values];
+                            for (NSString *binaryRecordID in binaryRecordIDs) {
+                                DBRecord *record = [binaryTable getRecord:binaryRecordID error:nil];
+                                if (record) {
+                                    NSData *chunk = [record objectForKey:@"data"];
+                                    if (chunk && [chunk isKindOfClass:[NSData class]]) {
+                                        [previousData appendData:chunk];
+                                    }
+                                    [previousRecords addObject:record];
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Only sync data if it's changed
+                    NSData *data = value;
+                    if (![data isEqualToData:previousData]) {
+                        previousData = nil;
+                        
+                        if ([value length] <= PKMaximumBinaryDataLengthInBytes) {
+                            [strongSelf setObject:value forKey:name];
+                        } else {
+                            // Split the data into chunks
+                            [self removeObjectForKey:name];
+                            DBList *list = [self getOrCreateList:name];
+
+                            NSUInteger length = [value length];
+                            NSUInteger numberOfChunks = ceil(length / (double)PKMaximumBinaryDataChunkLengthInBytes);
+                            for (NSInteger i = 0; i < numberOfChunks; i++) {
+                                NSUInteger location = i * PKMaximumBinaryDataChunkLengthInBytes;
+                                NSRange range = NSMakeRange(location, MIN(PKMaximumBinaryDataChunkLengthInBytes, length - location));
+                                NSData *chunk = [value subdataWithRange:range];
+                                DBRecord *record = [binaryTable insert:@{@"data": chunk}];
+                                [list addObject:record.recordId];
+                            }
+                        }
+                        
+                        // Delete all previous records
+                        for (DBRecord *record in previousRecords) {
+                            [record deleteRecord];
+                        }
+                    }
                 }
             } else if ([propertyDescription isKindOfClass:[NSRelationshipDescription class]]) {
                 NSRelationshipDescription *relationshipDescription = (NSRelationshipDescription *)propertyDescription;
@@ -83,9 +144,23 @@
             }
         } else {
             if ([fieldNames containsObject:name]) {
+                id previousValue = [strongSelf objectForKey:name];
+                if ([propertyDescription isKindOfClass:[NSAttributeDescription class]] && [(NSAttributeDescription *)propertyDescription attributeType] == NSBinaryDataAttributeType && [previousValue isKindOfClass:[DBList class]]) {
+                    NSString *binaryTableID = [self.table.tableId stringByAppendingString:PKBinaryDataTableSuffix];
+                    DBTable *binaryTable = [self.table.datastore getTable:binaryTableID];
+                    NSArray *binaryRecordIDs = [previousValue values];
+                    for (NSString *binaryRecordID in binaryRecordIDs) {
+                        DBRecord *record = [binaryTable getRecord:binaryRecordID error:nil];
+                        if (record) {
+                            [record deleteRecord];
+                        }
+                    }
+                }
+                
                 [strongSelf removeObjectForKey:name];
             }
         }
     }];
 }
+
 @end

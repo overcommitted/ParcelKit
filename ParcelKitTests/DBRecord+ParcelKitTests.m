@@ -28,11 +28,15 @@
 #import "DBRecord+ParcelKit.h"
 
 #import "PKSyncManager.h"
+#import "PKDatastoreMock.h"
+#import "PKTableMock.h"
 #import "PKRecordMock.h"
 #import "PKListMock.h"
 #import "NSManagedObjectContext+ParcelKitTests.h"
 
 @interface DBRecordParcelKitTests : XCTestCase
+@property (strong, nonatomic) PKDatastoreMock *datastore;
+@property (strong, nonatomic) PKTableMock *table;
 @property (strong, nonatomic) PKRecordMock *record;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSManagedObject *book;
@@ -46,7 +50,10 @@
 {
     [super setUp];
     
+    self.datastore = [[PKDatastoreMock alloc] init];
+    self.table = [[PKTableMock alloc] initWithTableID:@"books" datastore:self.datastore];
     self.record = [[PKRecordMock alloc] initWithRecordId:@"1" fields:nil deleted:NO];
+    [self.record setTable:self.table];
     
     self.managedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
     
@@ -86,6 +93,66 @@
 {
     [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
     XCTAssertEqualObjects([self.book valueForKey:@"title"], [self.record objectForKey:@"title"], @"");
+}
+
+- (void)testSetFieldsWithManagedObjectShouldSetBinaryDataAttributeDirectlyIfDataIsSmallEnough
+{
+    NSData *cover = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
+    [self.book setValue:cover forKey:@"cover"];
+    [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqualObjects(cover, [self.record objectForKey:@"cover"], @"");
+}
+
+- (void)testSetFieldsWithManagedObjectShouldSplitBinaryDataAttributeIfDataIsNotSmallEnough
+{
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:self.datastore];
+
+    [self.book setValue:[@"OneTwoThree" dataUsingEncoding:NSUTF8StringEncoding] forKey:@"cover"];
+    [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
+    
+    DBList *records = [self.record objectForKey:@"cover"];
+    XCTAssertNotNil(records, @"");
+    XCTAssertEqual(4, (int)[records count], @"");
+
+    // For testing data is split into 3 byte chunks
+    XCTAssertEqual(4, (int)[binaryTable.records count], @"");
+    XCTAssertEqualObjects(@"One", [[NSString alloc] initWithData:[binaryTable getRecord:records[0] error:nil][@"data"] encoding:NSUTF8StringEncoding]);
+    XCTAssertEqualObjects(@"Two", [[NSString alloc] initWithData:[binaryTable getRecord:records[1] error:nil][@"data"] encoding:NSUTF8StringEncoding]);
+    XCTAssertEqualObjects(@"Thr", [[NSString alloc] initWithData:[binaryTable getRecord:records[2] error:nil][@"data"] encoding:NSUTF8StringEncoding]);
+    XCTAssertEqualObjects(@"ee", [[NSString alloc] initWithData:[binaryTable getRecord:records[3] error:nil][@"data"] encoding:NSUTF8StringEncoding]);
+}
+
+- (void)testSetFieldsWithManagedObjectSettingBinaryDataShouldRemoveAnyPreviouslyChunkedBinaryDataAttribute
+{
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:self.datastore];
+    [binaryTable setRecord:[PKRecordMock record:@"1" withFields:nil]];
+    [binaryTable setRecord:[PKRecordMock record:@"2" withFields:nil]];
+    [binaryTable setRecord:[PKRecordMock record:@"3" withFields:nil]];
+    
+    DBList *list = [self.record getOrCreateList:@"cover"];
+    [list addObject:@"1"];
+    [list addObject:@"2"];
+    [list addObject:@"3"];
+    
+    [self.book setValue:[@"One" dataUsingEncoding:NSUTF8StringEncoding] forKey:@"cover"];
+    [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqual(0, (int)[binaryTable.records count], @"");
+}
+
+- (void)testSetFieldsWithManagedObjectRemovingBinaryDataShouldRemoveAnyPreviouslyChunkedBinaryDataAttribute
+{
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:self.datastore];
+    [binaryTable setRecord:[PKRecordMock record:@"1" withFields:nil]];
+    [binaryTable setRecord:[PKRecordMock record:@"2" withFields:nil]];
+    [binaryTable setRecord:[PKRecordMock record:@"3" withFields:nil]];
+    
+    DBList *list = [self.record getOrCreateList:@"cover"];
+    [list addObject:@"1"];
+    [list addObject:@"2"];
+    [list addObject:@"3"];
+    
+    [self.record pk_setFieldsWithManagedObject:self.book syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqual(0, (int)[binaryTable.records count], @"");
 }
 
 - (void)testSetFieldsWithManagedObjectShouldSetMultipleAttributes

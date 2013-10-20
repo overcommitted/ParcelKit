@@ -73,6 +73,12 @@
     return (DBDatastore *)_datastoreMock;
 }
 
+- (void)setRecord:(DBRecord *)record
+{
+    [(PKRecordMock *)record setTable:self];
+    [self.records setObject:record forKey:record.recordId];
+}
+
 - (void)deleteRecord:(DBRecord *)record
 {
     [self.records removeObjectForKey:record.recordId];
@@ -96,6 +102,12 @@
         [self.records setObject:record forKey:recordId];
     }
     return record;
+}
+
+- (PKRecordMock *)insert:(NSDictionary *)fields
+{
+    NSString *recordID = [[[NSUUID UUID] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return (PKRecordMock *)[self getOrInsertRecord:recordID fields:fields inserted:NULL error:nil];
 }
 
 @end
