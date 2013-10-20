@@ -26,11 +26,14 @@
 #import <Foundation/Foundation.h>
 #import <Dropbox/Dropbox.h>
 
+@class PKDatastoreMock;
 @class PKRecordMock;
 
 @interface PKTableMock : DBTable
 @property (strong, nonatomic, readonly) NSMutableDictionary *records;
 
 - (id)initWithTableID:(NSString *)tableID;
+- (id)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore;
+
 - (void)deleteRecord:(DBRecord *)record;
 @end

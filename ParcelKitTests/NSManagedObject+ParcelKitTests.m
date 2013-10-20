@@ -29,6 +29,8 @@
 #import "PKSyncManager.h"
 #import "NSManagedObject+ParcelKit.h"
 #import "NSManagedObjectContext+ParcelKitTests.h"
+#import "PKDatastoreMock.h"
+#import "PKTableMock.h"
 #import "PKRecordMock.h"
 #import "PKListMock.h"
 
@@ -265,6 +267,111 @@
 - (void)testSetPropertiesWithRecordShouldRaiseExceptionIfCannotConvertDateAttributeType
 {
     PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"publishedDate": @"1960-07-11"}];
+    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldSetBinaryDataAttributeType
+{
+    NSData *cover = [NSData data];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": cover}];
+    [self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqualObjects(cover, [self.book valueForKey:@"cover"], @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldCombineBinaryDataAttributeTypeIfSplitIntoChunks
+{
+    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
+
+    NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
+    
+    NSData *chunkTwo = [@"Two" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{@"data": chunkTwo}];
+    
+    NSData *chunkThree = [@"Three" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"3"] = [PKRecordMock record:@"3" withFields:@{@"data": chunkThree}];
+    
+    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2", @"3"]]}];
+    [record setTable:table];
+    
+    NSMutableData *cover = [[NSMutableData alloc] init];
+    [cover appendData:chunkOne];
+    [cover appendData:chunkTwo];
+    [cover appendData:chunkThree];
+    
+    [self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqualObjects(cover, [self.book valueForKey:@"cover"], @"");
+    
+    NSString *stringValue = [[NSString alloc] initWithData:[self.book valueForKey:@"cover"] encoding:NSUTF8StringEncoding];
+    XCTAssertEqualObjects(@"OneTwoThree", stringValue, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfInvalidBinaryAttributeType
+{
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": @"Not binary or list type"}];
+    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfCannotFindBinaryTableForChunkedBinaryDataAttribute
+{
+    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
+    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
+    
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2", @"3"]]}];
+    [record setTable:table];
+    
+    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfCannotFindBinaryTableRecordForChunkedBinaryDataAttribute
+{
+    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
+    
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
+    NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
+    
+    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
+    
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2"]]}];
+    [record setTable:table];
+    
+    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfBinaryTableRecordContainsInvalidDataForChunkedBinaryDataAttribute
+{
+    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
+    
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
+    NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
+    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{@"data": @"Not a binary value"}];
+    
+    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
+    
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2"]]}];
+    [record setTable:table];
+    
+    XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
+}
+
+- (void)testSetPropertiesWithRecordShouldRaiseExceptionIfBinaryTableRecordDataIsMissingForChunkedBinaryDataAttribute
+{
+    PKDatastoreMock *datastore = [[PKDatastoreMock alloc] init];
+    
+    PKTableMock *binaryTable = [[PKTableMock alloc] initWithTableID:@"books.bin" datastore:datastore];
+    NSData *chunkOne = [@"One" dataUsingEncoding:NSUTF8StringEncoding];
+    binaryTable.records[@"1"] = [PKRecordMock record:@"1" withFields:@{@"data": chunkOne}];
+    binaryTable.records[@"2"] = [PKRecordMock record:@"2" withFields:@{}];
+    
+    PKTableMock *table = [[PKTableMock alloc] initWithTableID:@"books" datastore:datastore];
+    
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"cover": [[PKListMock alloc] initWithValues:@[@"1", @"2"]]}];
+    [record setTable:table];
+    
     XCTAssertThrowsSpecificNamed([self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName], NSException, PKInvalidAttributeValueException, @"");
 }
 

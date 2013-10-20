@@ -24,11 +24,13 @@
 //
 
 #import "PKTableMock.h"
+#import "PKDatastoreMock.h"
 #import "PKRecordMock.h"
 
 @interface PKTableMock ()
 @property (copy, nonatomic) NSString *tableID;
 @property (strong, nonatomic, readwrite) NSMutableDictionary *records;
+@property (weak, nonatomic) PKDatastoreMock *datastoreMock;
 @end
 
 @implementation PKTableMock
@@ -51,9 +53,24 @@
     return self;
 }
 
+- (id)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore
+{
+    self = [self initWithTableID:tableID];
+    if (self) {
+        _datastoreMock = datastore;
+        [_datastoreMock setTable:self];
+    }
+    return self;
+}
+
 - (NSString *)tableId
 {
     return _tableID;
+}
+
+- (DBDatastore *)datastore
+{
+    return (DBDatastore *)_datastoreMock;
 }
 
 - (void)deleteRecord:(DBRecord *)record

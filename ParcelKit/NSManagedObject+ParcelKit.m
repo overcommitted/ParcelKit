@@ -72,6 +72,38 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                     }
                 } else if ((attributeType == NSDateAttributeType) && (![value isKindOfClass:[NSDate class]])) {
                     [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, value, [NSDate class], [value class]];
+                } else if ((attributeType == NSBinaryDataAttributeType) && (![value isKindOfClass:[NSData class]])) {
+                    if ([value isKindOfClass:[DBList class]]) {
+                        // Get the corresponding table used to store binary data
+                        NSString *binaryTableID = [record.table.tableId stringByAppendingString:@".bin"];
+                        DBTable *binaryTable = [record.table.datastore getTable:binaryTableID];
+                        if (binaryTable) {
+                            NSMutableData *data = [[NSMutableData alloc] init];
+                            
+                            // Loop through the binary records and combine them into a single data value
+                            NSArray *binaryRecordIDs = [value values];
+                            for (NSString *binaryRecordID in binaryRecordIDs) {
+                                DBError *dberror = nil;
+                                DBRecord *record = [binaryTable getRecord:binaryRecordID error:&dberror];
+                                if (record) {
+                                    NSData *chunk = [record objectForKey:@"data"];
+                                    if (chunk && [chunk isKindOfClass:[NSData class]]) {
+                                        [data appendData:chunk];
+                                    } else {
+                                        [NSException raise:PKInvalidAttributeValueException format:@"Invalid binary record “%@.%@” for “%@.%@” expected “data” to be of type “%@” but is “%@”", binaryTableID, binaryRecordID, entityName, propertyName, [NSData class], [chunk class]];
+                                    }
+                                } else {
+                                    [NSException raise:PKInvalidAttributeValueException format:@"Could not find binary record “%@.%@” for “%@.%@”", binaryTableID, binaryRecordID, entityName, propertyName];
+                                }
+                            }
+
+                            value = [[NSData alloc] initWithData:data];
+                        } else {
+                            [NSException raise:PKInvalidAttributeValueException format:@"Could not find table “%@” for “%@.%@”", binaryTableID, entityName, propertyName];
+                        }
+                    } else {
+                        [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, value, [NSData class], [value class]];
+                    }
                 }
             } else if (![propertyDescription isOptional] && ![strongSelf valueForKey:propertyName]) {
                  [NSException raise:PKInvalidAttributeValueException format:@"“%@.%@” expected to not be null", entityName, propertyName];
