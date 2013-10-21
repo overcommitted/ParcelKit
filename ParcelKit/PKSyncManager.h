@@ -29,6 +29,12 @@
 
 extern NSString * const PKDefaultSyncAttributeName;
 
+/**
+ Notification that is posted when a sync has finished.
+ */
+extern NSString * const PKSyncManagerSyncDidFinishNotification;
+
+
 /** 
  The sync manager is responsible for listening to changes from a
  Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the changes between them.

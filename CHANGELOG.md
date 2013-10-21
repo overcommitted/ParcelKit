@@ -1,3 +1,7 @@
+Version 1.1.1
+================
+* Post notification when sync has finished.
+
 Version 1.1.0
 ================
 * Added support for syncing binary data.
