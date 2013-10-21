@@ -28,7 +28,8 @@
 #import "DBRecord+ParcelKit.h"
 
 NSString * const PKDefaultSyncAttributeName = @"syncID";
-NSString * const PKSyncManagerSyncDidFinishNotification = @"PKSyncManagerSyncDidFinish";
+NSString * const PKSyncManagerDatastoreStatusDidChangeNotification = @"PKSyncManagerDatastoreStatusDidChange";
+NSString * const PKSyncManagerDatastoreStatusKey = @"status";
 
 static NSUInteger const PKFetchRequestBatchSize = 25;
 
@@ -146,6 +147,10 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
                 NSLog(@"Error syncing with Dropbox: %@", error);
             }
         }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreStatusDidChangeNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreStatusKey:@(strongSelf.datastore.status)}];
+        });
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.managedObjectContext];
@@ -228,7 +233,6 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
 - (void)syncManagedObjectContextDidSave:(NSNotification *)notification
 {
     [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
-    [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerSyncDidFinishNotification object:self];
 }
 
 #pragma mark - Updating Datastore
@@ -274,7 +278,6 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     } else {
         NSLog(@"Error syncing with Dropbox: %@", error);
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerSyncDidFinishNotification object:self];
 }
 
 - (void)updateDatastoreWithManagedObject:(NSManagedObject *)managedObject

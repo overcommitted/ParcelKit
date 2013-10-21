@@ -30,9 +30,12 @@
 extern NSString * const PKDefaultSyncAttributeName;
 
 /**
- Notification that is posted when a sync has finished.
+ Notification that is posted when the DBDatastoreStatus changes.
+ 
+ The userInfo of the notification will contain the DBDatastoreStatus in `PKSyncManagerDatastoreStatusKey`
  */
-extern NSString * const PKSyncManagerSyncDidFinishNotification;
+extern NSString * const PKSyncManagerDatastoreStatusDidChangeNotification;
+extern NSString * const PKSyncManagerDatastoreStatusKey;
 
 
 /** 
