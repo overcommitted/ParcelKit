@@ -4,6 +4,4 @@
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
-    #define PKBinaryDataTableSuffix @".bin"
-    #define PKMaximumBinaryDataLengthInBytes 50000
 #endif

@@ -46,6 +46,7 @@
 		ABC7D10D1793611800AAA1CA /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D10C1793611800AAA1CA /* CFNetwork.framework */; };
 		ABC7D10F1793611E00AAA1CA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC7D10E1793611E00AAA1CA /* MobileCoreServices.framework */; };
 		ABC8E9541794A35B00724531 /* PKTableMock.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC8E9531794A35B00724531 /* PKTableMock.m */; };
+		ABE580CB181543FC00B714E5 /* PKConstants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE580C8181542E800B714E5 /* PKConstants.h */; };
 		ABE87A16179353C800E2A1DA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE87A15179353C800E2A1DA /* Foundation.framework */; };
 		ABE87A1B179353C800E2A1DA /* ParcelKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = ABE87A1A179353C800E2A1DA /* ParcelKit.h */; };
 		ABE87A301793556400E2A1DA /* PKSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE87A251793556400E2A1DA /* PKSyncManager.m */; };
@@ -84,6 +85,7 @@
 				ABE87A4517935C0400E2A1DA /* PKSyncManager.h in CopyFiles */,
 				ABE87A4617935C0400E2A1DA /* NSManagedObject+ParcelKit.h in CopyFiles */,
 				ABE87A4917935C0400E2A1DA /* DBRecord+ParcelKit.h in CopyFiles */,
+				ABE580CB181543FC00B714E5 /* PKConstants.h in CopyFiles */,
 				ABE87A1B179353C800E2A1DA /* ParcelKit.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,6 +126,7 @@
 		ABC7D10E1793611E00AAA1CA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		ABC8E9521794A35B00724531 /* PKTableMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTableMock.h; sourceTree = "<group>"; };
 		ABC8E9531794A35B00724531 /* PKTableMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTableMock.m; sourceTree = "<group>"; };
+		ABE580C8181542E800B714E5 /* PKConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKConstants.h; sourceTree = "<group>"; };
 		ABE87A12179353C800E2A1DA /* libParcelKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libParcelKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABE87A15179353C800E2A1DA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ABE87A19179353C800E2A1DA /* ParcelKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParcelKit-Prefix.pch"; sourceTree = "<group>"; };
@@ -265,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				ABE87A1A179353C800E2A1DA /* ParcelKit.h */,
+				ABE580C8181542E800B714E5 /* PKConstants.h */,
 				ABE87A241793556400E2A1DA /* PKSyncManager.h */,
 				ABE87A251793556400E2A1DA /* PKSyncManager.m */,
 				ABE87A261793556400E2A1DA /* NSManagedObject+ParcelKit.h */,

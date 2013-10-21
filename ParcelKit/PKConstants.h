@@ -1,5 +1,5 @@
 //
-//  ParcelKit.h
+//  PKConstants.h
 //  ParcelKit
 //
 //  Copyright (c) 2013 Overcommitted, LLC. All rights reserved.
@@ -23,7 +23,15 @@
 //  THE SOFTWARE.
 //
 
-#import <ParcelKit/PKConstants.h>
-#import <ParcelKit/PKSyncManager.h>
-#import <ParcelKit/NSManagedObject+ParcelKit.h>
-#import <ParcelKit/DBRecord+ParcelKit.h>
+// Binary data is stored separately from regular data in a special table
+// named by appending a suffix to the original tableID.
+// The suffix can be overridden by defining PKBinaryDataTableSuffix before including ParcelKit.
+#ifndef PKBinaryDataTableSuffix
+#define PKBinaryDataTableSuffix @".bin"
+#endif
+
+// By default binary data will use up to half the maximum record size of 100 KiB.
+// Can be overridden by defining PKMaximumBinaryDataLengthInBytes before including ParcelKit.
+#ifndef PKMaximumBinaryDataLengthInBytes
+#define PKMaximumBinaryDataLengthInBytes 50000
+#endif

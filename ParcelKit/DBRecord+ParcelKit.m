@@ -24,6 +24,7 @@
 //
 
 #import "DBRecord+ParcelKit.h"
+#import "PKConstants.h"
 
 #ifndef PKMaximumBinaryDataChunkLengthInBytes
 #define PKMaximumBinaryDataChunkLengthInBytes 95000

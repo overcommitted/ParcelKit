@@ -25,6 +25,7 @@
 
 #import "NSManagedObject+ParcelKit.h"
 #import <Dropbox/Dropbox.h>
+#import "PKConstants.h"
 
 NSString * const PKInvalidAttributeValueException = @"Invalid attribute value";
 static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” expected “%@” to be of type “%@” but is “%@”";
