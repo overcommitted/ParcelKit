@@ -138,7 +138,8 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         if (![strongSelf isObserving]) return;
         
-        if (strongSelf.datastore.status & DBDatastoreIncoming) {
+        DBDatastoreStatus status = strongSelf.datastore.status;
+        if (status & DBDatastoreIncoming) {
             DBError *error = nil;
             NSDictionary *changes = [strongSelf.datastore sync:&error];
             if (changes) {
@@ -149,7 +150,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreStatusDidChangeNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreStatusKey:@(strongSelf.datastore.status)}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreStatusDidChangeNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreStatusKey:@(status)}];
         });
     }];
     
