@@ -66,7 +66,9 @@ typedef enum {
  */
 - (NSArray *)listFolder:(DBPath *)path error:(DBError **)error;
 
-/** Returns the [file info](DBFileInfo) for the file or folder at `path`. */
+/** Returns the [file info](DBFileInfo) for the file or folder at `path`, or
+ `nil` if an error occurred.  If there is no file or folder at `path`, returns
+ `nil` and sets `error` to `DBErrorParamsNotFound`.*/
 - (DBFileInfo *)fileInfoForPath:(DBPath *)path error:(DBError **)error;
 
 

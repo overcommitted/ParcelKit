@@ -14,7 +14,6 @@
 
 - (id)objectAtIndexedSubscript:(NSUInteger)index;
 
-
 /** Inserts an object at the given index, moving other objects further down the list. */
 - (void)insertObject:(id)obj atIndex:(NSUInteger)index;
 
@@ -31,6 +30,10 @@
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)obj;
 
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+
+/** Moves the object from the given old idnex, so that it appears at the
+ given new index. */
+- (void)moveObjectAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
 
 /** Returns all objects in the list. */
 @property (nonatomic, readonly) NSArray *values;
