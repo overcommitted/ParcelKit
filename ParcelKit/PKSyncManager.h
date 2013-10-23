@@ -61,6 +61,17 @@ extern NSString * const PKSyncManagerDatastoreStatusKey;
 */
 @property (nonatomic, copy) NSString *syncAttributeName;
 
+
+/**
+ The number of Core Data managed objects to sync with the DBDatastore at a time.
+ 
+ The DBDatastore has a 2 MiB delta size limit so changes in the managed object context
+ must be batched to remain below this limit.
+ 
+ The default value is “20”. (2048 KiB max delta size / 100 KiB max record size)
+*/
+@property (nonatomic) NSUInteger syncBatchSize;
+
 /**
  Returns a random string suitable for using as a sync identifer.
  @return A random string suitable for using as a sync identifer.

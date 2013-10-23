@@ -55,6 +55,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     if (self) {
         _tablesKeyedByEntityName = [[NSMutableDictionary alloc] init];
         _syncAttributeName = PKDefaultSyncAttributeName;
+        _syncBatchSize = 20;
     }
     return self;
 }
@@ -268,17 +269,17 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
         [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
     };
     
+    NSUInteger index = 0;
     for (NSManagedObject *managedObject in managedObjects) {
         [self updateDatastoreWithManagedObject:managedObject];
-    };
-    
-    DBError *error = nil;
-    NSDictionary *changes = [self.datastore sync:&error];
-    if (changes) {
-        [self updateCoreDataWithDatastoreChanges:changes];
-    } else {
-        NSLog(@"Error syncing with Dropbox: %@", error);
+        index++;
+
+        if (index % self.syncBatchSize == 0) {
+            [self syncDatastore];
+        }
     }
+
+    [self syncDatastore];
 }
 
 - (void)updateDatastoreWithManagedObject:(NSManagedObject *)managedObject
@@ -293,6 +294,17 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
         [record pk_setFieldsWithManagedObject:managedObject syncAttributeName:self.syncAttributeName];
     } else {
         NSLog(@"Error getting or inserting datatore record: %@", error);
+    }
+}
+
+- (void)syncDatastore
+{
+    DBError *error = nil;
+    NSDictionary *changes = [self.datastore sync:&error];
+    if (changes) {
+        [self updateCoreDataWithDatastoreChanges:changes];
+    } else {
+        NSLog(@"Error syncing with Dropbox: %@", error);
     }
 }
 
