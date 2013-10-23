@@ -69,6 +69,13 @@
     [self.mockValues removeObjectAtIndex:index];
 }
 
+- (void)moveObjectAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex
+{
+    id object = [self.mockValues objectAtIndex:oldIndex];
+    [self.mockValues removeObjectAtIndex:oldIndex];
+    [self.mockValues insertObject:object atIndex:newIndex];
+}
+
 - (NSArray *)values
 {
     return [[NSArray alloc] initWithArray:self.mockValues];

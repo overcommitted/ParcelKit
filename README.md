@@ -75,9 +75,9 @@ Example Application
 Requirements
 ------------
 * iOS 6.1 or higher
-* Dropbox Sync SDK 2.0.0-b7 or higher
+* Dropbox Sync SDK 2.0.2 or higher
 * Xcode 4.6 or higher for building the framework
-* Xcode 5 Developer or higher for running the included logic tests
+* Xcode 5 or higher for running the included logic tests
 
 License
 -------

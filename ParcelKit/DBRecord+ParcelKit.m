@@ -130,9 +130,10 @@
                         if ([relationshipDescription isOrdered]) {
                             if (index != recordIndex) {
                                 if (index != NSNotFound) {
-                                    [fieldList removeObjectAtIndex:index];
+                                    [fieldList moveObjectAtIndex:index toIndex:recordIndex];
+                                } else {
+                                    [fieldList insertObject:identifier atIndex:recordIndex];
                                 }
-                                [fieldList insertObject:identifier atIndex:recordIndex];
                             }
                         } else if (index == NSNotFound) {
                             [fieldList addObject:identifier];
