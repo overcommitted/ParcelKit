@@ -4,10 +4,9 @@
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
 		<title>PKSyncManager Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
-		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
-		<meta name="generator" content="appledoc 2.1 (build 840)" />
+		<meta name="generator" content="appledoc 2.2 (build 961)" />
 	</head>
 	<body>
 		<header id="top_header">
@@ -45,6 +44,8 @@
 	<option value="//api/name/managedObjectContext">&nbsp;&nbsp;&nbsp;&nbsp;managedObjectContext</option>
 	
 	<option value="//api/name/syncAttributeName">&nbsp;&nbsp;&nbsp;&nbsp;syncAttributeName</option>
+	
+	<option value="//api/name/syncBatchSize">&nbsp;&nbsp;&nbsp;&nbsp;syncBatchSize</option>
 	
 	
 	
@@ -118,6 +119,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncAttributeName">syncAttributeName</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncBatchSize">syncBatchSize</a></span></li>
+	
 </ul></li>
 
 
@@ -187,8 +190,8 @@
 </tr>
 						</tbody></table></div>
 					
-					
-					
+                    
+                    
 					
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
@@ -213,28 +216,30 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/managedObjectContext">&nbsp;&nbsp;managedObjectContext</a></code>
-		<span class="tooltip"><p>The Core Data managed object context to listen for changes from.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/datastore">&nbsp;&nbsp;datastore</a></code>
-		<span class="tooltip"><p>The Dropbox Datastore to read and write to.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncAttributeName">&nbsp;&nbsp;syncAttributeName</a></code>
-		<span class="tooltip"><p>The Core Data entity attribute name to use for keeping managed objects in sync.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncBatchSize">&nbsp;&nbsp;syncBatchSize</a></code>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncID">+&nbsp;syncID</a></code>
-		<span class="tooltip"><p>Returns a random string suitable for using as a sync identifer.</p></span>
 	</span>
 	
 	
@@ -249,28 +254,24 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/initWithManagedObjectContext:datastore:">&ndash;&nbsp;initWithManagedObjectContext:datastore:</a></code>
-		<span class="tooltip"><p>The designated initializer used to specify the Core Data managed object context and the Dropbox data store that should be synchronized.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/setTablesForEntityNamesWithDictionary:">&ndash;&nbsp;setTablesForEntityNamesWithDictionary:</a></code>
-		<span class="tooltip"><p>Map multiple Core Data entity names to their corresponding Dropbox data store table name. Replaces all other existing relationships that may have been previously set.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/setTable:forEntityName:">&ndash;&nbsp;setTable:forEntityName:</a></code>
-		<span class="tooltip"><p>Maps a single Core Data entity name to the corresponding Dropbox data store table name.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/removeTableForEntityName:">&ndash;&nbsp;removeTableForEntityName:</a></code>
-		<span class="tooltip"><p>Removes the Core Data &lt;&ndash;> Dropbox mapping for the given entity name.</p></span>
 	</span>
 	
 	
@@ -285,35 +286,30 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/tablesByEntityName">&ndash;&nbsp;tablesByEntityName</a></code>
-		<span class="tooltip"><p>Returns a dictionary of tables mapped to their corresponding entity names.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/tableIDs">&ndash;&nbsp;tableIDs</a></code>
-		<span class="tooltip"><p>Returns an array of currently mapped Dropbox data store tableIDs.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/entityNames">&ndash;&nbsp;entityNames</a></code>
-		<span class="tooltip"><p>Returns an array of currently mapped Core Data entity names.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/tableForEntityName:">&ndash;&nbsp;tableForEntityName:</a></code>
-		<span class="tooltip"><p>Returns the tableID associated with a given entity name.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/entityNameForTable:">&ndash;&nbsp;entityNameForTable:</a></code>
-		<span class="tooltip"><p>Returns the entity name associated with a given tableID.</p></span>
 	</span>
 	
 	
@@ -328,21 +324,18 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/isObserving">&ndash;&nbsp;isObserving</a></code>
-		<span class="tooltip"><p>Returns whether or not the sync manager is currently observing changes.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/startObserving">&ndash;&nbsp;startObserving</a></code>
-		<span class="tooltip"><p>Starts observing changes to the Core Data managed object context and the Dropbox data store.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/stopObserving">&ndash;&nbsp;stopObserving</a></code>
-		<span class="tooltip"><p>Stops observing changes from the Core Data managed object context and the Dropbox data store.</p></span>
 	</span>
 	
 	
@@ -461,6 +454,50 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The default value is “syncID”.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">PKSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncBatchSize" title="syncBatchSize"></a>
+	<h3 class="subsubtitle method-title">syncBatchSize</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The number of Core Data managed objects to sync with the DBDatastore at a time.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic) NSUInteger syncBatchSize</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The DBDatastore has a 2 MiB delta size limit so changes in the managed object context
+must be batched to remain below this limit.</p>
+
+<p>The default value is “20”. (2048 KiB max delta size / 100 KiB max record size)</p>
 	</div>
 	
 	
@@ -740,7 +777,7 @@ Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the chang
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Removes the Core Data &lt;&ndash;> Dropbox mapping for the given entity name.</p>
+		<p>Removes the Core Data &lt;-> Dropbox mapping for the given entity name.</p>
 	</div>		
 	
     
@@ -1090,6 +1127,8 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 					</div>
 					
 					
+                    
+                    
 				</div>
 				<div class="main-navigation navigation-bottom">
 					<ul>
@@ -1100,9 +1139,9 @@ Will raise an NSInternalInconsistencyException if the entity does not contain a 
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Overcommitted, LLC. All rights reserved. (Last updated: 2013-07-30)</span><br />
+						<p><span class="copyright">&copy; 2013 Overcommitted, LLC. All rights reserved. (Last updated: 2013-10-23)</span><br />
 						
-						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 961)</a>.</span></p>
 						
 					</div>
 				</div>
