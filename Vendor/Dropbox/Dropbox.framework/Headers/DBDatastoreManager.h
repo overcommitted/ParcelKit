@@ -12,8 +12,9 @@
 
 /** Gets the datastore manager for an account that has been linked via the account manager.
 
- Multiple calls with the same account will return the same object, unless you call <shutDown> or
- the account is unlinked. */
+ The returned object will be the only datastore manager for this account until you release
+ it, call <shutDown>, or the account is unlinked.  Calling this method again in the
+ mean time will return the same object. */
 + (DBDatastoreManager *)managerForAccount:(DBAccount *)account;
 
 /** Opens the default datastore for this account, or creates it if it doesn't exist.
@@ -42,8 +43,6 @@
 /** Deletes a datastore with the given ID.
 
  You must close open datastores before deleting them. The default datastore can never be deleted.
- This method will block until the deletion happens on the server, so you must be online for it to
- succeed and it should never be called from the main UI thread.
 
  @return YES if the datastore was deleted, or NO if an error occurrred. */
 - (BOOL)deleteDatastore:(NSString *)datastoreId error:(DBError **)error;

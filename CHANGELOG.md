@@ -1,4 +1,9 @@
+Version 1.2.1
+================
+* Updated Dropbox-Sync-API-SDK to 2.0.3
+
 Version 1.2.0
+================
 * Sync Core Data changes with the datastore in batches 
 * Updated Dropbox-Sync-API-SDK to 2.0.2
 
