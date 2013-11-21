@@ -10,7 +10,7 @@ ParcelKit can be added to a project using [CocoaPods](https://github.com/cocoapo
 
 ### Using CocoaPods
 
-[![Version Status](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)][docsLink]
+![Version Status](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)
 
 ```
 // Podfile
