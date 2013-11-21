@@ -1,0 +1,8 @@
+language: objective-c
+
+script: 
+- xctool -project ParcelKit.xcodeproj -scheme ParcelKit -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO clean build test
+
+branches:
+only:
+- master
