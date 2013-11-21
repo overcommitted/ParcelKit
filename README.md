@@ -8,9 +8,7 @@ Installation
 ------------
 ParcelKit can be added to a project using [CocoaPods](https://github.com/cocoapods/cocoapods). We also distribute a framework build.
 
-### Using CocoaPods
-
-![Version Status](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)
+### Using CocoaPods ![Version Status](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)
 
 ```
 // Podfile
