@@ -1,14 +1,13 @@
 <img src="https://raw.github.com/overcommitted/ParcelKit/master/ParcelKitLogo.png" width="89px" height="109px" />
 
-ParcelKit
-=========
+# ParcelKit [![Build Status](https://travis-ci.org/overcommitted/ParcelKit.png?branch=master)](https://travis-ci.org/overcommitted/ParcelKit)
 ParcelKit integrates Core Data with [Dropbox](http://www.dropbox.com) using the Dropbox [Datastore API](https://www.dropbox.com/developers/datastore).
 
 Installation
 ------------
 ParcelKit can be added to a project using [CocoaPods](https://github.com/cocoapods/cocoapods). We also distribute a framework build.
 
-### Using CocoaPods ![Version Status](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)
+### Using CocoaPods [![Badge w/ Version](https://cocoapod-badges.herokuapp.com/v/ParcelKit/badge.png)](https://cocoadocs.org/docsets/ParcelKit)
 
 ```
 // Podfile
