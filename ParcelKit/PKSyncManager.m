@@ -30,6 +30,8 @@
 NSString * const PKDefaultSyncAttributeName = @"syncID";
 NSString * const PKSyncManagerDatastoreStatusDidChangeNotification = @"PKSyncManagerDatastoreStatusDidChange";
 NSString * const PKSyncManagerDatastoreStatusKey = @"status";
+NSString * const PKSyncManagerDatastoreIncomingChangesNotification = @"PKSyncManagerDatastoreIncomingChanges";
+NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
 
 static NSUInteger const PKFetchRequestBatchSize = 25;
 
@@ -145,6 +147,10 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
             NSDictionary *changes = [strongSelf.datastore sync:&error];
             if (changes) {
                 [strongSelf updateCoreDataWithDatastoreChanges:changes];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
+                });
             } else {
                 NSLog(@"Error syncing with Dropbox: %@", error);
             }
