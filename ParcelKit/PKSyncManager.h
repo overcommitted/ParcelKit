@@ -37,6 +37,13 @@ extern NSString * const PKDefaultSyncAttributeName;
 extern NSString * const PKSyncManagerDatastoreStatusDidChangeNotification;
 extern NSString * const PKSyncManagerDatastoreStatusKey;
 
+/**
+ Notification that is posted when the DBDatastore has incoming changes.
+
+ The userInfo of the notification will contain the DBDatastore change NSDictionary in `PKSyncManagerDatastoreStatusKey`
+ */
+extern NSString * const PKSyncManagerDatastoreIncomingChangesNotification;
+extern NSString * const PKSyncManagerDatastoreIncomingChangesKey;
 
 /** 
  The sync manager is responsible for listening to changes from a
