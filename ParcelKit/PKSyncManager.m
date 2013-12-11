@@ -143,17 +143,7 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
         
         DBDatastoreStatus status = strongSelf.datastore.status;
         if (status & DBDatastoreIncoming) {
-            DBError *error = nil;
-            NSDictionary *changes = [strongSelf.datastore sync:&error];
-            if (changes) {
-                [strongSelf updateCoreDataWithDatastoreChanges:changes];
-
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
-                });
-            } else {
-                NSLog(@"Error syncing with Dropbox: %@", error);
-            }
+            [strongSelf syncDatastore];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -309,6 +299,8 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     NSDictionary *changes = [self.datastore sync:&error];
     if (changes) {
         [self updateCoreDataWithDatastoreChanges:changes];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:self userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
     } else {
         NSLog(@"Error syncing with Dropbox: %@", error);
     }
