@@ -33,11 +33,12 @@
 #import "PKTableMock.h"
 #import "PKRecordMock.h"
 #import "PKListMock.h"
+#import "Author.h"
 
 @interface NSManagedObjectParcelKitTests : XCTestCase
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSManagedObject *book;
-@property (strong, nonatomic) NSManagedObject *author;
+@property (strong, nonatomic) Author *author;
 @property (strong, nonatomic) NSManagedObject *publisher;
 @end
 
@@ -53,7 +54,7 @@
     [self.book setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.book setValue:@"To Kill a Mockingbird" forKey:@"title"];
     
-    self.author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
+    self.author = [Author insertInManagedObjectContext:self.managedObjectContext];
     [self.author setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.author setValue:@"Harper Lee" forKey:@"name"];
     
@@ -519,4 +520,13 @@
     XCTAssertEqualObjects(@"To Kill a Mockingbird Part 2: Birdy's Revenge", [self.book valueForKey:@"title"], @"");
     XCTAssertEqualObjects(@(296), [self.book valueForKey:@"pageCount"], @"");
 }
+
+-(void)testSetPropertiesWithRecordShouldTriggerCallback
+{
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"title": @"To Kill a Mockingbird Part 2: Birdy's Revenge"}];
+    [self.author pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssert(self.author.hasSyncCallbackBeenCalled, @"");
+    
+}
+
 @end

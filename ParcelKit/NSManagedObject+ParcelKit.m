@@ -199,5 +199,10 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
             }
         }
     }];
+    
+    if ([self respondsToSelector:@selector(parcelKitWasSyncedFromDropbox)]) {
+        // Give objects an opportunity to respond to the sync
+        [self performSelector:@selector(parcelKitWasSyncedFromDropbox)];
+    }
 }
 @end
