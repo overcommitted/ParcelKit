@@ -31,6 +31,7 @@ extern NSString * const PKInvalidAttributeValueException;
 @protocol ParcelKitSyncedObject
 @optional
 - (void)parcelKitWasSyncedFromDropbox;
+- (NSDictionary*)syncedPropertiesDictionary:(NSDictionary*)propertiesByName;
 @end
 
 @interface NSManagedObject (ParcelKit)

@@ -298,4 +298,10 @@
     XCTAssertFalse([[[self.record fields] allKeys] containsObject:@"publisher"], @"");
 }
 
+- (void)testSetPropertiesWithRecordShouldGetCustomValueDictionary
+{
+    [self.record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqualObjects(@"cheese", [self.record objectForKey:@"favourite_food"], @"");
+}
+
 @end

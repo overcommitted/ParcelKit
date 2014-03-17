@@ -25,6 +25,7 @@
 
 #import "DBRecord+ParcelKit.h"
 #import "PKConstants.h"
+#import "NSManagedObject+ParcelKit.h"
 
 #ifndef PKMaximumBinaryDataChunkLengthInBytes
 #define PKMaximumBinaryDataChunkLengthInBytes 95000
@@ -37,7 +38,14 @@
     __weak typeof(self) weakSelf = self;
     NSDictionary *propertiesByName = [[managedObject entity] propertiesByName];
     NSArray *fieldNames = [[self fields] allKeys];
-    NSDictionary *values = [managedObject dictionaryWithValuesForKeys:[propertiesByName allKeys]];
+    NSDictionary *values;
+    if ([managedObject respondsToSelector:@selector(syncedPropertiesDictionary:)]) {
+        // Get the custom properties dictionary
+        values = [managedObject performSelector:@selector(syncedPropertiesDictionary:) withObject:propertiesByName];
+    } else {
+        // Get the standard properties dictionary
+        values = [managedObject dictionaryWithValuesForKeys:[propertiesByName allKeys]];
+    }
     [values enumerateKeysAndObjectsUsingBlock:^(NSString *name, id value, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         
@@ -47,11 +55,11 @@
         if ([propertyDescription isTransient]) return;
 
         if (value && value != [NSNull null]) {
-            if ([propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
+            if ((propertyDescription == nil) || [propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
                 id previousValue = [strongSelf objectForKey:name];
 
                 NSAttributeType attributeType = [(NSAttributeDescription *)propertyDescription attributeType];
-                if (attributeType != NSBinaryDataAttributeType) {
+                if ((propertyDescription == nil) || (attributeType != NSBinaryDataAttributeType)) {
                     if (!previousValue || [previousValue compare:value] != NSOrderedSame) {
                         [strongSelf setObject:value forKey:name];
                     }
