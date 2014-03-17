@@ -284,6 +284,15 @@
     XCTAssertEqualObjects([self.publisher valueForKey:PKDefaultSyncAttributeName], [self.record objectForKey:@"publisher"], @"");
 }
 
+- (void)testSetFieldsWithManagedObjectShouldNotSetOneToManyRelationshipOnBothSides
+{
+    [self.book setValue:self.publisher forKey:@"publisher"];
+    
+    [self.record pk_setFieldsWithManagedObject:self.publisher syncAttributeName:PKDefaultSyncAttributeName];
+    
+    XCTAssertNil([self.record objectForKey:@"books"], @"");
+}
+
 - (void)testSetFieldsWithManagedObjectShouldRemoveToOneRelationship
 {
     [self.record setObject:@"1" forKey:@"publisher"];

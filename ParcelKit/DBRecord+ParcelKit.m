@@ -119,44 +119,50 @@
             } else if ([propertyDescription isKindOfClass:[NSRelationshipDescription class]]) {
                 NSRelationshipDescription *relationshipDescription = (NSRelationshipDescription *)propertyDescription;
                 if ([relationshipDescription isToMany]) {
-                    DBList *fieldList = [strongSelf getOrCreateList:name];
-                    NSMutableOrderedSet *previousIdentifiers = [[NSMutableOrderedSet alloc] initWithArray:[fieldList values]];
-                    NSOrderedSet *currentIdentifiers = ([relationshipDescription isOrdered] ? [value valueForKey:syncAttributeName] : [[NSOrderedSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]]);
-                    NSPredicate* syncablePred = [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary* bindings) {
-                        
-                        if (([object respondsToSelector:@selector(isRecordSyncable)]) && (![object performSelector:@selector(isRecordSyncable)])) {
-                            // Don't links to un-synced objects
-                            return NO;
-                        } else {
-                            return YES;
-                        }
-                    }];
-                    currentIdentifiers = [currentIdentifiers filteredOrderedSetUsingPredicate:syncablePred];
-                    
-                    NSMutableOrderedSet *deletedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:previousIdentifiers];
-                    [deletedIdentifiers minusOrderedSet:currentIdentifiers];
-                    for (NSString *identifier in deletedIdentifiers) {
-                        NSInteger index = [[fieldList values] indexOfObject:identifier];
-                        if (index != NSNotFound) {
-                            [fieldList removeObjectAtIndex:index];
-                        }
-                    }
-                    
-                    NSUInteger recordIndex = 0;
-                    for (NSString *identifier in currentIdentifiers) {
-                        NSInteger index = [[fieldList values] indexOfObject:identifier];
-                        if ([relationshipDescription isOrdered]) {
-                            if (index != recordIndex) {
-                                if (index != NSNotFound) {
-                                    [fieldList moveObjectAtIndex:index toIndex:recordIndex];
-                                } else {
-                                    [fieldList insertObject:identifier atIndex:recordIndex];
-                                }
+                    // See if the inverse relationship is to-one, and if so we don't need
+                    // to bother storing the relationship on this table at all (it'll lead to
+                    // fewer potential inconsistencies if we don't)
+                    NSRelationshipDescription* inverse = [relationshipDescription inverseRelationship];
+                    if ([inverse isToMany]) {
+                        DBList *fieldList = [strongSelf getOrCreateList:name];
+                        NSMutableOrderedSet *previousIdentifiers = [[NSMutableOrderedSet alloc] initWithArray:[fieldList values]];
+                        NSOrderedSet *currentIdentifiers = ([relationshipDescription isOrdered] ? [value valueForKey:syncAttributeName] : [[NSOrderedSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]]);
+                        NSPredicate* syncablePred = [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary* bindings) {
+                            
+                            if (([object respondsToSelector:@selector(isRecordSyncable)]) && (![object performSelector:@selector(isRecordSyncable)])) {
+                                // Don't links to un-synced objects
+                                return NO;
+                            } else {
+                                return YES;
                             }
-                        } else if (index == NSNotFound) {
-                            [fieldList addObject:identifier];
+                        }];
+                        currentIdentifiers = [currentIdentifiers filteredOrderedSetUsingPredicate:syncablePred];
+                        
+                        NSMutableOrderedSet *deletedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:previousIdentifiers];
+                        [deletedIdentifiers minusOrderedSet:currentIdentifiers];
+                        for (NSString *identifier in deletedIdentifiers) {
+                            NSInteger index = [[fieldList values] indexOfObject:identifier];
+                            if (index != NSNotFound) {
+                                [fieldList removeObjectAtIndex:index];
+                            }
                         }
-                        recordIndex++;
+                        
+                        NSUInteger recordIndex = 0;
+                        for (NSString *identifier in currentIdentifiers) {
+                            NSInteger index = [[fieldList values] indexOfObject:identifier];
+                            if ([relationshipDescription isOrdered]) {
+                                if (index != recordIndex) {
+                                    if (index != NSNotFound) {
+                                        [fieldList moveObjectAtIndex:index toIndex:recordIndex];
+                                    } else {
+                                        [fieldList insertObject:identifier atIndex:recordIndex];
+                                    }
+                                }
+                            } else if (index == NSNotFound) {
+                                [fieldList addObject:identifier];
+                            }
+                            recordIndex++;
+                        }
                     }
                 } else {
                     [strongSelf setObject:[value valueForKey:syncAttributeName] forKey:name];

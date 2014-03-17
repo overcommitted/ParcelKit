@@ -484,6 +484,14 @@
     XCTAssertEqualObjects(self.publisher, [self.book valueForKey:@"publisher"], @"");
 }
 
+- (void)testSetPropertiesWithRecordShouldNotSetToOneToManyRelationshipOnTheManySide
+{
+    [self.book setValue:self.publisher forKey:@"publisher"];
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"books": @""}];
+    [self.publisher pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertEqualObjects(self.publisher, [self.book valueForKey:@"publisher"], @"");
+}
+
 - (void)testSetPropertiesWithRecordShouldIgnoreMissingObjectInToOneRelationship
 {
     PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"publisher": @"2"}];

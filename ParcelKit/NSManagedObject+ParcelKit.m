@@ -109,71 +109,84 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
             [strongSelf setValue:value forKey:propertyName];
         } else if ([propertyDescription isKindOfClass:[NSRelationshipDescription class]]) {
             NSRelationshipDescription *relationshipDescription = (NSRelationshipDescription *)propertyDescription;
+            NSRelationshipDescription *inverse = [relationshipDescription inverseRelationship];
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[[relationshipDescription destinationEntity] name]];
             [fetchRequest setFetchLimit:1];
             
             if ([relationshipDescription isToMany]) {
-                DBList *recordList = [record objectForKey:propertyName];
-                if (recordList && ![recordList isKindOfClass:[DBList class]]) {
-                    [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, recordList, [DBList class], [recordList class]];
-                }
-                
-                NSMutableArray *recordIdentifiers = [[NSMutableArray alloc] init];
-                for (id value in [recordList values]) {
-                    if (![value isKindOfClass:[NSString class]]) {
-                        if ([value respondsToSelector:@selector(stringValue)]) {
-                            [recordIdentifiers addObject:[value stringValue]];
-                        } else {
-                            [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, value, [NSString class], [value class]];
-                        }
-                    } else {
-                        [recordIdentifiers addObject:value];
-                    }
-                }
-                
-                id relatedObjects = ([relationshipDescription isOrdered] ? [strongSelf mutableOrderedSetValueForKey:propertyName] : [strongSelf mutableSetValueForKey:propertyName]);
-                NSMutableSet *unrelatedObjects = [[NSMutableSet alloc] init];
-                for (NSManagedObject *relatedObject in relatedObjects) {
-                    if (![recordIdentifiers containsObject:[relatedObject valueForKey:syncAttributeName]]) {
-                        if (([relatedObject respondsToSelector:@selector(isRecordSyncable)]) && (![relatedObject performSelector:@selector(isRecordSyncable)])) {
-                            // Don't remove links to un-synced objects
-                            continue;
-                        }
-                        [unrelatedObjects addObject:relatedObject];
-                    }
-                }
-                [relatedObjects minusSet:unrelatedObjects];
-                
-                NSUInteger recordIndex = 0;
-                for (NSString *identifier in recordIdentifiers) {
-                    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", syncAttributeName, identifier]];
-                    [fetchRequest setIncludesPropertyValues:NO];
-                    NSError *error = nil;
-                    NSArray *managedObjects = [strongSelf.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-                    if (managedObjects) {
-                        if ([managedObjects count] == 1) {
-                            NSManagedObject *relatedObject = managedObjects[0];
-                            
-                            if ([relationshipDescription isOrdered]) {
-                                NSUInteger relatedObjectIndex = [relatedObjects indexOfObject:relatedObject];
-                                if (relatedObjectIndex != recordIndex) {
-                                    if (relatedObjectIndex != NSNotFound) {
-                                        [relatedObjects removeObject:relatedObject];
-                                    }
-                                    [relatedObjects insertObject:relatedObject atIndex:recordIndex];
-                                }
-                            } else {
-                                if (![relatedObjects containsObject:relatedObject]) {
-                                    [relatedObjects addObject:relatedObject];
-                                }
-                            }
-                        }
-                    } else {
-                        NSLog(@"Error executing fetch request: %@", error);
+                // If it's a one-to-many relationship, leave all the relationship business
+                // to the "one" side of the equation. Otherwise, carry on and deal with it here
+                if ([inverse isToMany]) {
+                    DBList *recordList = [record objectForKey:propertyName];
+                    if (recordList && ![recordList isKindOfClass:[DBList class]]) {
+                        [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, recordList, [DBList class], [recordList class]];
                     }
                     
-                    recordIndex++;
-                };
+                    NSMutableArray *recordIdentifiers = [[NSMutableArray alloc] init];
+                    for (id value in [recordList values]) {
+                        if (![value isKindOfClass:[NSString class]]) {
+                            if ([value respondsToSelector:@selector(stringValue)]) {
+                                [recordIdentifiers addObject:[value stringValue]];
+                            } else {
+                                [NSException raise:PKInvalidAttributeValueException format:PKInvalidAttributeValueExceptionFormat, entityName, propertyName, value, [NSString class], [value class]];
+                            }
+                        } else {
+                            [recordIdentifiers addObject:value];
+                        }
+                    }
+                    
+                    id relatedObjects = ([relationshipDescription isOrdered] ? [strongSelf mutableOrderedSetValueForKey:propertyName] : [strongSelf mutableSetValueForKey:propertyName]);
+                    NSMutableSet *unrelatedObjects = [[NSMutableSet alloc] init];
+                    for (NSManagedObject *relatedObject in relatedObjects) {
+                        if (![recordIdentifiers containsObject:[relatedObject valueForKey:syncAttributeName]]) {
+                            if (([relatedObject respondsToSelector:@selector(isRecordSyncable)]) && (![relatedObject performSelector:@selector(isRecordSyncable)])) {
+                                // Don't remove links to un-synced objects
+                                continue;
+                            }
+                            if (![inverse isOptional]) {
+                                // We should only be removing non-optional relationships when
+                                // the corresponding record has been deleted
+                                if (![relatedObject isDeleted]) {
+                                    // Let's keep this relationship
+                                    continue;
+                                }
+                            }
+                            [unrelatedObjects addObject:relatedObject];
+                        }
+                    }
+                    [relatedObjects minusSet:unrelatedObjects];
+                    
+                    NSUInteger recordIndex = 0;
+                    for (NSString *identifier in recordIdentifiers) {
+                        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", syncAttributeName, identifier]];
+                        [fetchRequest setIncludesPropertyValues:NO];
+                        NSError *error = nil;
+                        NSArray *managedObjects = [strongSelf.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+                        if (managedObjects) {
+                            if ([managedObjects count] == 1) {
+                                NSManagedObject *relatedObject = managedObjects[0];
+                                
+                                if ([relationshipDescription isOrdered]) {
+                                    NSUInteger relatedObjectIndex = [relatedObjects indexOfObject:relatedObject];
+                                    if (relatedObjectIndex != recordIndex) {
+                                        if (relatedObjectIndex != NSNotFound) {
+                                            [relatedObjects removeObject:relatedObject];
+                                        }
+                                        [relatedObjects insertObject:relatedObject atIndex:recordIndex];
+                                    }
+                                } else {
+                                    if (![relatedObjects containsObject:relatedObject]) {
+                                        [relatedObjects addObject:relatedObject];
+                                    }
+                                }
+                            }
+                        } else {
+                            NSLog(@"Error executing fetch request: %@", error);
+                        }
+                        
+                        recordIndex++;
+                    };
+                }
             } else {
                 id identifier = [record objectForKey:propertyName];
                 if (identifier) {
