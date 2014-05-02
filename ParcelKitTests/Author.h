@@ -4,5 +4,6 @@
 @interface Author : _Author <ParcelKitSyncedObject> {}
 
 @property (nonatomic) BOOL hasSyncCallbackBeenCalled;
+@property (nonatomic) BOOL isRecordSyncable;
 
 @end

@@ -11,6 +11,14 @@
 @implementation Author
 
 @synthesize hasSyncCallbackBeenCalled;
+@synthesize isRecordSyncable;
+
+- (id)initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
+    if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
+        self.isRecordSyncable = YES;
+    }
+    return self;
+}
 
 - (void)parcelKitWasSyncedFromDropbox {
     self.hasSyncCallbackBeenCalled = YES;

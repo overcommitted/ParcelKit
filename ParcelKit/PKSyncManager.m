@@ -243,8 +243,11 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     
     NSSet *deletedObjects = [managedObjectContext deletedObjects];
     for (NSManagedObject *managedObject in deletedObjects) {
-        if (([managedObject respondsToSelector:@selector(isRecordSyncable)]) && (![managedObject performSelector:@selector(isRecordSyncable)])) {
-            continue;
+        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
+            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
+            if (![pkObj isRecordSyncable]) {
+                continue;
+            }
         }
         
         NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
@@ -271,8 +274,11 @@ static NSUInteger const PKFetchRequestBatchSize = 25;
     
     NSUInteger index = 0;
     for (NSManagedObject *managedObject in managedObjects) {
-        if (([managedObject respondsToSelector:@selector(isRecordSyncable)]) && (![managedObject performSelector:@selector(isRecordSyncable)])) {
-            continue;
+        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
+            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
+            if (![pkObj isRecordSyncable]) {
+                continue;
+            }
         }
         
         [self updateDatastoreWithManagedObject:managedObject];

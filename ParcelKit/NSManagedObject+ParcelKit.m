@@ -139,9 +139,12 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                     NSMutableSet *unrelatedObjects = [[NSMutableSet alloc] init];
                     for (NSManagedObject *relatedObject in relatedObjects) {
                         if (![recordIdentifiers containsObject:[relatedObject valueForKey:syncAttributeName]]) {
-                            if (([relatedObject respondsToSelector:@selector(isRecordSyncable)]) && (![relatedObject performSelector:@selector(isRecordSyncable)])) {
-                                // Don't remove links to un-synced objects
-                                continue;
+                            if ([relatedObject respondsToSelector:@selector(isRecordSyncable)]) {
+                                id<ParcelKitSyncedObject> pkRelatedObj = (id<ParcelKitSyncedObject>)relatedObject;
+                                if (![pkRelatedObj isRecordSyncable]) {
+                                    // Don't remove links to un-synced objects
+                                    continue;
+                                }
                             }
                             if (![inverse isOptional]) {
                                 // We should only be removing non-optional relationships when

@@ -28,7 +28,7 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="publisher" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Author" positionX="0" positionY="0" width="128" height="88"/>
+        <element name="Author" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Book" positionX="0" positionY="0" width="128" height="268"/>
         <element name="Publisher" positionX="0" positionY="0" width="128" height="90"/>
     </elements>

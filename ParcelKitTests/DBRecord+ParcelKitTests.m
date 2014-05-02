@@ -33,6 +33,7 @@
 #import "PKRecordMock.h"
 #import "PKListMock.h"
 #import "NSManagedObjectContext+ParcelKitTests.h"
+#import "Author.h"
 
 @interface DBRecordParcelKitTests : XCTestCase
 @property (strong, nonatomic) PKDatastoreMock *datastore;
@@ -40,7 +41,7 @@
 @property (strong, nonatomic) PKRecordMock *record;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSManagedObject *book;
-@property (strong, nonatomic) NSManagedObject *author;
+@property (strong, nonatomic) Author *author;
 @property (strong, nonatomic) NSManagedObject *publisher;
 @end
 
@@ -61,7 +62,7 @@
     [self.book setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.book setValue:@"To Kill a Mockingbird" forKey:@"title"];
     
-    self.author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
+    self.author = [Author insertInManagedObjectContext:self.managedObjectContext];
     [self.author setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.author setValue:@"Harper Lee" forKey:@"name"];
     
@@ -190,6 +191,19 @@
     XCTAssertNotNil(authors, @"");
     XCTAssertEqual(1, (int)[authors count], @"");
     XCTAssertTrue([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
+}
+
+- (void)testSetFieldsWithManagedObjectShouldNotSetRelationshipToUnsycnedRows
+{
+    [self.book setValue:[NSSet setWithObject:self.author] forKey:@"authors"];
+    self.author.isRecordSyncable = NO;
+    
+    [self.record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
+    
+    NSArray *authors = [[self.record getOrCreateList:@"authors"] values];
+    XCTAssertNotNil(authors, @"");
+    XCTAssertEqual(0, (int)[authors count], @"");
+    XCTAssertFalse([authors containsObject:[self.author valueForKey:PKDefaultSyncAttributeName]], @"");
 }
 
 - (void)testSetFieldsWithManagedObjectShouldSetOrderedToManyRelationship

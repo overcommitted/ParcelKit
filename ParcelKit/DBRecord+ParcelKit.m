@@ -129,9 +129,10 @@
                         NSOrderedSet *currentIdentifiers = ([relationshipDescription isOrdered] ? [value valueForKey:syncAttributeName] : [[NSOrderedSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]]);
                         NSPredicate* syncablePred = [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary* bindings) {
                             
-                            if (([object respondsToSelector:@selector(isRecordSyncable)]) && (![object performSelector:@selector(isRecordSyncable)])) {
+                            if ([object respondsToSelector:@selector(isRecordSyncable)]) {
+                                id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)object;
                                 // Don't links to un-synced objects
-                                return NO;
+                                return [pkObj isRecordSyncable];
                             } else {
                                 return YES;
                             }

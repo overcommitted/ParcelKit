@@ -436,6 +436,26 @@
     XCTAssertEqualObjects(author, self.author, @"");
 }
 
+- (void)testSetPropertiesWithRecordShouldNotRemoveUnsyncableObjectsInToManyRelationship
+{
+    Author *authorToBeRemoved = [Author insertInManagedObjectContext:self.managedObjectContext];
+    [authorToBeRemoved setValue:@"2" forKey:PKDefaultSyncAttributeName];
+    authorToBeRemoved.isRecordSyncable = NO;
+    
+    [self.book setValue:[NSSet setWithObjects:self.author, authorToBeRemoved, nil] forKey:@"authors"];
+    XCTAssertEqual(2, (int)[[self.book valueForKey:@"authors"] count], @"");
+    
+    PKRecordMock *record = [PKRecordMock record:@"1" withFields:@{@"authors": [[PKListMock alloc] initWithValues:@[@"1"]]}];
+    [self.book pk_setPropertiesWithRecord:record syncAttributeName:PKDefaultSyncAttributeName];
+    
+    NSSet *authors = [self.book valueForKey:@"authors"];
+    XCTAssertNotNil(authors, @"");
+    XCTAssertEqual(2, (int)[authors count], @"");
+    
+    XCTAssert([authors containsObject:authorToBeRemoved], @"");
+    XCTAssert([authors containsObject:self.author], @"");
+}
+
 - (void)testSetPropertiesWithRecordShouldRemoveObjectsInOrderedToManyRelationship
 {
     NSManagedObject *author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
