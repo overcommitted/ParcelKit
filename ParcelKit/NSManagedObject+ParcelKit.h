@@ -32,6 +32,7 @@ extern NSString * const PKInvalidAttributeValueException;
 @optional
 - (void)parcelKitWasSyncedFromDropbox;
 - (NSDictionary*)syncedPropertiesDictionary:(NSDictionary*)propertiesByName;
+- (BOOL)isRecordSyncable;
 @end
 
 @interface NSManagedObject (ParcelKit)

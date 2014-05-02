@@ -122,6 +122,16 @@
                     DBList *fieldList = [strongSelf getOrCreateList:name];
                     NSMutableOrderedSet *previousIdentifiers = [[NSMutableOrderedSet alloc] initWithArray:[fieldList values]];
                     NSOrderedSet *currentIdentifiers = ([relationshipDescription isOrdered] ? [value valueForKey:syncAttributeName] : [[NSOrderedSet alloc] initWithArray:[[value allObjects] valueForKey:syncAttributeName]]);
+                    NSPredicate* syncablePred = [NSPredicate predicateWithBlock:^BOOL(id object, NSDictionary* bindings) {
+                        
+                        if (([object respondsToSelector:@selector(isRecordSyncable)]) && (![object performSelector:@selector(isRecordSyncable)])) {
+                            // Don't links to un-synced objects
+                            return NO;
+                        } else {
+                            return YES;
+                        }
+                    }];
+                    currentIdentifiers = [currentIdentifiers filteredOrderedSetUsingPredicate:syncablePred];
                     
                     NSMutableOrderedSet *deletedIdentifiers = [[NSMutableOrderedSet alloc] initWithOrderedSet:previousIdentifiers];
                     [deletedIdentifiers minusOrderedSet:currentIdentifiers];

@@ -135,6 +135,10 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
                 NSMutableSet *unrelatedObjects = [[NSMutableSet alloc] init];
                 for (NSManagedObject *relatedObject in relatedObjects) {
                     if (![recordIdentifiers containsObject:[relatedObject valueForKey:syncAttributeName]]) {
+                        if (([relatedObject respondsToSelector:@selector(isRecordSyncable)]) && (![relatedObject performSelector:@selector(isRecordSyncable)])) {
+                            // Don't remove links to un-synced objects
+                            continue;
+                        }
                         [unrelatedObjects addObject:relatedObject];
                     }
                 }
