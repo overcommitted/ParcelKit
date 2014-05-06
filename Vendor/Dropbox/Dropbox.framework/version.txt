@@ -1,1 +1,2 @@
-2.0.3
+Dropbox Sync/Datastore API for iOS
+2.1.2

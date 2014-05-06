@@ -31,7 +31,7 @@
 
 - (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
 
-/** Moves the object from the given old idnex, so that it appears at the
+/** Moves the object from the given old index, so that it appears at the
  given new index. */
 - (void)moveObjectAtIndex:(NSUInteger)oldIndex toIndex:(NSUInteger)newIndex;
 

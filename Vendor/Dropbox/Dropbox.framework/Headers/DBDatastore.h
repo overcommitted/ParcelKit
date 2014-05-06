@@ -60,8 +60,8 @@ typedef NSUInteger DBDatastoreStatus;
 
  @returns A dictionary mapping of `tableId` to a set of <DBRecord> objects if the call was
  successful, or `nil` if an error occurred. The table IDs and records in the dictionary correspond
- to the tables and records that changed due to remote changes applied during this sync. You can
- detect records that have been deleted using the `deleted` property on the records. */
+ to the tables and records that changed due to remote changes applied during this sync. If records
+ are deleted by the sync, the `DBRecord`s will have the `deleted` property set, but no fields. */
 - (NSDictionary *)sync:(DBError **)error;
 
 /** Whether the datastore is currently open. */

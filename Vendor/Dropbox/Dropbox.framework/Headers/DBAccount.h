@@ -27,7 +27,9 @@
  method or from the Dropbox website. */
 @property (nonatomic, readonly, getter=isLinked) BOOL linked;
 
-/** Information about the user of this account. */
+/** Information about the user of this account, or `nil` if no info is available.
+ * Account info is fetched in the background.  To be notified when account info is
+ * available or updated, use <addObserver:block:>.*/
 @property (nonatomic, readonly) DBAccountInfo *info;
 
 

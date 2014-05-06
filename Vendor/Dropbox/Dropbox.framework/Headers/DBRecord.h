@@ -63,13 +63,13 @@
 
 - (void)setObject:(id)value forKeyedSubscript:(id)key;
 
-/* Remove a single field from the record. */
+/** Remove a single field from the record. */
 - (void)removeObjectForKey:(NSString *)fieldName;
 
 /** Delete this record. This method has no effect on records which have already been deleted. */
 - (void)deleteRecord;
 
-/** Whether this record is deleted. */
+/** Whether this record is deleted.  A deleted `DBRecord` can't be used to read or write fields. */
 @property (nonatomic, readonly, getter=isDeleted) BOOL deleted;
 
 @end

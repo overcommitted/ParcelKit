@@ -27,7 +27,7 @@
 /** The name of an appropriate icon to display for the file, taken
  from the Dropbox icon library.  Will be `nil` if no suggested icon
  is available.  For more information see the
- [metadata](https://www.dropbox.com/developers/core/docs#metadata)
+ [metadata](https://www.dropbox.com/developers/core/docs#metadata )
  documentation. */
 @property (nonatomic, readonly) NSString *iconName;
 

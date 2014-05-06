@@ -11,7 +11,7 @@
 
 /** Create a new path object from a string.  Some special characters, names, or encodings a
  are not allowed in a Dropbox path.  For more details see this
- [article](http://www.dropbox.com/help/145).
+ [article](http://www.dropbox.com/help/145 ).
 
  @return A new path object if the contents of `pathStr` are a valid Dropbox path, `nil` otherwise.
  */

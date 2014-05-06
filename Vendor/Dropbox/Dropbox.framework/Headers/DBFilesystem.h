@@ -190,6 +190,17 @@ typedef enum {
 /** Unregister all blocks associated with `observer` from receiving updates. */
 - (void)removeObserver:(id)observer;
 
+/** Shuts down the filesystem, which stops all syncing.
+
+ All associated `DBFile`s will be closed.  Changes that were made to files
+ before shutdown will be uploaded the next time a `DBFilesystem` is created.
+
+ After this call, the `DBFilesystem` and its `DBFile`s can no longer be used.
+ You should get a new `DBFilesystem` via <initWithAccount:>.
+
+ The datastore manager will be automatically shut down if the app is unlinked remotely. */
+- (void)shutDown;
+
 @end
 
 

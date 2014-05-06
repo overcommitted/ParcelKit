@@ -57,10 +57,17 @@
 
 /** Shuts down the datastore manager, which stops all syncing.
 
+ All associated `DBDatastore`s will be closed.  Unsynced changes to unclosed
+ datastores will be lost. Changes that were synced before shutdown but not yet
+ uploaded will be uploaded the next time that particular datastore is opened.
+ 
+ After this call, the `DBDatastoreManager` and its `DBDatastore`s can no longer be used.
+ You should get a new `DBDatastoreManager` via <managerForAccount:>.
+
  The datastore manager will be automatically shut down if the app is unlinked remotely. */
 - (void)shutDown;
 
-/** Whether the datastore manager is current shut down. */
+/** Whether the datastore manager is currently shut down. */
 @property (nonatomic, readonly, getter=isShutDown) BOOL shutDown;
 
 @end
