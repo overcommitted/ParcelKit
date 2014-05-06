@@ -33,8 +33,6 @@ NSString * const PKSyncManagerDatastoreStatusKey = @"status";
 NSString * const PKSyncManagerDatastoreIncomingChangesNotification = @"PKSyncManagerDatastoreIncomingChanges";
 NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
 
-static NSUInteger const PKFetchRequestBatchSize = 25;
-
 @interface PKSyncManager ()
 @property (nonatomic, strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readwrite) DBDatastore *datastore;
