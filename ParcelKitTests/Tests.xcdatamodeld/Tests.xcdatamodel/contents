@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="13A598" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Author" syncable="YES">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Author" representedClassName="Author" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="syncID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Book" inverseName="authors" inverseEntity="Book" syncable="YES"/>
     </entity>
-    <entity name="Book" syncable="YES">
+    <entity name="Book" representedClassName="NSManagedObject" syncable="YES">
         <attribute name="averageRating" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="cover" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="coverHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -28,8 +28,8 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="publisher" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Author" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Book" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Publisher" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Author" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="Book" positionX="0" positionY="0" width="128" height="268"/>
+        <element name="Publisher" positionX="0" positionY="0" width="128" height="90"/>
     </elements>
 </model>

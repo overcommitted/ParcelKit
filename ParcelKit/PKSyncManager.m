@@ -241,6 +241,13 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     
     NSSet *deletedObjects = [managedObjectContext deletedObjects];
     for (NSManagedObject *managedObject in deletedObjects) {
+        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
+            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
+            if (![pkObj isRecordSyncable]) {
+                continue;
+            }
+        }
+        
         NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
         if (!tableID) continue;
         
@@ -265,6 +272,13 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     
     NSUInteger index = 0;
     for (NSManagedObject *managedObject in managedObjects) {
+        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
+            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
+            if (![pkObj isRecordSyncable]) {
+                continue;
+            }
+        }
+        
         [self updateDatastoreWithManagedObject:managedObject];
         index++;
 
