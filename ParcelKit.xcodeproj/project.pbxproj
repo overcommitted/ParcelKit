@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		52F5FB18191430470060F8EA /* _Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5FB15191430470060F8EA /* _Author.m */; };
+		52F5FB19191430470060F8EA /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5FB17191430470060F8EA /* Author.m */; };
 		AB1E6AF01795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */; };
 		AB1E6AF31795D77A00FF03A8 /* PKListMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF21795D77A00FF03A8 /* PKListMock.m */; };
 		AB1E6AF51795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF41795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m */; };
@@ -93,6 +95,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		52F5FB14191430470060F8EA /* _Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Author.h; sourceTree = "<group>"; };
+		52F5FB15191430470060F8EA /* _Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Author.m; sourceTree = "<group>"; };
+		52F5FB16191430470060F8EA /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
+		52F5FB17191430470060F8EA /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
 		AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ParcelKitTests.m"; sourceTree = "<group>"; };
 		AB1E6AF11795D77A00FF03A8 /* PKListMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKListMock.h; sourceTree = "<group>"; };
 		AB1E6AF21795D77A00FF03A8 /* PKListMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKListMock.m; sourceTree = "<group>"; };
@@ -187,6 +193,10 @@
 		AB3F8D3717935E2D000F8FA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52F5FB14191430470060F8EA /* _Author.h */,
+				52F5FB15191430470060F8EA /* _Author.m */,
+				52F5FB16191430470060F8EA /* Author.h */,
+				52F5FB17191430470060F8EA /* Author.m */,
 				AB6EF6771794363500D0BAB0 /* Tests.xcdatamodeld */,
 				AB6EF67D17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.h */,
 				AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */,
@@ -424,6 +434,8 @@
 			files = (
 				AB6EF6851794783400D0BAB0 /* PKDatastoreMock.m in Sources */,
 				ABC8E9541794A35B00724531 /* PKTableMock.m in Sources */,
+				52F5FB19191430470060F8EA /* Author.m in Sources */,
+				52F5FB18191430470060F8EA /* _Author.m in Sources */,
 				AB1E6AF51795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m in Sources */,
 				ABC7D0FE179360A300AAA1CA /* PKSyncManager.m in Sources */,
 				AB1E6AF01795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m in Sources */,

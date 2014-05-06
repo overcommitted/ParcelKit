@@ -174,4 +174,9 @@ extern NSString * const PKSyncManagerDatastoreIncomingChangesKey;
  */
 - (void)stopObserving;
 
+/**
+ Force a manual sync of the datastore
+ */
+- (void)syncDatastore;
+
 @end

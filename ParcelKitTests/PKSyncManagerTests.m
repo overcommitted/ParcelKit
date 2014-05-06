@@ -30,6 +30,7 @@
 #import "PKDatastoreMock.h"
 #import "PKTableMock.h"
 #import "PKRecordMock.h"
+#import "Author.h"
 
 @interface PKSyncManager (ParcelKitTests)
 - (void)updateCoreDataWithDatastoreChanges:(NSDictionary *)changes;
@@ -387,6 +388,23 @@
     XCTAssertEqualObjects(@"To Kill a Mockingbird Part 2: Birdy's Revenge", [record objectForKey:@"title"], @"");
 }
 
+- (void)testCoreDataUpdateShouldNotUpdateDatastoreWithUpdatedUnsyncableObject
+{
+    [self.syncManager startObserving];
+    
+    Author *object = [Author insertInManagedObjectContext:self.managedObjectContext];
+    [object setValue:@"1" forKey:self.syncManager.syncAttributeName];
+    [object setValue:@"Harper Lee" forKey:@"name"];
+    object.isRecordSyncable = NO;
+    XCTAssertTrue([self.managedObjectContext save:nil], @"");
+    
+    DBTable *table = [self.datastore getTable:@"authors"];
+    XCTAssertNotNil(table, @"");
+    
+    DBRecord *record = [table getRecord:@"1" error:nil];
+    XCTAssertNil(record, @"");
+}
+
 - (void)testCoreDataDeleteShouldUpdateDatastoreWithDeletedObject
 {
     [self.syncManager startObserving];
@@ -404,6 +422,27 @@
     
     DBRecord *record = [table getRecord:@"1" error:nil];
     XCTAssertNil(record, @"");
+}
+
+- (void)testCoreDataDeleteShouldNotUpdateDatastoreWithDeletedUnsycableObject
+{
+    [self.syncManager startObserving];
+    
+    Author *object = [Author insertInManagedObjectContext:self.managedObjectContext];
+    [object setValue:@"1" forKey:self.syncManager.syncAttributeName];
+    [object setValue:@"Harper Lee" forKey:@"name"];
+    XCTAssertTrue([self.managedObjectContext save:nil], @"");
+    
+    object.isRecordSyncable = NO;
+    [self.managedObjectContext deleteObject:object];
+    XCTAssertTrue([self.managedObjectContext save:nil], @"");
+    
+    DBTable *table = [self.datastore getTable:@"authors"];
+    XCTAssertNotNil(table, @"");
+    
+    DBRecord *record = [table getRecord:@"1" error:nil];
+    XCTAssertNotNil(record, @"");
+    XCTAssertEqualObjects(@"Harper Lee", [record objectForKey:@"name"], @"");
 }
 
 - (void)testCoreDataInsertWithoutSyncAttributeSpecifiedShouldAddSyncAttribute
