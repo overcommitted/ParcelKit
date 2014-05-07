@@ -1,3 +1,12 @@
+Version 1.3.0
+================
+* Allow a manual sync to be requested by calling [syncManager syncDatastore]
+* Allow selectively syncing certain rows only
+* Allow models to customise exactly what data gets synced
+* Add a hook to make any modifications after a row is synced
+* Only store one to many relationship on one side
+* Updated Dropbox-Sync-API-SDK to 2.1.2
+
 Version 1.2.1
 ================
 * Updated Dropbox-Sync-API-SDK to 2.0.3
