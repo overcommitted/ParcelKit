@@ -1,7 +1,15 @@
+# script: 
+# - xctool -project ParcelKit.xcodeproj -scheme ParcelKit -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO clean build test
+
 language: objective-c
 
-script: 
-- xctool -project ParcelKit.xcodeproj -scheme ParcelKit -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO clean build test
+before_script:
+  - brew update
+  - brew upgrade xctool
+  
+xcode_project:  ParcelKit.xcodeproj 
+xcode_scheme: ParcelKit
+xcode_sdk: iphonesimulator7.0
 
 branches:
 only:
