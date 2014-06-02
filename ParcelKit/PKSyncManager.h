@@ -177,6 +177,6 @@ extern NSString * const PKSyncManagerDatastoreIncomingChangesKey;
 /**
  Force a manual sync of the datastore
  */
-- (void)syncDatastore;
+- (BOOL)syncDatastore;
 
 @end

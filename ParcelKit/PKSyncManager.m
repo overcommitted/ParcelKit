@@ -162,12 +162,12 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
 }
 
 #pragma mark - Updating Core Data
-- (void)updateCoreDataWithDatastoreChanges:(NSDictionary *)changes
+- (BOOL)updateCoreDataWithDatastoreChanges:(NSDictionary *)changes
 {
     static NSString * const PKUpdateManagedObjectKey = @"object";
     static NSString * const PKUpdateRecordKey = @"record";
     
-    if ([changes count] == 0) return;
+    if ([changes count] == 0) return NO;
     
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [managedObjectContext setPersistentStoreCoordinator:[self.managedObjectContext persistentStoreCoordinator]];
@@ -230,6 +230,8 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
             [[NSNotificationCenter defaultCenter] removeObserver:strongSelf name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
         }
     }];
+    
+    return YES;
 }
 
 - (void)syncManagedObjectContextDidSave:(NSNotification *)notification
@@ -315,16 +317,19 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     }
 }
 
-- (void)syncDatastore
+- (BOOL)syncDatastore
 {
     DBError *error = nil;
     NSDictionary *changes = [self.datastore sync:&error];
     if (changes) {
-        [self updateCoreDataWithDatastoreChanges:changes];
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:self userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
+        if ([self updateCoreDataWithDatastoreChanges:changes]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:self userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
+        }
+        
+        return YES;
     } else {
         NSLog(@"Error syncing with Dropbox: %@", error);
+        return NO;
     }
 }
 
