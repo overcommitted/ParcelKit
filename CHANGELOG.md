@@ -1,3 +1,7 @@
+Version 2.0.0
+================
+* Updated Dropbox-Sync-API-SDK to 3.0.0. See the Dropbox-Sync-API-SDK Changelog for potentially breaking changes.
+
 Version 1.3.0
 ================
 * Allow a manual sync to be requested by calling [syncManager syncDatastore]
