@@ -4,16 +4,7 @@
 #import "DBFile.h"
 #import "DBFileInfo.h"
 #import "DBPath.h"
-
-enum DBSyncStatusFlags {
-    DBSyncStatusDownloading = (1 << 0),
-    DBSyncStatusUploading = (1 << 1),
-    DBSyncStatusSyncing = (1 << 2),
-    DBSyncStatusActive = (1 << 3),
-};
-
-/** A set of various fields indicating the current status of syncing. */
-typedef NSUInteger DBSyncStatus;
+#import "DBSyncStatus.h"
 
 /** Possible values for thumbnail size when opening a thumbnail.  Thumbnails are scaled
  (not cropped) in a way which preserves the original images aspect ratio, to a
@@ -37,10 +28,27 @@ typedef enum {
     DBThumbFormatPNG,
 } DBThumbFormat;
 
+
 /** The filesystem object provides a files and folder view of a user's Dropbox. The most basic
  operations are listing a folder and opening a file, but it also allows you to move, delete, and
- create files and folders.*/
-
+ create files and folders.  The filesystem automatically synchronizes changes with the Dropbox
+ server in the background.
+ <!-- paragraph separator in class docs for appledoc bug -->
+ File and folder info for a user's Dropbox is mirrored locally and synced in the background.
+ The content of a file is not downloaded until the file is opened, after which it is cached
+ locally, up to a configured maximum size (defaulting to 500MB). If the file cache grows beyond
+ the maximum size, the least recently used files will be removed from the cache to free space.
+ Cached files will never be removed while in use: i.e. when a [`DBFile`](DBFile) is open, or
+ when there is an outstanding upload or download, so it is possible for the cache to temporarily
+ exceed the limit. The cache size can be set to zero, in which case files are removed from the
+ cache as soon as they are no longer in-use.
+ <!-- paragraph separator in class docs for appledoc bug -->
+ Background syncing will remain active if there are outstanding changes to upload or download,
+ if there are open files, or if there are any observers registered for paths. Otherwise, syncing
+ will be paused to preserve battery life until you access the filesystem again.
+ <!-- paragraph separator in class docs for appledoc bug -->
+ A `DBFilesystem` instance is tied to a linked user account, and will be shut down if the account
+ is unlinked. In this case, most methods will fail with an error code of `DBErrorAuth`. */
 @interface DBFilesystem : NSObject
 
 /** @name Creating a filesystem object */
@@ -164,9 +172,8 @@ typedef enum {
  associated with this filesystem becomes unlinked. */
 @property (nonatomic, readonly, getter=isShutDown) BOOL shutDown;
 
-/** Returns a bitmask representing all the currently active states of the filesystem OR'ed together.
- See the DBSyncStatus enum for more details. */
-@property (nonatomic, readonly) DBSyncStatus status;
+/** The status of background synchronization. */
+@property (nonatomic, readonly) DBSyncStatus *status;
 
 
 /** @name Watching for changes */
@@ -198,10 +205,19 @@ typedef enum {
  After this call, the `DBFilesystem` and its `DBFile`s can no longer be used.
  You should get a new `DBFilesystem` via <initWithAccount:>.
 
- The datastore manager will be automatically shut down if the app is unlinked remotely. */
+ The filesystem will be automatically shut down if the app is unlinked remotely. */
 - (void)shutDown;
 
+/** @name Cache Configuration */
+
+/** The current total disk space consumed by files in the cache. */
+@property (nonatomic, readonly) unsigned long long fileCacheSize;
+
+/** The configured maximum size of files in the cache.
+
+ Once set, this setting will remain in effect across app restarts. When the cache size
+ is lowered, this method will immediately clean up the cache based on the new limit.
+ See the [class documentation](DBFilesystem) for more information on cache management. */
+@property (nonatomic, assign) unsigned long long maxFileCacheSize;
+
 @end
-
-
-

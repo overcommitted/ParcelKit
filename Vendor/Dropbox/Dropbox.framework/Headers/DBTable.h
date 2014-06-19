@@ -22,23 +22,24 @@ typedef enum {
 
 /** A collection of [records](DBRecord) that lets you query for existing records or insert new ones. You can
  get an instance using the `getTable:` or `getTables:` methods on <DBDatastore>.
- </p><p>
+ <!-- paragraph separator in class docs for appledoc bug -->
  In addition to querying and inserting records, you can also set custom conflict resolution rules.
- </p><p>
+ <!-- paragraph separator in class docs for appledoc bug -->
  When using the max and min resolution rules, values are compared as follows: integer,
  floating point, boolean, and date values are ordered by their numerical value.  String, byte, and
  list values are lexicographically ordered. Integer and floating point values are compared to each
  other by casting to double, but boolean values are treated as a distinct type ordered before all
  other numbers.  Other values of distinct types are ordered by type, in the order listed
  above.  For example, all boolean values are ordered before all other numeric values, which in
- turn are ordered before all string values.
- */
+ turn are ordered before all string values. */
 @interface DBTable : NSObject
 
 /** Returns `YES` if `tableId` is a valid ID for a `DBTable`, or `NO` otherwise.
-  IDs are case-sensitive, can be 1-32 characters long and may contain alphanumeric
-  characters plus these punctuation characters: . - _ + / =
-  IDs with a leading : are valid, but reserved for internal use. */
+ IDs are case-sensitive, can be 1-64 characters long and may contain alphanumeric
+ characters plus these punctuation characters: . - _ + / =
+ IDs with a leading : are valid, but reserved for internal use.  (Note that older SDKs
+ limited these to 32 characters, so take care if your datastore needs to be accessed by
+ legacy clients.) */
 + (BOOL)isValidId:(NSString *)tableId;
 
 /** Returns records matching the provided filter, or all records if filter is `nil`.

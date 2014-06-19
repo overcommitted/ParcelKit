@@ -139,13 +139,13 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         if (![strongSelf isObserving]) return;
         
-        DBDatastoreStatus status = strongSelf.datastore.status;
-        if (status & DBDatastoreIncoming) {
+        DBDatastoreStatus *status = strongSelf.datastore.status;
+        if (status.incoming) {
             [strongSelf syncDatastore];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreStatusDidChangeNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreStatusKey:@(status)}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreStatusDidChangeNotification object:strongSelf userInfo:@{PKSyncManagerDatastoreStatusKey:status}];
         });
     }];
     

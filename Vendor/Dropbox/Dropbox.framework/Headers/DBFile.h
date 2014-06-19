@@ -38,6 +38,8 @@
  current location (i.e. "stolen") into management by the Sync SDK, or if it must
  be copied. If you are done with the file at `localPath`, then stealing is more
  efficient, but the behavior of writing to the file after stealing is undefined.
+ Stealing will fail if the source file is not on the same device as the
+ SDK cache, since it relies on the ability to rename without copying.
  @return YES if the file was written successfully, or NO if an error occurred.
  */
 - (BOOL)writeContentsOfFile:(NSString *)localPath shouldSteal:(BOOL)shouldSteal error:(DBError **)error;

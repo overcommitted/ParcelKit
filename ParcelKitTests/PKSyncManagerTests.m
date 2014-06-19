@@ -28,6 +28,7 @@
 #import "NSManagedObjectContext+ParcelKitTests.h"
 #import "PKSyncManager.h"
 #import "PKDatastoreMock.h"
+#import "PKDatastoreStatusMock.h"
 #import "PKTableMock.h"
 #import "PKRecordMock.h"
 #import "Author.h"
@@ -78,7 +79,7 @@
 - (void)testSyncIdShouldBeLessThanThirtyTwoCharacters
 {
     NSString *syncID = [PKSyncManager syncID];
-    XCTAssertTrue([syncID length] <= 32, @"syncID should be less than or equal to 32 characters");
+    XCTAssertTrue([syncID length] <= 64, @"syncID should be less than or equal to 64 characters");
 }
 
 - (void)testSyncIdShouldBeRandom
@@ -236,7 +237,7 @@
     [self.syncManager startObserving];
     
     PKRecordMock *book = [PKRecordMock record:@"1" withFields:@{@"title": @"To Kill a Mockingbird"}];
-    [self.datastore updateStatus:DBDatastoreIncoming withChanges:@{@"books": @[book]}];
+    [self.datastore updateStatus:[PKDatastoreStatusMock datastoreStatusWithIncoming:YES] withChanges:@{@"books": @[book]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
@@ -253,7 +254,7 @@
     
     PKRecordMock *bookA = [PKRecordMock record:@"1" withFields:@{@"title": @"To Kill a Mockingbird"}];
     PKRecordMock *bookB = [PKRecordMock record:@"2" withFields:@{@"title": @"The Grapes of Wrath"}];
-    [self.datastore updateStatus:DBDatastoreIncoming withChanges:@{@"books": @[bookA, bookB]}];
+    [self.datastore updateStatus:[PKDatastoreStatusMock datastoreStatusWithIncoming:YES] withChanges:@{@"books": @[bookA, bookB]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     [fetchRequest setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"syncID" ascending:YES]]];
@@ -279,7 +280,7 @@
     [self.syncManager startObserving];
     
     PKRecordMock *book = [PKRecordMock record:@"1" withFields:@{@"title": @"To Kill a Mockingbird Part 2: Birdy's Revenge"}];
-    [self.datastore updateStatus:DBDatastoreIncoming withChanges:@{@"books": @[book]}];
+    [self.datastore updateStatus:[PKDatastoreStatusMock datastoreStatusWithIncoming:YES] withChanges:@{@"books": @[book]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
@@ -300,7 +301,7 @@
     [self.syncManager startObserving];
     
     PKRecordMock *book = [PKRecordMock record:@"1" withFields:nil deleted:YES];
-    [self.datastore updateStatus:DBDatastoreIncoming withChanges:@{@"books": @[book]}];
+    [self.datastore updateStatus:[PKDatastoreStatusMock datastoreStatusWithIncoming:YES] withChanges:@{@"books": @[book]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
@@ -312,7 +313,13 @@
     [self.syncManager startObserving];
     
     PKRecordMock *book = [PKRecordMock record:@"1" withFields:@{@"title": @"To Kill a Mockingbird"}];
-    [self.datastore updateStatus:(DBDatastoreConnected | DBDatastoreDownloading | DBDatastoreUploading | DBDatastoreOutgoing) withChanges:@{@"books": @[book]}];
+    PKDatastoreStatusMock *status = [[PKDatastoreStatusMock alloc] init];
+    status.incoming = NO;
+    status.connected = YES;
+    status.downloading = YES;
+    status.uploading = YES;
+    status.outgoing = YES;
+    [self.datastore updateStatus:status withChanges:@{@"books": @[book]}];
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
     NSArray *objects = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];

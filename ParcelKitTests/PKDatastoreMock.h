@@ -27,12 +27,13 @@
 #import <Dropbox/Dropbox.h>
 
 @class PKTableMock;
+@class PKDatastoreStatusMock;
 
 @interface PKDatastoreMock : NSObject
-@property (nonatomic, readonly) DBDatastoreStatus status;
+@property (nonatomic, readonly) PKDatastoreStatusMock *status;
 
 // Unit Testing Methods
-- (void)updateStatus:(DBDatastoreStatus)status withChanges:(NSDictionary *)changes;
+- (void)updateStatus:(PKDatastoreStatusMock *)status withChanges:(NSDictionary *)changes;
 
 // Mocked DBDatastore Methods
 - (void)addObserver:(id)observer block:(DBObserver)block;

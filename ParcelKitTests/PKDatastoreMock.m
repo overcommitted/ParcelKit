@@ -25,13 +25,14 @@
 
 #import "PKDatastoreMock.h"
 #import "PKTableMock.h"
+#import "PKDatastoreStatusMock.h"
 
 static NSString * const PKDatastoreMockObserverKey = @"observer";
 static NSString * const PKDatastoreMockObserverBlockKey = @"block";
 
 @interface PKDatastoreMock()
 @property (strong, nonatomic) NSMutableSet *observers;
-@property (nonatomic, readwrite) DBDatastoreStatus status;
+@property (nonatomic, readwrite) PKDatastoreStatusMock *status;
 @property (strong, nonatomic) NSDictionary *changes;
 @property (strong, nonatomic) NSMutableDictionary *tables;
 @end
@@ -48,7 +49,7 @@ static NSString * const PKDatastoreMockObserverBlockKey = @"block";
 }
 
 #pragma mark - Unit Testing Methods
-- (void)updateStatus:(DBDatastoreStatus)status withChanges:(NSDictionary *)changes
+- (void)updateStatus:(PKDatastoreStatusMock *)status withChanges:(NSDictionary *)changes
 {
     self.status = status;
     self.changes = changes;
