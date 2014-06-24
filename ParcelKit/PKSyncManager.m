@@ -172,63 +172,73 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [managedObjectContext setPersistentStoreCoordinator:[self.managedObjectContext persistentStoreCoordinator]];
     [managedObjectContext setUndoManager:nil];
-    
-    __block NSMutableArray *updates = [[NSMutableArray alloc] init];
-    
+
     __weak typeof(self) weakSelf = self;
-    [changes enumerateKeysAndObjectsUsingBlock:^(NSString *tableID, NSArray *records, BOOL *stop) {
+    [managedObjectContext performBlockAndWait:^{
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
-        NSString *entityName = [strongSelf entityNameForTable:tableID];
-        if (!entityName) return;
-
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
-        [fetchRequest setFetchLimit:1];
-
-        for (DBRecord *record in records) {
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", strongSelf.syncAttributeName, record.recordId]];
+        
+        __block NSMutableArray *updates = [[NSMutableArray alloc] init];
+        
+        typeof(self) weakSelf = strongSelf;
+        [changes enumerateKeysAndObjectsUsingBlock:^(NSString *tableID, NSArray *records, BOOL *stop) {
+            typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
+            NSString *entityName = [strongSelf entityNameForTable:tableID];
+            if (!entityName) return;
             
-            NSError *error = nil;
-            NSArray *managedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-            if (managedObjects)  {
-                NSManagedObject *managedObject = [managedObjects lastObject];
+            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+            [fetchRequest setFetchLimit:1];
+            
+            for (DBRecord *record in records) {
+                [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", strongSelf.syncAttributeName, record.recordId]];
                 
-                if ([record isDeleted]) {
-                    if (managedObject) {
-                        [managedObjectContext deleteObject:managedObject];
+                NSError *error = nil;
+                NSArray *managedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+                if (managedObjects)  {
+                    NSManagedObject *managedObject = [managedObjects lastObject];
+                    
+                    if ([record isDeleted]) {
+                        if (managedObject) {
+                            [managedObjectContext deleteObject:managedObject];
+                        }
+                    } else {
+                        if (!managedObject) {
+                            managedObject = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:managedObjectContext];
+                            [managedObject setValue:record.recordId forKey:strongSelf.syncAttributeName];
+                        }
+                        
+                        [updates addObject:@{PKUpdateManagedObjectKey: managedObject, PKUpdateRecordKey: record}];
                     }
                 } else {
-                    if (!managedObject) {
-                        managedObject = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:managedObjectContext];
-                        [managedObject setValue:record.recordId forKey:strongSelf.syncAttributeName];
-                    }
-                    
-                    [updates addObject:@{PKUpdateManagedObjectKey: managedObject, PKUpdateRecordKey: record}];
+                    NSLog(@"Error executing fetch request: %@", error);
                 }
-            } else {
-                NSLog(@"Error executing fetch request: %@", error);
             }
+        }];
+        
+        
+        for (NSDictionary *update in updates) {
+            NSManagedObject *managedObject = update[PKUpdateManagedObjectKey];
+            DBRecord *record = update[PKUpdateRecordKey];
+            [managedObject pk_setPropertiesWithRecord:record syncAttributeName:strongSelf.syncAttributeName];
+        }
+        
+        if ([managedObjectContext hasChanges]) {
+            [[NSNotificationCenter defaultCenter] addObserver:strongSelf selector:@selector(syncManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
+            NSError *error = nil;
+            if (![managedObjectContext save:&error]) {
+                NSLog(@"Error saving managed object context: %@", error);
+            }
+            [[NSNotificationCenter defaultCenter] removeObserver:strongSelf name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
         }
     }];
-    
-    for (NSDictionary *update in updates) {
-        NSManagedObject *managedObject = update[PKUpdateManagedObjectKey];
-        DBRecord *record = update[PKUpdateRecordKey];
-        [managedObject pk_setPropertiesWithRecord:record syncAttributeName:self.syncAttributeName];
-    }
-    
-    if ([managedObjectContext hasChanges]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
-        NSError *error = nil;
-        if (![managedObjectContext save:&error]) {
-            NSLog(@"Error saving managed object context: %@", error);
-        }
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:managedObjectContext];
-    }
 }
 
 - (void)syncManagedObjectContextDidSave:(NSNotification *)notification
 {
-    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+    if ([NSThread isMainThread]) {
+        [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+    } else {
+        [self performSelectorOnMainThread:@selector(syncManagedObjectContextDidSave:) withObject:notification waitUntilDone:YES];
+    }
 }
 
 #pragma mark - Updating Datastore
