@@ -2,6 +2,7 @@ Version 2.0.0
 ================
 * Updated Dropbox-Sync-API-SDK to 3.0.0. See the Dropbox-Sync-API-SDK Changelog for potentially breaking changes.
 * Only post PKSyncManagerDatastoreIncomingChangesNotification if there were changes
+* Ignore non-syncable entities
 
 Version 1.3.0
 ================
