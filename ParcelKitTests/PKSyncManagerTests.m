@@ -374,6 +374,31 @@
     XCTAssertEqualObjects(@"The Grapes of Wrath", [recordB objectForKey:@"title"], @"");
 }
 
+- (void)testCoreDataInsertShouldNotUpdateDatastoreWithUnsycableObject
+{
+    [self.syncManager startObserving];
+    
+    NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [book setValue:@"1" forKey:self.syncManager.syncAttributeName];
+    [book setValue:@"To Kill a Mockingbird" forKey:@"title"];
+    
+ 	NSManagedObject *review = [NSEntityDescription insertNewObjectForEntityForName:@"Review" inManagedObjectContext:self.managedObjectContext];
+    [review setValue:book forKey:@"book"];
+    [review setValue:@"Goodreads" forKey:@"reviewer"];
+    [review setValue:@(4.23) forKey:@"rating"];
+    
+    XCTAssertTrue([self.managedObjectContext save:nil], @"");
+    XCTAssertEqual(1, [[book valueForKey:@"reviews"] count], @"");
+    
+    DBTable *table = [self.datastore getTable:@"books"];
+    XCTAssertNotNil(table, @"");
+    
+    DBRecord *recordA = [table getRecord:@"1" error:nil];
+    XCTAssertNotNil(recordA, @"");
+    XCTAssertEqualObjects(@"1", recordA.recordId, @"");
+    XCTAssertNil([recordA objectForKey:@"reviews"], @"");
+}
+
 - (void)testCoreDataUpdateShouldUpdateDatastoreWithUpdatedObject
 {
     [self.syncManager startObserving];

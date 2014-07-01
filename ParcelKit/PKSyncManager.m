@@ -277,18 +277,20 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     [managedObjects unionSet:[managedObjectContext insertedObjects]];
     [managedObjects unionSet:[managedObjectContext updatedObjects]];
     
-    NSSet *managedObjectsWithoutSyncId = [managedObjects filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"%K == nil", self.syncAttributeName]];
-    for (NSManagedObject *managedObject in managedObjectsWithoutSyncId) {
-        [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
-    };
-    
     NSUInteger index = 0;
     for (NSManagedObject *managedObject in managedObjects) {
+        NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
+        if (!tableID) continue;
+        
         if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
             id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
             if (![pkObj isRecordSyncable]) {
                 continue;
             }
+        }
+        
+        if (![managedObject valueForKey:self.syncAttributeName]) {
+            [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
         }
         
         [self updateDatastoreWithManagedObject:managedObject];
