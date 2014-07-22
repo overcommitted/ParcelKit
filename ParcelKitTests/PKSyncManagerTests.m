@@ -52,7 +52,7 @@
     self.managedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
     self.datastore = [OCMockObject partialMockForObject:[[PKDatastoreMock alloc] init]];
     self.syncManager = [[PKSyncManager alloc] initWithManagedObjectContext:self.managedObjectContext datastore:self.datastore];
-    [self.syncManager setTablesForEntityNamesWithDictionary:@{@"Book": @"books", @"Author": @"authors"}];
+    [self.syncManager setTablesForEntityNamesWithDictionary:@{@"Book": @"books", @"Author": @"authors", @"Publisher": @"publishers"}];
 }
 
 - (void)tearDown
@@ -167,29 +167,33 @@
 - (void)testTableIDsShouldReturnSpecifiedTableIDs
 {
     NSArray *tableIDs = [self.syncManager tableIDs];
-    XCTAssertEqual(2, (int)[tableIDs count], @"");
+    XCTAssertEqual(3, (int)[tableIDs count], @"");
     XCTAssertTrue([tableIDs containsObject:@"books"], @"");
     XCTAssertTrue([tableIDs containsObject:@"authors"], @"");
+    XCTAssertTrue([tableIDs containsObject:@"publishers"], @"");
 }
 
 - (void)testEntityNamesShouldReturnSpecifiedEntityNames
 {
     NSArray *entityNames = [self.syncManager entityNames];
-    XCTAssertEqual(2, (int)[entityNames count], @"");
+    XCTAssertEqual(3, (int)[entityNames count], @"");
     XCTAssertTrue([entityNames containsObject:@"Book"], @"");
     XCTAssertTrue([entityNames containsObject:@"Author"], @"");
+    XCTAssertTrue([entityNames containsObject:@"Publisher"], @"");
 }
 
 - (void)testTableForEntityNameShouldReturnRelatedTableForEntityName
 {
     XCTAssertEqualObjects(@"books", [self.syncManager tableForEntityName:@"Book"], @"");
     XCTAssertEqualObjects(@"authors", [self.syncManager tableForEntityName:@"Author"], @"");
+    XCTAssertEqualObjects(@"publishers", [self.syncManager tableForEntityName:@"Publisher"], @"");
 }
 
 - (void)testEntityNameForTableShouldReturnRelatedEntityNameForTable
 {
     XCTAssertEqualObjects(@"Book", [self.syncManager entityNameForTable:@"books"], @"");
     XCTAssertEqualObjects(@"Author", [self.syncManager entityNameForTable:@"authors"], @"");
+    XCTAssertEqualObjects(@"Publisher", [self.syncManager entityNameForTable:@"publishers"], @"");
 }
 
 #pragma mark - Observing Setup
@@ -481,23 +485,40 @@
 {
     [self.syncManager startObserving];
     
-    NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-    [object setValue:@"Treasure Island" forKey:@"title"];
+    NSManagedObject *publisher = [NSEntityDescription insertNewObjectForEntityForName:@"Publisher" inManagedObjectContext:self.managedObjectContext];
+    [publisher setValue:@"Cassell and Company" forKey:@"name"];
+
+    NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [book setValue:@"Treasure Island" forKey:@"title"];
+    [book setValue:publisher forKey:@"publisher"];
+    
     XCTAssertTrue([self.managedObjectContext save:nil], @"");
-    XCTAssertNotNil([object valueForKey:self.syncManager.syncAttributeName], @"");
+    
+    XCTAssertNotNil([publisher valueForKey:self.syncManager.syncAttributeName], @"");
+    DBTable *publishers = [self.datastore getTable:@"publishers"];
+    XCTAssertNotNil(publishers, @"");
+    XCTAssertNotNil([publishers getRecord:[publisher valueForKey:self.syncManager.syncAttributeName] error:nil], @"");
+    
+    XCTAssertNotNil([book valueForKey:self.syncManager.syncAttributeName], @"");
+    DBTable *books = [self.datastore getTable:@"books"];
+    XCTAssertNotNil(books, @"");
+    XCTAssertNotNil([books getRecord:[book valueForKey:self.syncManager.syncAttributeName] error:nil], @"");
 }
 
 - (void)testCoreDataUpdateWithoutSyncAttributeSpecifiedShouldAddSyncAttribute
 {
-    NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
-    [object setValue:@"Treasure Island" forKey:@"title"];
+    NSManagedObject *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [book setValue:@"Treasure Island" forKey:@"title"];
     XCTAssertTrue([self.managedObjectContext save:nil], @"");
-    XCTAssertNil([object valueForKey:self.syncManager.syncAttributeName], @"");
+    XCTAssertNil([book valueForKey:self.syncManager.syncAttributeName], @"");
     
     [self.syncManager startObserving];
     
-    [object setValue:@"Return to Treasure Island" forKey:@"title"];
+    [book setValue:@"Return to Treasure Island" forKey:@"title"];
     XCTAssertTrue([self.managedObjectContext save:nil], @"");
-    XCTAssertNotNil([object valueForKey:self.syncManager.syncAttributeName], @"");
+    XCTAssertNotNil([book valueForKey:self.syncManager.syncAttributeName], @"");
+    DBTable *books = [self.datastore getTable:@"books"];
+    XCTAssertNotNil(books, @"");
+    XCTAssertNotNil([books getRecord:[book valueForKey:self.syncManager.syncAttributeName] error:nil], @"");
 }
 @end

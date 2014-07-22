@@ -252,24 +252,13 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     if (self.managedObjectContext != managedObjectContext) return;
     
     NSSet *deletedObjects = [managedObjectContext deletedObjects];
-    for (NSManagedObject *managedObject in deletedObjects) {
-        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
-            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
-            if (![pkObj isRecordSyncable]) {
-                continue;
-            }
-        }
-        
+    for (NSManagedObject *managedObject in [self syncableManagedObjectsFromManagedObjects:deletedObjects]) {
         NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
-        if (!tableID) continue;
-        
         DBTable *table = [self.datastore getTable:tableID];
         DBError *error = nil;
         DBRecord *record = [table getRecord:[managedObject primitiveValueForKey:self.syncAttributeName] error:&error];
         if (record) {
             [record deleteRecord];
-        } else if (error) {
-            NSLog(@"Error getting datastore record: %@", error);
         }
     };
     
@@ -278,21 +267,7 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     [managedObjects unionSet:[managedObjectContext updatedObjects]];
     
     NSUInteger index = 0;
-    for (NSManagedObject *managedObject in managedObjects) {
-        NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
-        if (!tableID) continue;
-        
-        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
-            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
-            if (![pkObj isRecordSyncable]) {
-                continue;
-            }
-        }
-        
-        if (![managedObject valueForKey:self.syncAttributeName]) {
-            [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
-        }
-        
+    for (NSManagedObject *managedObject in [self syncableManagedObjectsFromManagedObjects:managedObjects]) {
         [self updateDatastoreWithManagedObject:managedObject];
         index++;
 
@@ -333,6 +308,30 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
         NSLog(@"Error syncing with Dropbox: %@", error);
         return NO;
     }
+}
+
+- (NSSet *)syncableManagedObjectsFromManagedObjects:(NSSet *)managedObjects
+{
+    NSMutableSet *syncableManagedObjects = [[NSMutableSet alloc] init];
+    for (NSManagedObject *managedObject in managedObjects) {
+        NSString *tableID = [self tableForEntityName:[[managedObject entity] name]];
+        if (!tableID) continue;
+        
+        if ([managedObject respondsToSelector:@selector(isRecordSyncable)]) {
+            id<ParcelKitSyncedObject> pkObj = (id<ParcelKitSyncedObject>)managedObject;
+            if (![pkObj isRecordSyncable]) {
+                continue;
+            }
+        }
+        
+        if (![managedObject valueForKey:self.syncAttributeName]) {
+            [managedObject setPrimitiveValue:[[self class] syncID] forKey:self.syncAttributeName];
+        }
+        
+        [syncableManagedObjects addObject:managedObject];
+    }
+    
+    return [[NSSet alloc] initWithSet:syncableManagedObjects];
 }
 
 @end
