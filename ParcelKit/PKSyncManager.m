@@ -34,6 +34,7 @@ NSString * const PKSyncManagerDatastoreIncomingChangesNotification = @"PKSyncMan
 NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
 
 @interface PKSyncManager ()
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readwrite) DBDatastore *datastore;
 @property (nonatomic, strong) NSMutableDictionary *tablesKeyedByEntityName;
@@ -68,6 +69,21 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
         _datastore = datastore;
     }
     return self;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (_persistentStoreCoordinator) return _persistentStoreCoordinator;
+    
+    if ([self.managedObjectContext persistentStoreCoordinator]) {
+        _persistentStoreCoordinator = [self.managedObjectContext persistentStoreCoordinator];
+    } else if ([self.managedObjectContext parentContext]) {
+        if ([[self.managedObjectContext parentContext] persistentStoreCoordinator]) {
+            _persistentStoreCoordinator = [[self.managedObjectContext parentContext] persistentStoreCoordinator];
+        }
+    }
+    
+    return _persistentStoreCoordinator;
 }
 
 #pragma mark - Entity and Table map
@@ -156,6 +172,7 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
 {
     if (![self isObserving]) return;
     self.observing = NO;
+    self.persistentStoreCoordinator = nil;
     
     [self.datastore removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:self.managedObjectContext];
@@ -170,7 +187,7 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
     if ([changes count] == 0) return NO;
     
     NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [managedObjectContext setPersistentStoreCoordinator:[self.managedObjectContext persistentStoreCoordinator]];
+    [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
     [managedObjectContext setUndoManager:nil];
 
     __weak typeof(self) weakSelf = self;
