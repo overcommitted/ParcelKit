@@ -31,7 +31,8 @@ extern const NSUInteger DBDatastoreBaseChangeSize;
  <DBDatastoreManager>.
  <!-- paragraph separator in class docs for appledoc bug -->
  You interact with data in the datastore using tables. You can call <getTable:> to get a table,
- or [getTables:](getTables:) to list all tables in a datastore containing records.
+ or [getTables:](#DBDatastore.getTables:) to list all tables in a datastore containing
+ records.
  <!-- paragraph separator in class docs for appledoc bug -->
  Changes you make to the datastore will be visible immediately, and calling <sync:> will persist
  outgoing changes and queue them to be uploaded to the server. While a datastore is open, it will

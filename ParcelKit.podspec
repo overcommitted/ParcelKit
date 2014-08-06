@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ParcelKit"
-  s.version      = "2.0.0"
+  s.version      = "2.0.1"
   s.summary      = "ParcelKit integrates Core Data with Dropbox using the Dropbox Datastore API."
   s.homepage     = "http://github.com/overcommitted/ParcelKit"
   s.license      = 'MIT'
@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.source_files = 'ParcelKit/*.{h,m}'
   s.frameworks   = 'CoreData', 'Dropbox'
   s.requires_arc = true
-  s.dependency 'Dropbox-Sync-API-SDK', '~> 3.0.0'
-  s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"${PODS_ROOT}/Dropbox-Sync-API-SDK/dropbox-ios-sync-sdk-3.0.0"' }
+  s.dependency 'Dropbox-Sync-API-SDK', '~> 3.0.2'
+  s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '"${PODS_ROOT}/Dropbox-Sync-API-SDK/dropbox-ios-sync-sdk-3.0.2"' }
 end
