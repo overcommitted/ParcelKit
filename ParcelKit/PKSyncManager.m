@@ -32,6 +32,8 @@ NSString * const PKSyncManagerDatastoreStatusDidChangeNotification = @"PKSyncMan
 NSString * const PKSyncManagerDatastoreStatusKey = @"status";
 NSString * const PKSyncManagerDatastoreIncomingChangesNotification = @"PKSyncManagerDatastoreIncomingChanges";
 NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
+NSString * const PKSyncManagerDatastoreLastSyncDateNotification = @"PKSyncManagerDatastoreLastSyncDateNotification";
+NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
 
 @interface PKSyncManager ()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -319,6 +321,7 @@ NSString * const PKSyncManagerDatastoreIncomingChangesKey = @"changes";
         if ([self updateCoreDataWithDatastoreChanges:changes]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreIncomingChangesNotification object:self userInfo:@{PKSyncManagerDatastoreIncomingChangesKey: changes}];
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:PKSyncManagerDatastoreLastSyncDateNotification object:self userInfo:@{PKSyncManagerDatastoreLastSyncDateKey: [NSDate date]}];
         
         return YES;
     } else {

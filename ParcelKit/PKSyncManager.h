@@ -45,6 +45,15 @@ extern NSString * const PKSyncManagerDatastoreStatusKey;
 extern NSString * const PKSyncManagerDatastoreIncomingChangesNotification;
 extern NSString * const PKSyncManagerDatastoreIncomingChangesKey;
 
+/**
+ Notification that is posted when the sync is ok.
+ 
+ The userInfo of the notification will contain the last sync date in `PKSyncManagerDatastoreLastSyncDateKey`
+ */
+extern NSString * const PKSyncManagerDatastoreLastSyncDateNotification;
+extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
+
+
 /** 
  The sync manager is responsible for listening to changes from a
  Core Data NSManagedObjectContext and a Dropbox DBDatastore and syncing the changes between them.
