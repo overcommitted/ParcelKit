@@ -1,6 +1,6 @@
 /* Copyright (c) 2014 Dropbox, Inc. All rights reserved. */
 
-#import "DBError.h"
+@class DBError;
 
 /** The current status of one type of background synchronization operation
  in a <DBFilesystem>. */

@@ -12,10 +12,12 @@
 @property (nonatomic, readonly) BOOL connected;
 
 /** Whether there are remote changes that need to be downloaded from the server.
- Always set when a `DBDatastore` is opened until the first successful check for updates. */
+ Always set when a `DBDatastore` is opened until the first successful check for updates.
+ Always set for a local datastore. */
 @property (nonatomic, readonly) BOOL downloading;
 
-/** Whether there are local changes that need to be uploaded to the server. */
+/** Whether there are local changes that need to be uploaded to the server.
+ Always set for a local datastore that has any changes at all. */
 @property (nonatomic, readonly) BOOL uploading;
 
 /** Whether there are remote changes that will be incorporated by the next

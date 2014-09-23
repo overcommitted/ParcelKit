@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, DBErrorCode) {
     DBErrorDiskSpace            = -10006,
     DBErrorDisallowed           = -10007,
     DBErrorFileIO               = -10008,
+    DBErrorCancelled            = -10009,
+    DBErrorReadOnly             = -10010,
 
     // Errors with network communication.
     DBErrorNetwork              = -11000,
@@ -53,7 +55,8 @@ typedef NS_ENUM(NSInteger, DBErrorCode) {
     DBErrorAuth                 = -11005,
     DBErrorQuota                = -11006,
     DBErrorRequest              = -11008,
-    DBErrorReesponse            = -11009,
+    DBErrorResponse             = -11009,
+    DBErrorRetryLater           = -11010,
 
     // Errors specific to DBFilesystem functionality.
     DBErrorParamsNoThumb        = -12000,
@@ -71,14 +74,14 @@ typedef NS_ENUM(NSInteger, DBErrorCode) {
  on a background thread. */
 @interface DBError : NSError
 
-/** The code on a DBError object is always listed in the DBErrorCode enum. */
-- (DBErrorCode)code;
+/** Same as `code`. The code on a DBError object is always listed in the DBErrorCode enum. */
+- (DBErrorCode)dbErrorCode;
 
 @end
 
 
 /** The `DBException` class is a subclass of `NSException` that always has `name` set to
- `DBExceptionName`.  A `DBException` is raised by a failure in an API method which indicates
+ `DBExceptionName`. A `DBException` is raised by a failure in an API method which indicates
  programming errors or internal SDK problems.
  <!-- paragraph separator in class docs for appledoc bug -->
  You should generally not have to catch a `DBException`, but the `error` property will allow you

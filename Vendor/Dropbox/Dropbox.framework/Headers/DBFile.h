@@ -4,6 +4,7 @@
 #import "DBError.h"
 #import "DBFileInfo.h"
 #import "DBFileStatus.h"
+#import "DBUtil.h"
 
 /** The file object represents a particular file at a particular version. It has basic file
  operations such as reading and writing the file's contents and getting info about the

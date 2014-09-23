@@ -6,8 +6,6 @@
 #import <AppKit/AppKit.h>
 #endif
 
-#import "DBError.h"
-
 @class DBAccount;
 
 /** An observer for the <linkedAccount> property */

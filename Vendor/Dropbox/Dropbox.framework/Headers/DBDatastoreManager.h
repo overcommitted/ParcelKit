@@ -18,12 +18,14 @@
  mean time will return the same object. */
 + (DBDatastoreManager *)managerForAccount:(DBAccount *)account;
 
-/** Gets the local datastore manager for the accountManager.
-
- __Local datastores and migration are a preview feature for testing only, and should not
- be used in production apps.__
- */
+/** Gets the local datastore manager for the accountManager. */
 + (DBDatastoreManager *)localManagerForAccountManager:(DBAccountManager *)accountManager;
+
+/** A convenient place to get your app's datastore manager. You must set it with `setSharedManager` first. */
++ (DBDatastoreManager *)sharedManager;
+
+/** Set your app's datastore manager using this method. Retrieve it any time with `sharedManager`. */
++ (void)setSharedManager:(DBDatastoreManager *)manager;
 
 /** Opens the default datastore for this account, or creates it if it doesn't exist.
 
@@ -47,24 +49,19 @@
 /** Returns a new `DBDatastoreManager` created by migrating a local `DBDatastoreManager` to
  the given account.
 
- This will move all datastores and data from the local `DbxDatastoreManager`
- to the new `DbxDatastoreManager`. This call doesn't immediately start
- uploading the data the server. A `DbxDatastore` and all of its changes will
- begin uploading the first time you open of that `DbxDatastore`. At that point
- they will also be merged with any existing changes on the server.
+ This will move all datastores and data from the local `DBDatastoreManager`
+ to the new `DBDatastoreManager`.  The new manager will immediately begin
+ uploading to the server, and merging with any existing changes on the server
 
- The data is moved not copied, so the local datastore manager will no longer contain the
- data which is migrated.  This should be done with a freshly linked account which contains
- no local datastore changes.  If that isn't the case, any datastore changes in the target
- account which have not uploaded will be overwritten by the migrated data.
+ The data is moved not copied, so the local datastore manager will be empty after migration.
+ Migration should be done to a freshly linked account which contains no unuploaded datastore
+ changes.  If that isn't the case, any datastore changes in the target account which
+ will be overwritten by the migrated data.
 
- This must be called on a local `DbxDatastoreManager`, and all of its datastores must
+ This must be called on a local `DBDatastoreManager`, and all of its datastores must
  be closed. If the account provided ever had a `DbxDatastoreManager` it must be
  shut down.  After this call, the current local `DbxDatastoreManager` will be shut
  down and emptied.
-
- __Local datastores and migration are a preview feature for testing only, and should not
- be used in production apps.__
 
  @return The new datastore manager linked to the account, or `nil` if an error occurred. */
 - (DBDatastoreManager *)migrateToAccount:(DBAccount *)account error:(DBError **)error;
@@ -134,5 +131,12 @@
 
 /** Whether the datastore manager is currently shut down. */
 @property (nonatomic, readonly, getter=isShutDown) BOOL shutDown;
+
+/** The [account](DBAccount) object this manager was created with. Will be `nil` if this
+ is the local manager. */
+@property (nonatomic, readonly) DBAccount *account;
+
+/** Whether this is the local manager. */
+@property (nonatomic, readonly) BOOL isLocal;
 
 @end

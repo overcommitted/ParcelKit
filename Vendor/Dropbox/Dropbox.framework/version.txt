@@ -1,2 +1,2 @@
 Dropbox Sync/Datastore API for iOS
-3.0.2
+3.1.0
