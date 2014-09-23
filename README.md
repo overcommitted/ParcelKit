@@ -11,7 +11,7 @@ ParcelKit can be added to a project using [CocoaPods](https://github.com/cocoapo
 
 ```
 // Podfile
-pod 'ParcelKit', '~> 2.0'
+pod 'ParcelKit', '~> 2.1'
 ```
 and
 ```
@@ -74,7 +74,7 @@ Example Application
 Requirements
 ------------
 * iOS 6.1 or higher
-* Dropbox Sync SDK 3.0.2 or higher
+* Dropbox Sync SDK 3.1.0 or higher
 * Xcode 5 or higher
 
 License
