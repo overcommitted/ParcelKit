@@ -35,12 +35,19 @@ static NSString * const PKInvalidAttributeValueExceptionFormat = @"“%@.%@” e
 {
     NSString *entityName = [[self entity] name];
     
-    __weak typeof(self) weakSelf = self;
     NSDictionary *propertiesByName = [[self entity] propertiesByName];
+    NSArray *syncedPropertyNames = nil;
+    if ([self respondsToSelector:@selector(syncedPropertiesDictionary:)]) {
+        syncedPropertyNames = [[self performSelector:@selector(syncedPropertiesDictionary:) withObject:propertiesByName] allKeys];
+    } else {
+        syncedPropertyNames = [propertiesByName allKeys];
+    }
+    
+    __weak typeof(self) weakSelf = self;
     [propertiesByName enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, NSPropertyDescription *propertyDescription, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         
-        if ([propertyName isEqualToString:syncAttributeName] || [propertyDescription isTransient]) return;
+        if ([propertyName isEqualToString:syncAttributeName] || ![syncedPropertyNames containsObject:propertyName] || [propertyDescription isTransient]) return;
         
         if ([propertyDescription isKindOfClass:[NSAttributeDescription class]]) {
             NSAttributeType attributeType = [(NSAttributeDescription *)propertyDescription attributeType];

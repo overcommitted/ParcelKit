@@ -428,7 +428,7 @@
 {
     [self.syncManager startObserving];
     
-    Author *object = [Author insertInManagedObjectContext:self.managedObjectContext];
+    Author *object = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
     [object setValue:@"1" forKey:self.syncManager.syncAttributeName];
     [object setValue:@"Harper Lee" forKey:@"name"];
     object.isRecordSyncable = NO;
@@ -464,7 +464,7 @@
 {
     [self.syncManager startObserving];
     
-    Author *object = [Author insertInManagedObjectContext:self.managedObjectContext];
+    Author *object = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
     [object setValue:@"1" forKey:self.syncManager.syncAttributeName];
     [object setValue:@"Harper Lee" forKey:@"name"];
     XCTAssertTrue([self.managedObjectContext save:nil], @"");

@@ -38,7 +38,8 @@
     __weak typeof(self) weakSelf = self;
     NSDictionary *propertiesByName = [[managedObject entity] propertiesByName];
     NSArray *fieldNames = [[self fields] allKeys];
-    NSDictionary *values;
+    
+    NSDictionary *values = nil;
     if ([managedObject respondsToSelector:@selector(syncedPropertiesDictionary:)]) {
         // Get the custom properties dictionary
         values = [managedObject performSelector:@selector(syncedPropertiesDictionary:) withObject:propertiesByName];
@@ -46,6 +47,7 @@
         // Get the standard properties dictionary
         values = [managedObject dictionaryWithValuesForKeys:[propertiesByName allKeys]];
     }
+    
     [values enumerateKeysAndObjectsUsingBlock:^(NSString *name, id value, BOOL *stop) {
         typeof(self) strongSelf = weakSelf; if (!strongSelf) return;
         

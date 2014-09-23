@@ -62,7 +62,7 @@
     [self.book setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.book setValue:@"To Kill a Mockingbird" forKey:@"title"];
     
-    self.author = [Author insertInManagedObjectContext:self.managedObjectContext];
+    self.author = [NSEntityDescription insertNewObjectForEntityForName:@"Author" inManagedObjectContext:self.managedObjectContext];
     [self.author setValue:@"1" forKey:PKDefaultSyncAttributeName];
     [self.author setValue:@"Harper Lee" forKey:@"name"];
     
@@ -321,10 +321,18 @@
     XCTAssertFalse([[[self.record fields] allKeys] containsObject:@"publisher"], @"");
 }
 
-- (void)testSetPropertiesWithRecordShouldGetCustomValueDictionary
+- (void)testSetFieldsWithManagedObjectShouldSetValuesFromSyncedPropertiesDictionary
 {
     [self.record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
-    XCTAssertEqualObjects(@"cheese", [self.record objectForKey:@"favourite_food"], @"");
+    XCTAssertEqualObjects(@"cheese", [self.record objectForKey:@"favoriteFood"], @"");
+}
+
+- (void)testSetFieldsWithManagedObjectShouldIgnorePropertiesNotInSyncedPropertiesDictionary
+{
+    [self.author setValue:@(100000) forKey:@"royalties"];
+    
+    [self.record pk_setFieldsWithManagedObject:self.author syncAttributeName:PKDefaultSyncAttributeName];
+    XCTAssertNil([self.record objectForKey:@"royalties"], @"");
 }
 
 @end
