@@ -1,3 +1,9 @@
+Version 2.1.0
+================
+* Updated Dropbox-Sync-API-SDK to 3.1.0.
+* Fixed issue with syncPropertiesDictionary not being used when syncing from Dropbox to Core Data.
+* Post notification of last sync date when sync completes.
+
 Version 2.0.1
 ================
 * Updated Dropbox-Sync-API-SDK to 3.0.2.
