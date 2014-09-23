@@ -24,6 +24,7 @@
 /* Begin PBXBuildFile section */
 		52F5FB18191430470060F8EA /* _Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5FB15191430470060F8EA /* _Author.m */; };
 		52F5FB19191430470060F8EA /* Author.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F5FB17191430470060F8EA /* Author.m */; };
+		AB0E84B319D1C362009E38B1 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB0E84A919D1C362009E38B1 /* libOCMock.a */; };
 		AB1E6AF01795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */; };
 		AB1E6AF31795D77A00FF03A8 /* PKListMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF21795D77A00FF03A8 /* PKListMock.m */; };
 		AB1E6AF51795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1E6AF41795E2BF00FF03A8 /* DBRecord+ParcelKitTests.m */; };
@@ -32,7 +33,6 @@
 		AB3F8D3517935E2D000F8FA0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F8D3417935E2D000F8FA0 /* UIKit.framework */; };
 		AB3F8D3B17935E2D000F8FA0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB3F8D3917935E2D000F8FA0 /* InfoPlist.strings */; };
 		AB3F8D4517935E6C000F8FA0 /* PKSyncManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3F8D4417935E6C000F8FA0 /* PKSyncManagerTests.m */; };
-		AB6EF676179432FF00D0BAB0 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB6EF66F179432FF00D0BAB0 /* libOCMock.a */; };
 		AB6EF6791794363500D0BAB0 /* Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF6771794363500D0BAB0 /* Tests.xcdatamodeld */; };
 		AB6EF67F17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */; };
 		AB6EF6851794783400D0BAB0 /* PKDatastoreMock.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6EF6841794783400D0BAB0 /* PKDatastoreMock.m */; };
@@ -100,6 +100,16 @@
 		52F5FB15191430470060F8EA /* _Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Author.m; sourceTree = "<group>"; };
 		52F5FB16191430470060F8EA /* Author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Author.h; sourceTree = "<group>"; };
 		52F5FB17191430470060F8EA /* Author.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Author.m; sourceTree = "<group>"; };
+		AB0E84A919D1C362009E38B1 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		AB0E84AA19D1C362009E38B1 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
+		AB0E84AB19D1C362009E38B1 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
+		AB0E84AC19D1C362009E38B1 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
+		AB0E84AD19D1C362009E38B1 /* OCMLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMLocation.h; sourceTree = "<group>"; };
+		AB0E84AE19D1C362009E38B1 /* OCMMacroState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMMacroState.h; sourceTree = "<group>"; };
+		AB0E84AF19D1C362009E38B1 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
+		AB0E84B019D1C362009E38B1 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
+		AB0E84B119D1C362009E38B1 /* OCMRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMRecorder.h; sourceTree = "<group>"; };
+		AB0E84B219D1C362009E38B1 /* OCMStubRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMStubRecorder.h; sourceTree = "<group>"; };
 		AB1E6AEF1795AD8500FF03A8 /* NSManagedObject+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+ParcelKitTests.m"; sourceTree = "<group>"; };
 		AB1E6AF11795D77A00FF03A8 /* PKListMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKListMock.h; sourceTree = "<group>"; };
 		AB1E6AF21795D77A00FF03A8 /* PKListMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKListMock.m; sourceTree = "<group>"; };
@@ -111,13 +121,6 @@
 		AB3F8D3A17935E2D000F8FA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB3F8D3E17935E2D000F8FA0 /* ParcelKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParcelKitTests-Prefix.pch"; sourceTree = "<group>"; };
 		AB3F8D4417935E6C000F8FA0 /* PKSyncManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKSyncManagerTests.m; sourceTree = "<group>"; };
-		AB6EF66F179432FF00D0BAB0 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
-		AB6EF670179432FF00D0BAB0 /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
-		AB6EF671179432FF00D0BAB0 /* OCMArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMArg.h; sourceTree = "<group>"; };
-		AB6EF672179432FF00D0BAB0 /* OCMConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMConstraint.h; sourceTree = "<group>"; };
-		AB6EF673179432FF00D0BAB0 /* OCMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMock.h; sourceTree = "<group>"; };
-		AB6EF674179432FF00D0BAB0 /* OCMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockObject.h; sourceTree = "<group>"; };
-		AB6EF675179432FF00D0BAB0 /* OCMockRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCMockRecorder.h; sourceTree = "<group>"; };
 		AB6EF6781794363500D0BAB0 /* Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Tests.xcdatamodel; sourceTree = "<group>"; };
 		AB6EF67D17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+ParcelKitTests.h"; sourceTree = "<group>"; };
 		AB6EF67E17943D6400D0BAB0 /* NSManagedObjectContext+ParcelKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+ParcelKitTests.m"; sourceTree = "<group>"; };
@@ -157,7 +160,7 @@
 			files = (
 				ABC7D10F1793611E00AAA1CA /* MobileCoreServices.framework in Frameworks */,
 				ABC7D10D1793611800AAA1CA /* CFNetwork.framework in Frameworks */,
-				AB6EF676179432FF00D0BAB0 /* libOCMock.a in Frameworks */,
+				AB0E84B319D1C362009E38B1 /* libOCMock.a in Frameworks */,
 				ABC7D10B1793611300AAA1CA /* SystemConfiguration.framework in Frameworks */,
 				ABC7D1091793610700AAA1CA /* Security.framework in Frameworks */,
 				ABC7D1071793610300AAA1CA /* QuartzCore.framework in Frameworks */,
@@ -231,13 +234,16 @@
 		AB6EF66E179432FF00D0BAB0 /* OCMock */ = {
 			isa = PBXGroup;
 			children = (
-				AB6EF66F179432FF00D0BAB0 /* libOCMock.a */,
-				AB6EF670179432FF00D0BAB0 /* NSNotificationCenter+OCMAdditions.h */,
-				AB6EF671179432FF00D0BAB0 /* OCMArg.h */,
-				AB6EF672179432FF00D0BAB0 /* OCMConstraint.h */,
-				AB6EF673179432FF00D0BAB0 /* OCMock.h */,
-				AB6EF674179432FF00D0BAB0 /* OCMockObject.h */,
-				AB6EF675179432FF00D0BAB0 /* OCMockRecorder.h */,
+				AB0E84A919D1C362009E38B1 /* libOCMock.a */,
+				AB0E84AA19D1C362009E38B1 /* NSNotificationCenter+OCMAdditions.h */,
+				AB0E84AB19D1C362009E38B1 /* OCMArg.h */,
+				AB0E84AC19D1C362009E38B1 /* OCMConstraint.h */,
+				AB0E84AD19D1C362009E38B1 /* OCMLocation.h */,
+				AB0E84AE19D1C362009E38B1 /* OCMMacroState.h */,
+				AB0E84AF19D1C362009E38B1 /* OCMock.h */,
+				AB0E84B019D1C362009E38B1 /* OCMockObject.h */,
+				AB0E84B119D1C362009E38B1 /* OCMRecorder.h */,
+				AB0E84B219D1C362009E38B1 /* OCMStubRecorder.h */,
 			);
 			path = OCMock;
 			sourceTree = "<group>";
@@ -520,6 +526,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock",
+					"$(PROJECT_DIR)/ParcelKitTests/Vendor/OCMock",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -558,6 +565,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/ParcelKitTests/Vendor/OCMock",
+					"$(PROJECT_DIR)/ParcelKitTests/Vendor/OCMock",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
