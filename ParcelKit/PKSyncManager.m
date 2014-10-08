@@ -37,6 +37,7 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
 
 @interface PKSyncManager ()
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong, readwrite) NSSet *observedManagedObjectContexts;
 @property (nonatomic, strong, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong, readwrite) DBDatastore *datastore;
 @property (nonatomic, strong) NSMutableDictionary *tablesKeyedByEntityName;
@@ -56,6 +57,7 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
 {
     self = [super init];
     if (self) {
+        _observedManagedObjectContexts = [[NSSet alloc] init];
         _tablesKeyedByEntityName = [[NSMutableDictionary alloc] init];
         _syncAttributeName = PKDefaultSyncAttributeName;
         _syncBatchSize = 20;
@@ -68,6 +70,8 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
     self = [self init];
     if (self) {
         _managedObjectContext = managedObjectContext;
+        [self addObserverForManagedObjectContext:_managedObjectContext];
+        
         _datastore = datastore;
     }
     return self;
@@ -140,7 +144,6 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
     return [[self.tablesKeyedByEntityName allKeysForObject:tableID] lastObject];
 }
 
-
 #pragma mark - Observing methods
 - (BOOL)isObserving
 {
@@ -167,7 +170,10 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
         });
     }];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.managedObjectContext];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    for (NSManagedObjectContext *managedObjectContext in self.observedManagedObjectContexts) {
+        [notificationCenter addObserver:self selector:@selector(managedObjectContextWillSave:) name:NSManagedObjectContextWillSaveNotification object:managedObjectContext];
+    }
 }
 
 - (void)stopObserving
@@ -177,7 +183,32 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
     self.persistentStoreCoordinator = nil;
     
     [self.datastore removeObserver:self];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:self.managedObjectContext];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    for (NSManagedObjectContext *managedObjectContext in self.observedManagedObjectContexts) {
+        [notificationCenter removeObserver:self name:NSManagedObjectContextWillSaveNotification object:managedObjectContext];
+    }
+}
+
+- (void)addObserverForManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    if ([self.observedManagedObjectContexts containsObject:managedObjectContext]) return;
+    self.observedManagedObjectContexts = [self.observedManagedObjectContexts setByAddingObject:managedObjectContext];
+    
+    if ([self isObserving]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextWillSave:) name:NSManagedObjectContextWillSaveNotification object:managedObjectContext];
+    }
+}
+
+- (void)removeObserverForManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    if (![self.observedManagedObjectContexts containsObject:managedObjectContext]) return;
+    
+    NSMutableSet *observedManagedObjectContexts = [[NSMutableSet alloc] initWithSet:self.observedManagedObjectContexts];
+    [observedManagedObjectContexts removeObject:managedObjectContext];
+    self.observedManagedObjectContexts = [[NSSet alloc] initWithSet:observedManagedObjectContexts];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextWillSaveNotification object:managedObjectContext];
 }
 
 #pragma mark - Updating Core Data
@@ -268,7 +299,7 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
     if (![self isObserving]) return;
     
     NSManagedObjectContext *managedObjectContext = notification.object;
-    if (self.managedObjectContext != managedObjectContext) return;
+    if (![self.observedManagedObjectContexts containsObject:managedObjectContext]) return;
     
     NSSet *deletedObjects = [managedObjectContext deletedObjects];
     for (NSManagedObject *managedObject in [self syncableManagedObjectsFromManagedObjects:deletedObjects]) {
