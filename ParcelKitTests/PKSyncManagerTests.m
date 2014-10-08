@@ -220,15 +220,104 @@
     [self.datastore verify];
 }
 
-- (void)testStartObservingShouldObserveManagedObjectContext
+- (void)testStopObservingShouldStopObservingDatastore
 {
+    [(DBDatastore *)[self.datastore expect] removeObserver:self.syncManager];
+    [self.syncManager startObserving];
+    
+    [self.syncManager stopObserving];
+    [self.datastore verify];
+}
+
+- (void)testStartObservingShouldObserveManagedObjectContexts
+{
+    NSManagedObjectContext *additionalManagedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
+    [self.syncManager addObserverForManagedObjectContext:additionalManagedObjectContext];
+    
     id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
     [[mockNotificationCenter expect] addObserver:self.syncManager selector:[OCMArg anySelector] name:NSManagedObjectContextWillSaveNotification object:self.syncManager.managedObjectContext];
+    [[mockNotificationCenter expect] addObserver:self.syncManager selector:[OCMArg anySelector] name:NSManagedObjectContextWillSaveNotification object:additionalManagedObjectContext];
     
     id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
     [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
     
     [self.syncManager startObserving];
+    
+    [mockNotificationCenter verify];
+    [mockNotificationCenterClass stopMocking];
+}
+
+- (void)testStopObservingShouldStopObservingManagedObjectContexts
+{
+    [self.syncManager startObserving];
+
+    NSManagedObjectContext *additionalManagedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
+    [self.syncManager addObserverForManagedObjectContext:additionalManagedObjectContext];
+    
+    id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
+    [[mockNotificationCenter expect] removeObserver:self.syncManager name:NSManagedObjectContextWillSaveNotification object:self.syncManager.managedObjectContext];
+    [[mockNotificationCenter expect] removeObserver:self.syncManager name:NSManagedObjectContextWillSaveNotification object:additionalManagedObjectContext];
+    
+    id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
+    [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
+    
+    
+    [self.syncManager stopObserving];
+    
+    [mockNotificationCenter verify];
+    [mockNotificationCenterClass stopMocking];
+}
+
+- (void)testAddObserverForManagedObjectContextShouldAddButNotObserveIfManagerIsNotObserving
+{
+    NSManagedObjectContext *additionalManagedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
+    
+    id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
+    [[mockNotificationCenter reject] addObserver:self.syncManager selector:[OCMArg anySelector] name:NSManagedObjectContextWillSaveNotification object:additionalManagedObjectContext];
+    
+    id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
+    [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
+    
+    [self.syncManager addObserverForManagedObjectContext:additionalManagedObjectContext];
+    XCTAssertTrue([self.syncManager.observedManagedObjectContexts containsObject:additionalManagedObjectContext]);
+    
+    [mockNotificationCenter verify];
+    [mockNotificationCenterClass stopMocking];
+}
+
+- (void)testAddObserverForManagedObjectContextShouldAddAndObserveIfManagerIsObserving
+{
+    [self.syncManager startObserving];
+
+    NSManagedObjectContext *additionalManagedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
+
+    id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
+    [[mockNotificationCenter expect] addObserver:self.syncManager selector:[OCMArg anySelector] name:NSManagedObjectContextWillSaveNotification object:additionalManagedObjectContext];
+    
+    id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
+    [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
+
+    [self.syncManager addObserverForManagedObjectContext:additionalManagedObjectContext];
+    XCTAssertTrue([self.syncManager.observedManagedObjectContexts containsObject:additionalManagedObjectContext]);
+    
+    [mockNotificationCenter verify];
+    [mockNotificationCenterClass stopMocking];
+}
+
+- (void)testRemoveObserverForManagedObjectContextShouldRemoveObserver
+{
+    NSManagedObjectContext *additionalManagedObjectContext = [NSManagedObjectContext pk_managedObjectContextWithModelName:@"Tests"];
+
+    id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
+    [[mockNotificationCenter expect] removeObserver:self.syncManager name:NSManagedObjectContextWillSaveNotification object:additionalManagedObjectContext];
+    
+    id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
+    [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
+    
+    [self.syncManager addObserverForManagedObjectContext:additionalManagedObjectContext];
+    
+    [self.syncManager removeObserverForManagedObjectContext:additionalManagedObjectContext];
+    XCTAssertFalse([self.syncManager.observedManagedObjectContexts containsObject:additionalManagedObjectContext]);
     
     [mockNotificationCenter verify];
     [mockNotificationCenterClass stopMocking];

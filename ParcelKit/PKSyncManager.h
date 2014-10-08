@@ -60,10 +60,16 @@ extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
  */
 @interface PKSyncManager : NSObject
 
-/** 
- The Core Data managed object context to listen for changes from.
+/**
+ The primary Core Data managed object context to listen for changes from.
  */
 @property (nonatomic, strong, readonly) NSManagedObjectContext *managedObjectContext;
+
+/**
+ A set of Core Data managed object context to listen for changes from.
+ */
+@property (nonatomic, strong, readonly) NSSet *observedManagedObjectContexts;
+
 
 /** The Dropbox Datastore to read and write to. */
 @property (nonatomic, strong, readonly) DBDatastore *datastore;
@@ -97,7 +103,7 @@ extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
 /**
  The designated initializer used to specify the Core Data managed object context and the Dropbox data store that should be synchronized.
  
- @param managedObjectContext The Core Data managed object context the sync manager should listen for changes from.
+ @param managedObjectContext The primary Core Data managed object context the sync manager should listen for changes from.
  @param datastore The Dropbox data store the sync manager should listen for changes from and write changes to.
  @return A newly initialized `PKSyncManager` object.
  */
@@ -178,6 +184,20 @@ extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
  Stops observing changes from the Core Data managed object context and the Dropbox data store.
  */
 - (void)stopObserving;
+
+/**
+ Adds an observer to listen for changes from the specified Core Data managed object context.
+ 
+ @param managedObjectContext The Core Data managed object context the sync manager should listen for changes from.
+ */
+- (void)addObserverForManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+
+/**
+ Removes the observer and stops listening for changes from the specified Core Data managed object context.
+ 
+ @param managedObjectContext The Core Data managed object context the sync manager should listen for changes from.
+ */
+- (void)removeObserverForManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 /**
  Force a manual sync of the datastore

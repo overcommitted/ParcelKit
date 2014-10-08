@@ -1,5 +1,6 @@
-Version 2.1.1
+Version 2.2.0 (YYYY-MM-DD)
 ================
+* Adds -[PKSyncManager addObserverForManagedObjectContext:] and -[PKSyncManager removeObserverForManagedObjectContext:] for adding and removing additional Core Data managed object contexts to listen to.
 * Updated Dropbox-Sync-API-SDK to 3.1.1.
 
 Version 2.1.0
