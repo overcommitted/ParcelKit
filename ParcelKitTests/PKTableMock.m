@@ -35,7 +35,7 @@
 
 @implementation PKTableMock
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -44,7 +44,7 @@
     return self;
 }
 
-- (id)initWithTableID:(NSString *)tableID
+- (instancetype)initWithTableID:(NSString *)tableID
 {
     self = [self init];
     if (self) {
@@ -53,7 +53,7 @@
     return self;
 }
 
-- (id)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore
+- (instancetype)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore
 {
     self = [self initWithTableID:tableID];
     if (self) {

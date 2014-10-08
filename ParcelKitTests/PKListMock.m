@@ -31,7 +31,7 @@
 
 @implementation PKListMock
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -40,7 +40,7 @@
     return self;
 }
 
-- (id)initWithValues:(NSArray *)values
+- (instancetype)initWithValues:(NSArray *)values
 {
     self = [self init];
     if (self) {

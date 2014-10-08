@@ -48,7 +48,7 @@
     return [self record:recordId withFields:fields deleted:NO];
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
@@ -57,7 +57,7 @@
     return self;
 }
 
-- (id)initWithRecordId:(NSString *)recordId fields:(NSDictionary *)fields deleted:(BOOL)deleted
+- (instancetype)initWithRecordId:(NSString *)recordId fields:(NSDictionary *)fields deleted:(BOOL)deleted
 {
     self = [self init];
     if (self) {

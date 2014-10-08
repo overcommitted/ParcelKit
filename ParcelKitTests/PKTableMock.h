@@ -32,8 +32,8 @@
 @interface PKTableMock : DBTable
 @property (strong, nonatomic, readonly) NSMutableDictionary *records;
 
-- (id)initWithTableID:(NSString *)tableID;
-- (id)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore;
+- (instancetype)initWithTableID:(NSString *)tableID;
+- (instancetype)initWithTableID:(NSString *)tableID datastore:(PKDatastoreMock *)datastore;
 
 - (void)setRecord:(DBRecord *)record;
 - (void)deleteRecord:(DBRecord *)record;

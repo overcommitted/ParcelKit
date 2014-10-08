@@ -29,7 +29,7 @@
 @interface PKRecordMock : DBRecord
 + (instancetype)record:(NSString *)recordId withFields:(NSDictionary *)fields deleted:(BOOL)deleted;
 + (instancetype)record:(NSString *)recordId withFields:(NSDictionary *)fields;
-- (id)initWithRecordId:(NSString *)recordId fields:(NSDictionary *)fields deleted:(BOOL)deleted;
+- (instancetype)initWithRecordId:(NSString *)recordId fields:(NSDictionary *)fields deleted:(BOOL)deleted;
 
 - (void)setTable:(DBTable *)table;
 @end

@@ -26,5 +26,5 @@
 #import <Dropbox/Dropbox.h>
 
 @interface PKListMock : DBList
-- (id)initWithValues:(NSArray *)values;
+- (instancetype)initWithValues:(NSArray *)values;
 @end

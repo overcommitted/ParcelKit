@@ -38,7 +38,7 @@ static NSString * const PKDatastoreMockObserverBlockKey = @"block";
 @end
 
 @implementation PKDatastoreMock
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
