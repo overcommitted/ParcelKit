@@ -323,6 +323,21 @@
     [mockNotificationCenterClass stopMocking];
 }
 
+- (void)testRemoveObserverForManagedObjectContextShouldNotAllowRemovingPrimaryManagedObjectContext
+{
+    id mockNotificationCenter = [OCMockObject niceMockForClass:[NSNotificationCenter class]];
+    [[mockNotificationCenter reject] removeObserver:self.syncManager name:NSManagedObjectContextWillSaveNotification object:self.managedObjectContext];
+    
+    id mockNotificationCenterClass = [OCMockObject mockForClass:[NSNotificationCenter class]];
+    [[[mockNotificationCenterClass expect] andReturn:mockNotificationCenter] defaultCenter];
+    
+    [self.syncManager removeObserverForManagedObjectContext:self.managedObjectContext];
+    XCTAssertTrue([self.syncManager.observedManagedObjectContexts containsObject:self.managedObjectContext]);
+    
+    [mockNotificationCenter verify];
+    [mockNotificationCenterClass stopMocking];
+}
+
 #pragma mark - Observe Datastore Changes
 
 - (void)testIncomingDatastoreChangeShouldUpdateCoreDataWithSingleObject

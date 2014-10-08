@@ -202,7 +202,7 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
 
 - (void)removeObserverForManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    if (![self.observedManagedObjectContexts containsObject:managedObjectContext]) return;
+    if (![self.observedManagedObjectContexts containsObject:managedObjectContext] || [managedObjectContext isEqual:self.managedObjectContext]) return;
     
     NSMutableSet *observedManagedObjectContexts = [[NSMutableSet alloc] initWithSet:self.observedManagedObjectContexts];
     [observedManagedObjectContexts removeObject:managedObjectContext];
