@@ -27,6 +27,13 @@
 #import <CoreData/CoreData.h>
 #import <Dropbox/Dropbox.h>
 
+@class PKSyncManager;
+
+@protocol PKSyncManagerDelegate <NSObject>
+@optional
+- (void)syncManager:(PKSyncManager *)syncManager managedObject:(NSManagedObject *)managedObject insertValidationFailed:(NSError *)error inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+@end
+
 extern NSString * const PKDefaultSyncAttributeName;
 
 /**
@@ -85,6 +92,11 @@ extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
  The default value is “20”. (2048 KiB max delta size / 100 KiB max record size)
 */
 @property (nonatomic) NSUInteger syncBatchSize;
+
+/**
+ Delegate that can handle various edge cases in an app-specific manner.
+*/
+@property (nonatomic, strong) id<PKSyncManagerDelegate> syncManagerDelegate;
 
 /**
  Returns a random string suitable for using as a sync identifer.
