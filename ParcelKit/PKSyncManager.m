@@ -241,12 +241,12 @@ NSString * const PKSyncManagerDatastoreLastSyncDateKey = @"lastSyncDate";
             
             if (managedObject.isInserted) {
                 // Validate this object quickly
-                NSError* error = nil;
+                NSError *error = nil;
                 if (![managedObject validateForInsert:&error]) {
-                    if ((self.syncManagerDelegate != nil) && ([self.syncManagerDelegate respondsToSelector:@selector(syncManager:managedObject:insertValidationFailed:inManagedObjectContext:)])) {
+                    if ((self.delegate != nil) && ([self.delegate respondsToSelector:@selector(syncManager:managedObject:insertValidationFailed:inManagedObjectContext:)])) {
                         
                         // Call the delegate method to respond to this validation error
-                        [self.syncManagerDelegate syncManager:self managedObject:managedObject insertValidationFailed:error inManagedObjectContext:managedObjectContext];
+                        [self.delegate syncManager:self managedObject:managedObject insertValidationFailed:error inManagedObjectContext:managedObjectContext];
                     }
                 }
             }

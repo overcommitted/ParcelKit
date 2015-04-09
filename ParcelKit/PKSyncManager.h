@@ -96,7 +96,7 @@ extern NSString * const PKSyncManagerDatastoreLastSyncDateKey;
 /**
  Delegate that can handle various edge cases in an app-specific manner.
 */
-@property (nonatomic, strong) id<PKSyncManagerDelegate> syncManagerDelegate;
+@property (nonatomic, weak) id<PKSyncManagerDelegate> delegate;
 
 /**
  Returns a random string suitable for using as a sync identifer.
