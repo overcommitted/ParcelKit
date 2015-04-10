@@ -330,6 +330,24 @@
     XCTAssertEqual(0, (int)[objects count], @"");
 }
 
+- (void)testInvalidIncomingDataShouldCallDelegateMethod
+{
+    id delegateMock = OCMProtocolMock(@protocol(PKSyncManagerDelegate));
+    OCMStub([delegateMock syncManager:self.syncManager managedObject:[OCMArg any] insertValidationFailed:[OCMArg any] inManagedObjectContext:self.managedObjectContext]);
+    
+    self.syncManager.delegate = delegateMock;
+    [self.syncManager startObserving];
+    
+    NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    [object setValue:@"1" forKey:self.syncManager.syncAttributeName];
+    [object setValue:@"" forKey:@"title"];
+    
+    PKRecordMock *book = [PKRecordMock record:@"1" withFields:@{@"title": @""}];
+    [self.datastore updateStatus:[PKDatastoreStatusMock datastoreStatusWithIncoming:YES] withChanges:@{@"books": @[book]}];
+    
+    OCMVerify([delegateMock syncManager:self.syncManager managedObject:[OCMArg any] insertValidationFailed:[OCMArg any] inManagedObjectContext:[OCMArg any]]);
+}
+
 #pragma mark - Observe Core Data Changes
 
 - (void)testCoreDataInsertShouldUpdateDatastoreWithSingleObject
